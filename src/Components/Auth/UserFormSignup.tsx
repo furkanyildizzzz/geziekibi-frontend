@@ -1,19 +1,20 @@
 import {
-  CreateAccount,
-  DontHaveAccount,
   EmailAddressLogIn,
-  ForgotPassword,
-  Href,
-  OrSignInWith,
   Password,
-  RememberPassword,
-  SignIn,
-  SignInToAccount,
+  ConfirmPassword,
+  DunzoLogin,
+  SignUpToAccount,
+  Username,
+  AlreadyHaveAnAccount,
+  AuthSignIn,
+  FirstName,
+  LastName,
+  SignUp,
 } from "@/Constant/constant";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import imageOne from "../../../public/assets/images/logo/logo-1.png";
@@ -28,42 +29,24 @@ import {
 } from "@/Types/ApiResponseType";
 import { SigninSchema } from "@/app/lib/definitions";
 import { useFormStatus } from "react-dom";
+import DisplayError from "@/utils/DisplayError";
+import { signup } from "@/app/actions/auth/signup";
 
-export const UserForm = () => {
+export const UserFormSignup = () => {
+  const router = useRouter();
+
   const [show, setShow] = useState(false);
+  const [firstName, setFirstName] = useState("John");
+  const [lastName, setLastName] = useState("Doe");
   const [email, setEmail] = useState("test1@test.com");
-  const [password, setPassword] = useState("test1");
-
-  const [formState, setFormState] = useState<SigninSchema>({
-    email: "Test123@gmail.com",
-    password: "Test@123",
-  });
+  const [password, setPassword] = useState("test");
+  const [passwordConfirm, setPasswordConfirm] = useState("test");
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorsValidation, setErrorsValidation] = useState<
     ErrorValidation[] | null
   >([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const router = useRouter();
-
-  const { pending } = useFormStatus();
-
-  const submitData = async () => {
-    let response = await fetch("http://localhost:4000/v1/auth/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-
-    response = await response.json();
-
-    alert(JSON.stringify(response));
-  };
 
   const formSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -71,50 +54,32 @@ export const UserForm = () => {
     setErrorsValidation([]);
     const formData = new FormData(event.currentTarget);
     try {
-      const response = await signin(formData);
+      const response = await signup(formData);
 
       if ("errorMessage" in response) {
-        console.log({ response });
-        console.error("Error:", response.errorMessage);
         setErrorsValidation(response.errorsValidation);
         setErrorMessage(response.errorMessage);
       } else {
-        console.log("Login successful:", response.message);
-        console.log("Token:", response.data);
-
-        console.log({ response });
-        Cookies.set("dunzo_token", JSON.stringify(response.data));
-        alert(JSON.stringify(response));
+        toast.success(response.message, {
+          // position: "top-right",
+          autoClose: 2000, // 2 seconds delay before redirect
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         setErrorsValidation(null);
         setErrorMessage("");
+        Cookies.remove("dunzo_token");
+        localStorage.clear();
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 2000);
       }
     } catch (error) {
       console.log({ error });
     }
-
-    // const isApiErrorResponse = response as ApiErrorResponse;
-    // const loginResponnse = response as LoginSuccessResponse;
-    // const errors: string[] = response as string[];
-    // if (errors) {
-    //   console.log({ errors });
-    //   setError(errors[0]);
-    // } else if (isApiErrorResponse) {
-    //   console.log({ isApiErrorResponse });
-    //   setError(isApiErrorResponse.errorMessage);
-    // } else if (loginResponnse) {
-    //   console.log({ loginResponnse });
-    //   Cookies.set("dunzo_token", JSON.stringify(loginResponnse.data));
-    //   setError(loginResponnse.data);
-    // }
-
     setIsLoading(false);
-    // if (email == "Test123@gmail.com" && password == "Test@123") {
-    //   Cookies.set("dunzo_token", JSON.stringify(true));
-    //   router.push("/");
-    //   window.location.reload();
-    // } else {
-    //   toast.error("Please Enter Valid Email Or Password");
-    // }
   };
 
   return (
@@ -127,7 +92,7 @@ export const UserForm = () => {
             height={38}
             className="img-fluid for-light"
             src={imageOne}
-            alt="login page"
+            alt="signup page"
           />
           <Image
             priority
@@ -135,7 +100,7 @@ export const UserForm = () => {
             height={38}
             className="img-fluid for-dark"
             src={imageTwo}
-            alt="login page"
+            alt="signup page"
           />
         </Link>
       </div>
@@ -144,8 +109,36 @@ export const UserForm = () => {
           className="theme-form"
           onSubmit={(event) => formSubmitHandle(event)}
         >
-          <h4>{SignInToAccount}</h4>
+          <h4>{SignUpToAccount}</h4>
           {errorMessage && <p style={{ color: "red" }}> {errorMessage} </p>}
+          <FormGroup>
+            <Label className="col-form-label">{FirstName}</Label>
+            <Input
+              name="firstName"
+              type="text"
+              defaultValue={firstName}
+              onChange={(event) => setFirstName(event.target.value)}
+              placeholder="John"
+            />
+            <DisplayError
+              errorsValidation={errorsValidation || []}
+              keyProp="firstName"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label className="col-form-label">{LastName}</Label>
+            <Input
+              name="lastName"
+              type="text"
+              defaultValue={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              placeholder="John"
+            />
+            <DisplayError
+              errorsValidation={errorsValidation || []}
+              keyProp="lastName"
+            />
+          </FormGroup>
           <FormGroup>
             <Label className="col-form-label">{EmailAddressLogIn}</Label>
             <Input
@@ -155,15 +148,10 @@ export const UserForm = () => {
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Test123@gmail.com"
             />
-            {errorsValidation &&
-              errorsValidation.length > 0 &&
-              errorsValidation?.map((errorObj) =>
-                errorObj.email ? (
-                  <p key="email-error" style={{ color: "red" }}>
-                    {errorObj.email}
-                  </p>
-                ) : null
-              )}
+            <DisplayError
+              errorsValidation={errorsValidation || []}
+              keyProp="email"
+            />
           </FormGroup>
           <FormGroup>
             <Label className="col-form-label">{Password}</Label>
@@ -173,44 +161,47 @@ export const UserForm = () => {
                 type={show ? "text" : "password"}
                 defaultValue={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="Test@123"
+                placeholder="test1"
               />
-              {errorsValidation &&
-                errorsValidation.length > 0 &&
-                errorsValidation?.map((errorObj) =>
-                  errorObj.password ? (
-                    <p key="password-error" style={{ color: "red" }}>
-                      {errorObj.password}
-                    </p>
-                  ) : null
-                )}
+              <DisplayError
+                errorsValidation={errorsValidation || []}
+                keyProp="password"
+              />
+              <div className="show-hide" onClick={() => setShow(!show)}>
+                <span className="show"> </span>
+              </div>
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <Label className="col-form-label">{ConfirmPassword}</Label>
+            <div className="position-relative">
+              <Input
+                name="passwordConfirm"
+                type={show ? "text" : "password"}
+                defaultValue={passwordConfirm}
+                onChange={(event) => setPasswordConfirm(event.target.value)}
+                placeholder="test1"
+              />
+              <DisplayError
+                errorsValidation={errorsValidation || []}
+                keyProp="passwordConfirm"
+              />
               <div className="show-hide" onClick={() => setShow(!show)}>
                 <span className="show"> </span>
               </div>
             </div>
           </FormGroup>
           <FormGroup className="form-group mb-0">
-            <div className="checkbox p-0">
-              <Input id="checkbox1" type="checkbox" />
-              <Label className="text-muted" htmlFor="checkbox1">
-                {RememberPassword}
-              </Label>
-            </div>
             <div className="text-end mt-3">
               <Button type="submit" color="primary" block disabled={isLoading}>
-                {SignIn}
+                {SignUp}
               </Button>
             </div>
-            <Link className="link" href={Href}>
-              {ForgotPassword}?
-            </Link>
           </FormGroup>
-          {/* <h6 className="text-muted mt-4">{OrSignInWith}</h6> */}
-          {/* <UserSocialApp /> */}
           <p className="mt-4 mb-0 text-center">
-            {DontHaveAccount}
-            <Link className="ms-2" href={"signup"}>
-              {CreateAccount}
+            {AlreadyHaveAnAccount}
+            <Link className="ms-2" href={"login"}>
+              {AuthSignIn}
             </Link>
           </p>
         </Form>
