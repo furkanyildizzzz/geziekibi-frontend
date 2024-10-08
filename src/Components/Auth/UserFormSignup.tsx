@@ -55,10 +55,17 @@ export const UserFormSignup = () => {
     const formData = new FormData(event.currentTarget);
     try {
       const response = await signup(formData);
-
       if ("errorMessage" in response) {
         setErrorsValidation(response.errorsValidation);
         setErrorMessage(response.errorMessage);
+        toast.error(response.errorMessage, {
+          // position: "top-right",
+          autoClose: 2000, // 2 seconds delay before redirect
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       } else {
         toast.success(response.message, {
           // position: "top-right",
@@ -121,7 +128,7 @@ export const UserFormSignup = () => {
               placeholder="John"
             />
             <DisplayError
-              errorsValidation={errorsValidation || []}
+              errorsValidation={errorsValidation}
               keyProp="firstName"
             />
           </FormGroup>
@@ -135,7 +142,7 @@ export const UserFormSignup = () => {
               placeholder="John"
             />
             <DisplayError
-              errorsValidation={errorsValidation || []}
+              errorsValidation={errorsValidation}
               keyProp="lastName"
             />
           </FormGroup>
@@ -148,10 +155,7 @@ export const UserFormSignup = () => {
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Test123@gmail.com"
             />
-            <DisplayError
-              errorsValidation={errorsValidation || []}
-              keyProp="email"
-            />
+            <DisplayError errorsValidation={errorsValidation} keyProp="email" />
           </FormGroup>
           <FormGroup>
             <Label className="col-form-label">{Password}</Label>
@@ -164,7 +168,7 @@ export const UserFormSignup = () => {
                 placeholder="test1"
               />
               <DisplayError
-                errorsValidation={errorsValidation || []}
+                errorsValidation={errorsValidation}
                 keyProp="password"
               />
               <div className="show-hide" onClick={() => setShow(!show)}>
@@ -183,7 +187,7 @@ export const UserFormSignup = () => {
                 placeholder="test1"
               />
               <DisplayError
-                errorsValidation={errorsValidation || []}
+                errorsValidation={errorsValidation}
                 keyProp="passwordConfirm"
               />
               <div className="show-hide" onClick={() => setShow(!show)}>

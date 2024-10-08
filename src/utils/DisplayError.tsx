@@ -2,7 +2,7 @@ import { ErrorValidation } from "@/Types/ApiResponseType";
 
 // Define the prop types for DisplayError
 interface DisplayErrorProps {
-  errorsValidation: ErrorValidation[];
+  errorsValidation: ErrorValidation[] | null;
   keyProp: string; // Use a different name for the key prop to avoid conflicts with the special `key` in JSX
 }
 
