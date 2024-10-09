@@ -11,7 +11,15 @@ export const MenuList: MenuItem[] | undefined = [
         icon: "home",
         type: "sub",
         lanClass: "lan-3",
-        path:"/dashboard",
+        path: "/dashboard",
+      },
+      {
+        title: "Tags",
+        id: 2,
+        icon: "Perk-Ui",
+        type: "link",
+        lanClass: "lan-3",
+        path: "/tags",
       },
     ],
   },
@@ -32,6 +40,16 @@ export const MenuList: MenuItem[] | undefined = [
 
   {
     title: "Support Ticket",
-    Items: [{ id: 33, path: "https://support.pixelstrap.com/", target:"_blank",icon: "support-tickets", type: "link", active: false, title: "Support Ticket" }],
+    Items: [
+      {
+        id: 33,
+        path: "https://support.pixelstrap.com/",
+        target: "_blank",
+        icon: "support-tickets",
+        type: "link",
+        active: false,
+        title: "Support Ticket",
+      },
+    ],
   },
 ];

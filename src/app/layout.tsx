@@ -25,23 +25,48 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Dunzo - Premium Admin Template",
+  title: {
+    template: "%s | GeziEkibi Dashboard",
+    default: "GeziEkibi Dashboard",
+  },
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const lng = await detectLanguage();
 
   return (
     <I18nProvider language={lng}>
       <html lang="en">
         <head>
-          <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon" />
-          <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/x-icon" />
+          <link
+            rel="icon"
+            href="/assets/images/favicon.png"
+            type="image/x-icon"
+          />
+          <link
+            rel="shortcut icon"
+            href="/assets/images/favicon.png"
+            type="image/x-icon"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-          <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0"></script>
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin=""
+          />
+          <script
+            async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0"
+          ></script>
         </head>
-        <body suppressHydrationWarning={true} className={`${outfit.variable} ${roboto.variable}`}>
+        <body
+          suppressHydrationWarning={true}
+          className={`${outfit.variable} ${roboto.variable}`}
+        >
           <NoSsr>
             <MainProvider>
               <NextTopLoader color="#307EF3" showSpinner={false} />

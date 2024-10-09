@@ -18,3 +18,5 @@ export interface ApiSuccessResponse<T> extends Response {
 
 export type LoginSuccessResponse = string;
 export type SignupSuccessResponse = string;
+
+export type TagSuccessResponse = { id: number; name: string };

@@ -1997,3 +1997,7 @@ export const Stroke = "Stroke";
 export const Configuration = "Configuration";
 export const LightLayout = "Light layout";
 export const DarkLayout = "Dark Layout";
+
+//General - Tag
+export const TagForm: string = "Tag Form";
+export const TagList: string = "Tag list";
