@@ -8,7 +8,12 @@ export interface ApiErrorResponse extends Response {
   errorsValidation: ErrorValidation[] | null;
   stack?: string;
 }
-type ErrorType = "General" | "Raw" | "Validation" | "Unauthorized";
+type ErrorType =
+  | "General"
+  | "Raw"
+  | "Validation"
+  | "Unauthanticated"
+  | "Unauthorized";
 export type ErrorValidation = { [key: string]: string };
 
 export interface ApiSuccessResponse<T> extends Response {

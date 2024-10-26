@@ -31,3 +31,11 @@ export const SigninFormSchema = z.object({
   password: z.string({ message: "Please enter a valid password" }).trim(),
 });
 export type SigninSchema = z.infer<typeof SigninFormSchema>;
+
+export const CreateTagFormSchema = z.object({
+  name: z
+    .string({ message: "Please enter valid tag name" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+});
+export type CreateTagSchema = z.infer<typeof CreateTagFormSchema>;

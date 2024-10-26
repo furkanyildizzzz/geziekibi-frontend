@@ -17,70 +17,77 @@ import {
   TagName,
   CreateNewTagHeading,
   Href,
+  EditTagHeading,
+  Edit,
 } from "@/Constant/constant";
 import DisplayError from "@/utils/DisplayError";
 import { createNewTag } from "@/app/actions/tag/createNewTag";
 import useFormState from "@/hooks/useFormState";
+import { TagSuccessResponse } from "@/Types/ApiResponseType";
+import { editTag } from "@/app/actions/tag/editTag";
 
-interface ICreateNewTagProps {
-  reload: () => Promise<void>;
+interface EditTagModalProps {
+  isOpen: boolean;
+  tag: TagSuccessResponse | null;
+  onClose: () => void;
+  onSave: (id: number, data: FormData) => Promise<void>;
 }
 
-const CreateNewTag: React.FC<ICreateNewTagProps> = (
-  props: ICreateNewTagProps
-) => {
-  const mdeEditorText = `Enter your messages...`;
-  const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal);
-
+const EditTagModal: React.FC<EditTagModalProps> = ({
+  isOpen,
+  tag,
+  onClose,
+  onSave,
+}) => {
   const {
     isLoading,
     errorsValidation,
     isSuccess,
-    handleSubmit,
+    inputValues,
+    setFormValues,
+    handleChange,
+    handleEditSubmit,
     resetFormState,
   } = useFormState();
 
   useEffect(() => {
-    if (isSuccess) {
-      props.reload();
-      toggle();
-      resetFormState();
-    }
-  }, [isSuccess]);
+    console.log({ tag });
+    setFormValues(tag || {});
+  }, [isOpen, tag]);
 
   const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
-    await handleSubmit(event, createNewTag);
+    await handleEditSubmit(event, onSave);
     console.log({ isSuccess });
     console.log({ errorsValidation });
 
     if (isSuccess) {
-      toggle();
       resetFormState();
+      onClose();
     }
   };
   return (
     <Col xs="12">
-      <div className="tag-buton">
-        <Button
-          color="transparent"
-          tag="a"
-          className="button-primary bg-light-primary font-primary"
-          href={Href}
-          onClick={toggle}
-        >
-          <i className="me-2 fa fa-plus"> </i>
-          {CreateNewTagHeading}
-        </Button>
-      </div>
-
-      <Modal isOpen={modal} toggle={toggle} size="lg">
+      <Modal isOpen={isOpen} size="lg">
         <Form className="theme-form" onSubmit={formSubmitHandle}>
           <div className="modal-header">
-            <h1 className="modal-title fs-5">{CreateNewTagHeading}</h1>
-            <Button close onClick={toggle} />
+            <h1 className="modal-title fs-5">
+              {EditTagHeading} {`"${tag?.name}"`}
+            </h1>
+            <Button close onClick={onClose} />
           </div>
           <ModalBody className="custom-input">
+            <FormGroup>
+              <Input
+                name="id"
+                className="m-0"
+                id="id"
+                type="number"
+                required
+                value={tag?.id}
+                hidden
+              />
+              <DisplayError errorsValidation={errorsValidation} keyProp="id" />{" "}
+            </FormGroup>
             <FormGroup>
               <Label for="name" check>
                 {TagName} <span className="txt-danger"> *</span>
@@ -89,7 +96,9 @@ const CreateNewTag: React.FC<ICreateNewTagProps> = (
                 name="name"
                 className="m-0"
                 id="name"
+                value={inputValues.name}
                 type="text"
+                onChange={handleChange}
                 required
               />
               <DisplayError
@@ -99,13 +108,13 @@ const CreateNewTag: React.FC<ICreateNewTagProps> = (
             </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <Button color="light" onClick={toggle} disabled={isLoading}>
+            <Button color="light" onClick={onClose} disabled={isLoading}>
               {" "}
               {Cancel}
             </Button>
             <Button color="primary" type="submit" disabled={isLoading}>
               {" "}
-              {Add}
+              {Edit}
             </Button>
           </ModalFooter>
         </Form>
@@ -114,4 +123,4 @@ const CreateNewTag: React.FC<ICreateNewTagProps> = (
   );
 };
 
-export default CreateNewTag;
+export default EditTagModal;

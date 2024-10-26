@@ -3,6 +3,9 @@ import {
   ApiResponse,
   ApiSuccessResponse,
 } from "@/Types/ApiResponseType";
+import Cookies from "js-cookie";
+import { isTokenExpired } from "./IsTokenExpired";
+import { useRouter } from "next/router";
 
 // utils/api.ts
 // export async function apiRequest<T>(
@@ -47,8 +50,11 @@ export async function apiRequest<T>(
   body?: any
 ): Promise<ApiResponse<T>> {
   try {
+    const token = Cookies.get("token"); // Replace 'yourTokenKey' with your actual key
+
     const headers: HeadersInit = {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     };
 
     const response = await fetch(`http://localhost:4000/v1/${url}`, {

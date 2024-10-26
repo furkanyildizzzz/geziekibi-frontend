@@ -77,7 +77,7 @@ export const UserFormSignup = () => {
         });
         setErrorsValidation(null);
         setErrorMessage("");
-        Cookies.remove("dunzo_token");
+        Cookies.remove("token");
         localStorage.clear();
         setTimeout(() => {
           router.push("/auth/login");
