@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
   if (path.split("/")[1] !== "auth" && isExpired)
     return NextResponse.redirect(new URL("/auth/login", request.url));
   if (path.split("/")[1] === "auth" && !isExpired)
-    return NextResponse.redirect(new URL(`/pages/sample_page`, request.url));
+    return NextResponse.redirect(new URL(`/tags`, request.url));
 
   return NextResponse.next();
 }
