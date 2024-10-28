@@ -26,7 +26,7 @@ import DisplayError from "@/utils/DisplayError";
 
 export const UserForm = () => {
   const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("test1@test.com");
+  const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("test");
 
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +34,6 @@ export const UserForm = () => {
     ErrorValidation[] | null
   >([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const router = useRouter();
 
   const formSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,7 +47,7 @@ export const UserForm = () => {
         setErrorsValidation(response.errorsValidation);
         setErrorMessage(response.errorMessage);
       } else {
-        Cookies.set("dunzo_token", JSON.stringify(response.data));
+        Cookies.set("token", response.data);
         SweetAlert.fire({
           icon: "success",
           title: "Good job!",

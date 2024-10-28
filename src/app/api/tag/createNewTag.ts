@@ -1,29 +1,21 @@
-import { SignupFormSchema, SignupSchema } from "@/app/lib/definitions";
+import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
 import {
   ApiErrorResponse,
   ApiResponse,
-  SignupSuccessResponse,
+  TagSuccessResponse,
 } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
 import mapZodErrorsToApiError from "@/utils/MapZodErrorsToApiErrors";
 import { ZodError } from "zod";
 
-export const signup = async (
+export const createNewTag = async (
   formData: FormData
-): Promise<ApiResponse<SignupSuccessResponse>> => {
-  const formObject = Object.fromEntries(formData.entries()) as SignupSchema;
+): Promise<ApiResponse<TagSuccessResponse>> => {
+  const formObject = Object.fromEntries(formData.entries()) as CreateTagSchema;
 
   try {
-    const data = SignupFormSchema.parse(formObject); // Zod throws an error if invalid
-
-    // If validation is successful, proceed with the API request
-    const response = await apiRequest<SignupSuccessResponse>(
-      "auth/register",
-      "POST",
-      data
-    );
-
-    return response;
+    const data = CreateTagFormSchema.parse(formObject);
+    return await apiRequest<TagSuccessResponse>("tag/", "POST", data);
   } catch (error) {
     // If Zod validation fails, map the error to ApiErrorResponse
     if (error instanceof ZodError) {
