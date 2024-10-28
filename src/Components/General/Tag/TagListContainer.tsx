@@ -212,6 +212,9 @@ const TagListContainer = () => {
                       progressPending={isLoading}
                       subHeaderComponent={subHeaderComponentMemo}
                       subHeaderAlign={Alignment.LEFT}
+                      onRowDoubleClicked={(row) => handleEdit(row.id)}
+                      dense
+                      pointerOnHover
                     />
                     {/* Edit Modal */}
                     <EditTagModal
