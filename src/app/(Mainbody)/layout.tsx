@@ -10,7 +10,13 @@ import { setLayout } from "@/Redux/Reducers/ThemeCustomizerSlice";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
   const { layout } = useAppSelector((state) => state.themeCustomizer);
   const dispatch = useAppDispatch();
 
@@ -45,7 +51,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <div className="page-body-wrapper">
           <SideBar />
-          <div className="page-body">{children}</div>
+          <div className="page-body">
+            {children}
+            {modal}
+          </div>
           <Footer />
         </div>
       </div>

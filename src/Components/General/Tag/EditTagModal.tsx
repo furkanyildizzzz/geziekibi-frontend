@@ -9,22 +9,11 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
-import { FormEvent, useEffect, useState } from "react";
-import SimpleMdeReact from "react-simplemde-editor";
-import {
-  Add,
-  Cancel,
-  TagName,
-  CreateNewTagHeading,
-  Href,
-  EditTagHeading,
-  Edit,
-} from "@/Constant/constant";
+import { useEffect } from "react";
+import { Cancel, TagName, EditTagHeading, Edit } from "@/Constant/constant";
 import DisplayError from "@/utils/DisplayError";
-import { createNewTag } from "@/app/actions/tag/createNewTag";
 import useFormState from "@/hooks/useFormState";
 import { TagSuccessResponse } from "@/Types/ApiResponseType";
-import { editTag } from "@/app/actions/tag/editTag";
 
 interface EditTagModalProps {
   isOpen: boolean;
@@ -41,6 +30,7 @@ const EditTagModal: React.FC<EditTagModalProps> = ({
 }) => {
   const {
     isLoading,
+    errorMessage,
     errorsValidation,
     isSuccess,
     inputValues,
@@ -59,6 +49,7 @@ const EditTagModal: React.FC<EditTagModalProps> = ({
     await handleEditSubmit(event, onSave);
     console.log({ isSuccess });
     console.log({ errorsValidation });
+    console.log({ errorMessage });
 
     if (isSuccess) {
       resetFormState();
@@ -75,6 +66,7 @@ const EditTagModal: React.FC<EditTagModalProps> = ({
             </h1>
             <Button close onClick={onClose} />
           </div>
+          <DisplayError errorMessage={errorMessage} />
           <ModalBody className="custom-input">
             <FormGroup>
               <Input

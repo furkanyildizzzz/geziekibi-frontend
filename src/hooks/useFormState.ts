@@ -1,17 +1,16 @@
 import { ErrorValidation } from "@/Types/ApiResponseType";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+type FormValues = { [key: string]: any };
 
-function useFormState(initialValues = {}) {
+function useFormState(initialValues: FormValues = {}) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorsValidation, setErrorsValidation] = useState<
     ErrorValidation[] | null
   >([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [inputValues, setInputValues] = useState<{ [key: string]: any }>(
-    initialValues
-  );
+  const [inputValues, setInputValues] = useState<FormValues>(initialValues);
 
   // Toast for errorMessage updates
   useEffect(() => {
@@ -38,7 +37,9 @@ function useFormState(initialValues = {}) {
     const formData = new FormData(event.currentTarget);
 
     try {
+      console.log("Before running action  ");
       const response = await submitAction(formData);
+      console.log({ response });
 
       if (response.errorMessage) {
         setIsSuccess(false);
@@ -78,7 +79,6 @@ function useFormState(initialValues = {}) {
     const id = inputValues.id;
     try {
       const response = await submitAction(id, formData);
-
       if (response.errorMessage) {
         setIsSuccess(false);
         setErrorsValidation(response.errorsValidation);
@@ -124,7 +124,14 @@ function useFormState(initialValues = {}) {
   };
 
   // Method to set initial form values, useful when opening an edit form
-  const setFormValues = (values: { [key: string]: any }) => {
+
+  const setFormValues = (values: FormValues) => {
+    console.log({ values });
+    const newValues = Object.entries(values).map(([key, value]) => ({
+      [key]: value,
+    }));
+
+    console.log({ newValues });
     setInputValues(values);
   };
 

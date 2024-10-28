@@ -1,7 +1,9 @@
 "use client";
 import {
+  CreateNewTagHeading,
   DeleteSelectDataButton,
   General,
+  Href,
   SearchTableButton,
   TagList,
 } from "@/Constant/constant";
@@ -26,7 +28,7 @@ import { deleteTag, deleteTags } from "@/app/actions/tag/deleteTag";
 import EditTagModal from "./EditTagModal";
 import { editTag } from "@/app/actions/tag/editTag";
 import { getTagById } from "@/app/actions/tag/getTagById";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const TagListContainer = () => {
   const [tagList, setTagList] = useState<TagSuccessResponse[]>([]);
@@ -40,6 +42,9 @@ const TagListContainer = () => {
   );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const pathname = usePathname();
+  const router = useRouter();
+
   const fetchData = async () => {
     const response = await getTagList();
     if ("errorMessage" in response) {
@@ -52,7 +57,7 @@ const TagListContainer = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pathname]);
 
   const filteredItems = tagList
     .filter((item) => {
@@ -136,14 +141,19 @@ const TagListContainer = () => {
   };
 
   const handleEdit = async (id: number) => {
-    const response = await getTagById(id);
-    if ("errorMessage" in response) {
-      setErrorMessage(response.errorMessage);
-    } else {
-      setErrorMessage("");
-      setSelectedTag(response.data);
-      setIsEditModalOpen(true);
-    }
+    // const response = await getTagById(id);
+    // if ("errorMessage" in response) {
+    //   setErrorMessage(response.errorMessage);
+    // } else {
+    //   setErrorMessage("");
+    //   setSelectedTag(response.data);
+    //   setIsEditModalOpen(true);
+    // }
+    router.push(`/tags/${id}`);
+  };
+
+  const handleAdd = () => {
+    router.push("/tags/add-tag");
   };
 
   const handleSave = async (id: number, data: FormData) => {
@@ -151,7 +161,7 @@ const TagListContainer = () => {
       // Call your update API
       await editTag(id, data);
       await fetchData(); // Reload the tag list
-      setIsEditModalOpen(false);
+      // setIsEditModalOpen(false);
     } catch (error) {
       console.error("Failed to update tag:", error);
     }
@@ -165,7 +175,17 @@ const TagListContainer = () => {
             <Card>
               <CardBody>
                 <div className="list-product-header">
-                  <CreateNewTag reload={fetchData} />
+                  <div className="tag-buton">
+                    <Button
+                      color="transparent"
+                      tag="a"
+                      className="button-primary bg-light-primary font-primary"
+                      onClick={handleAdd}
+                    >
+                      <i className="me-2 fa fa-plus"> </i>
+                      {CreateNewTagHeading}
+                    </Button>
+                  </div>
                 </div>
                 <div className="list-product">
                   <div className="table-responsive">

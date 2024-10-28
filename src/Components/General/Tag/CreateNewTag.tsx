@@ -21,6 +21,7 @@ import {
 import DisplayError from "@/utils/DisplayError";
 import { createNewTag } from "@/app/actions/tag/createNewTag";
 import useFormState from "@/hooks/useFormState";
+import { useRouter } from "next/navigation";
 
 interface ICreateNewTagProps {
   reload: () => Promise<void>;
@@ -33,6 +34,7 @@ const CreateNewTag: React.FC<ICreateNewTagProps> = (
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
+  const router = useRouter();
   const {
     isLoading,
     errorsValidation,
@@ -67,7 +69,8 @@ const CreateNewTag: React.FC<ICreateNewTagProps> = (
           tag="a"
           className="button-primary bg-light-primary font-primary"
           href={Href}
-          onClick={toggle}
+          // onClick={toggle}
+          onClick={() => router.push("/tags/add-tag")}
         >
           <i className="me-2 fa fa-plus"> </i>
           {CreateNewTagHeading}
