@@ -21,6 +21,28 @@ export const MenuList: MenuItem[] | undefined = [
         lanClass: "lan-3",
         path: "/tags",
       },
+      {
+        title: "Tour",
+        id: 6,
+        icon: "ecommerce",
+        type: "sub",
+        active: false,
+        children: [
+          {
+            path: "/tours/add_tour",
+            title: "Add Tour",
+            type: "link",
+          },
+          { path: "/tours", title: "Tour List", type: "link" },
+          {
+            path: "/tour/categories",
+            title: "Categories",
+            type: "link",
+          },
+          { path: "/tour/services", title: "Services", type: "link" },
+          { path: "/tour/prices", title: "Prices", type: "link" },
+        ],
+      },
     ],
   },
   {

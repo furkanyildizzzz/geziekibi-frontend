@@ -2003,3 +2003,14 @@ export const DarkLayout = "Dark Layout";
 //General - Tag
 export const TagForm: string = "Tag Form";
 export const TagList: string = "Tag list";
+
+//Tour
+export const Tours: string = "Tours";
+export const TourForm: string = "Tour Form";
+export const TourList: string = "Tour list";
+
+//Tour - Category
+export const CategoryForm: string = "Category Form";
+export const CategoryList: string = "Category list";
+export const EditTourCategoryHeading: string = "Edit Category";
+export const CreateNewTourCategoryHeading: string = "Create New Category";

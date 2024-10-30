@@ -34,12 +34,15 @@ function useFormState(initialValues: FormValues = {}) {
     setErrorsValidation([]);
     setErrorMessage(null);
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData();
+    Object.entries(inputValues).forEach(([key, value]) => {
+      if (key !== "id") {
+        formData.append(key, value);
+      }
+    });
 
     try {
-      console.log("Before running action  ");
       const response = await submitAction(formData);
-      console.log({ response });
 
       if (response.errorMessage) {
         setIsSuccess(false);
@@ -75,8 +78,13 @@ function useFormState(initialValues: FormValues = {}) {
     setErrorsValidation([]);
     setErrorMessage(null);
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData();
     const id = inputValues.id;
+    Object.entries(inputValues).forEach(([key, value]) => {
+      if (key !== "id") {
+        formData.append(key, value);
+      }
+    });
     try {
       const response = await submitAction(id, formData);
       if (response.errorMessage) {
@@ -126,12 +134,10 @@ function useFormState(initialValues: FormValues = {}) {
   // Method to set initial form values, useful when opening an edit form
 
   const setFormValues = (values: FormValues) => {
-    console.log({ values });
     const newValues = Object.entries(values).map(([key, value]) => ({
       [key]: value,
     }));
 
-    console.log({ newValues });
     setInputValues(values);
   };
 
@@ -142,6 +148,7 @@ function useFormState(initialValues: FormValues = {}) {
     isSuccess,
     inputValues,
     setFormValues,
+    setInputValues,
     handleChange,
     handleSubmit,
     handleEditSubmit,
