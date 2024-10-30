@@ -39,3 +39,15 @@ export const CreateTagFormSchema = z.object({
     .trim(),
 });
 export type CreateTagSchema = z.infer<typeof CreateTagFormSchema>;
+
+export const CreateTourCategoryFormSchema = z.object({
+  name: z
+    .string({ message: "Please enter valid category name" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+  description: z.string().optional(),
+  parentid: z.number().optional(),
+});
+export type CreateTourCategorySchema = z.infer<
+  typeof CreateTourCategoryFormSchema
+>;

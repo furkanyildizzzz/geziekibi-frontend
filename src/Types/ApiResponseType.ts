@@ -25,3 +25,10 @@ export type LoginSuccessResponse = string;
 export type SignupSuccessResponse = string;
 
 export type TagSuccessResponse = { id: number; name: string };
+export type TourCategorySuccessResponse = {
+  id: number;
+  name: string;
+  description: Text;
+  parent: TourCategorySuccessResponse;
+  subCategories: TourCategorySuccessResponse[];
+};

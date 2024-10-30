@@ -9,41 +9,6 @@ export interface TagTableDataColumnType {
   name: string;
 }
 
-export interface TagTableTour {
-  images?: string;
-  name?: string;
-}
-
-export interface TagType {
-  id: number;
-  name: string;
-}
-
-export interface TagItemInterface {
-  id: number;
-  name: string;
-}
-
-export interface TagModalInterfaceType {
-  value: boolean;
-  setOpenModal: (value: boolean) => void;
-  dataId: undefined | number;
-}
-
-export interface ModalTagDetailsProp {
-  singleTag: TagItemInterface;
-}
-
-export interface ModalQuantityProp {
-  quantity: number;
-  setQuantity: (key: number) => void;
-}
-
-export interface ModalButtonsProp {
-  singleTag: TagItemInterface;
-  quantity: number;
-}
-
 export interface TagListTableDataColumnType {
   id: number;
   name: string;
