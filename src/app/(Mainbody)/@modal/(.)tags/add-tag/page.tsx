@@ -8,7 +8,7 @@ import useFormState from "@/hooks/useFormState";
 import { useRouter } from "next/navigation";
 import ModalComponent from "@/CommonComponent/Modal";
 
-export const CreateNewTagModal = () => {
+const CreateNewTagModal = () => {
   const router = useRouter();
 
   const {
