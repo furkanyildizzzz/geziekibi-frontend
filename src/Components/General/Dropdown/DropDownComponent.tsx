@@ -2,6 +2,7 @@ import { Col, Label, Row } from "reactstrap";
 import { Typeahead, TypeaheadRef } from "react-bootstrap-typeahead";
 import { useRef, useState } from "react";
 import { Option } from "react-bootstrap-typeahead/types/types";
+import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 
 interface DropDownComponentProps {
   id: string;
@@ -83,6 +84,7 @@ const DropDownComponent: React.FC<DropDownComponentProps> = ({
             onChange={handleChange}
             ref={typeaheadRef}
             onBlur={handleBlur}
+            // {...register}
           />
           {placeHolder && <p className="f-light">{placeHolder}</p>}
         </Col>

@@ -21,6 +21,7 @@
     "@fullcalendar/interaction": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
+    "@hookform/resolvers": "^3.9.1",
     "@react-google-maps/api": "^2.19.2",
     "@reactour/tour": "^3.6.1",
     "@reduxjs/toolkit": "^2.1.0",

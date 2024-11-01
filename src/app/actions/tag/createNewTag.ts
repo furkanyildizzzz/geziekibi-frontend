@@ -6,9 +6,10 @@ import {
 } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
 import mapZodErrorsToApiError from "@/utils/MapZodErrorsToApiErrors";
+import { FieldValues } from "react-hook-form";
 import { ZodError } from "zod";
 
-export const createNewTag = async (
+export const createNewTagEski = async (
   formData: FormData
 ): Promise<ApiResponse<TagSuccessResponse>> => {
   const formObject = Object.fromEntries(formData.entries()) as CreateTagSchema;
@@ -23,6 +24,18 @@ export const createNewTag = async (
       return apiErrorResponse as ApiErrorResponse; // Return the mapped error response
     }
 
+    // Handle any other errors (if necessary)
+    throw error;
+  }
+};
+
+export const createNewTag = async (
+  formData: FieldValues
+): Promise<ApiResponse<TagSuccessResponse>> => {
+  try {
+    return await apiRequest<TagSuccessResponse>("tag/", "POST", formData);
+  } catch (error) {
+    console.log({ error });
     // Handle any other errors (if necessary)
     throw error;
   }

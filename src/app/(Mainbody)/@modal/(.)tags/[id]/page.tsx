@@ -1,87 +1,101 @@
 "use client";
 import { editTag } from "@/app/actions/tag/editTag";
 import { getTagById } from "@/app/actions/tag/getTagById";
+import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
 import { Cancel, EditTagHeading, TagName, Edit } from "@/Constant/constant";
 import useFormState from "@/hooks/useFormState";
-import { TagSuccessResponse } from "@/Types/ApiResponseType";
+import { ErrorValidation, TagSuccessResponse } from "@/Types/ApiResponseType";
 import DisplayError from "@/utils/DisplayError";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
-  const router = useRouter();
-
-  const [tag, setTag] = useState<TagSuccessResponse>();
+  const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
+    []
+  );
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
-    isLoading,
-    errorMessage,
-    errorsValidation,
-    isSuccess,
-    inputValues,
-    setFormValues,
-    handleChange,
-    handleEditSubmit,
-    resetFormState,
-  } = useFormState(tag);
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors, isLoading },
+  } = useForm<TagSuccessResponse>({
+    resolver: zodResolver(CreateTagFormSchema),
+  });
+
+  const router = useRouter();
 
   const fetchTagData = async () => {
     const response = await getTagById(Number(id));
-    console.log({ response });
     if ("data" in response) {
       console.log({ data: response.data });
-      setTag({ ...response.data });
-      setFormValues({ ...response.data });
-      console.log({ tag });
-      console.log({ inputValues });
+      reset({ ...response.data });
     }
   };
 
   useEffect(() => {
     fetchTagData();
-    if (isSuccess) {
-      resetFormState();
-      router.back();
-    }
-  }, [isSuccess]);
+  }, []);
 
-  const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
-    await handleEditSubmit(event, editTag);
+  const onsubmit = async (data: CreateTagSchema) => {
+    console.log({ data });
+    const response = await editTag(Number(id), data);
+    console.log({ response });
+
+    if ("errorType" in response) {
+      if (response.errorType == "Validation")
+        setErrorsValidation(response.errorsValidation!);
+      else setErrorMessage(response.errorMessage);
+    } else {
+      router.back(); // Close modal by navigating back
+    }
+    return;
   };
 
   return (
-    <ModalComponent title={EditTagHeading + ` "${tag?.name}"`}>
+    <ModalComponent title={EditTagHeading + ` "${getValues("name")}"`}>
       <Col xs="12">
-        <Form className="theme-form" onSubmit={formSubmitHandle}>
-          <DisplayError errorMessage={errorMessage} />
+        <DisplayError errorMessage={errorMessage} />
+        <Form
+          className="theme-form"
+          onSubmit={handleSubmit((data) => onsubmit(data as CreateTagSchema))}
+        >
           <FormGroup>
-            <Input
-              name="id"
-              className="m-0"
+            <input
+              className="m-0 form-control"
               id="id"
-              type="number"
-              required
-              value={tag?.id}
               hidden
+              required
+              {...register("id")}
             />
-            <DisplayError errorsValidation={errorsValidation} keyProp="id" />{" "}
+            <DisplayError
+              errors={errors}
+              errorsValidation={errorsValidation}
+              keyProp="id"
+            />{" "}
           </FormGroup>
           <FormGroup>
             <Label for="name" check>
               {TagName} <span className="txt-danger"> *</span>
             </Label>
-            <Input
-              name="name"
-              className="m-0"
-              id="name"
-              value={inputValues.name}
+            <input
               type="text"
-              onChange={handleChange}
+              className="m-0 form-control"
+              id="name"
               required
+              {...register("name")}
             />
-            <DisplayError errorsValidation={errorsValidation} keyProp="name" />{" "}
+            <DisplayError
+              errors={errors}
+              errorsValidation={errorsValidation}
+              keyProp="name"
+            />
           </FormGroup>
           <Button
             color="light"

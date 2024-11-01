@@ -10,9 +10,28 @@ import {
 } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
 import mapZodErrorsToApiError from "@/utils/MapZodErrorsToApiErrors";
+import { FieldValues } from "react-hook-form";
 import { ZodError, z } from "zod";
 
 export const editTourCategory = async (
+  id: number,
+  formData: FieldValues
+): Promise<ApiResponse<TagSuccessResponse>> => {
+  try {
+    const data = CreateTourCategoryFormSchema.parse(formData);
+    return await apiRequest<TourCategorySuccessResponse>(
+      "tour/category/" + id,
+      "POST",
+      data
+    );
+  } catch (error) {
+    console.log({ error });
+    // Handle any other errors (if necessary)
+    throw error;
+  }
+};
+
+export const editTourCategoryEski = async (
   id: number,
   formData: FormData
 ): Promise<ApiResponse<TagSuccessResponse>> => {
