@@ -7,6 +7,7 @@ import { createNewTag } from "@/app/actions/tag/createNewTag";
 import useFormState from "@/hooks/useFormState";
 import { useRouter } from "next/navigation";
 import ModalComponent from "@/CommonComponent/Modal";
+
 const CreateNewTagModal = () => {
   const router = useRouter();
 
