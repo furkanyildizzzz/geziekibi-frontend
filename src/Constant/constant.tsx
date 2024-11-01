@@ -2000,15 +2000,26 @@ export const Configuration = "Configuration";
 export const LightLayout = "Light layout";
 export const DarkLayout = "Dark Layout";
 
-//General - Tag
+//General
+export const DragYourImageHere = "Drag your image here, or";
+
+//Tag
 export const TagForm: string = "Tag Form";
 export const TagList: string = "Tag list";
 
 //Tour
+export const TourTitle: string = "Tour Title";
+export const TourSpot: string = "Tour Spot";
 export const Tours: string = "Tours";
 export const TourForm: string = "Tour Form";
 export const TourList: string = "Tour list";
-
+export const AddTour: string = "Add Tour";
+export const TourImage: string = "Tour Image";
+export const AddTourGalleryImages: string = "Add Product Tour Images";
+export const TourGalery: string = "Tour Gallery";
+export const TypesOfTourDiscountConstant: string = "Types of tour discount";
+export const ChooseServices: string =
+  "Which of the following services do you want to include in tour?";
 //Tour - Category
 export const CategoryForm: string = "Category Form";
 export const CategoryList: string = "Category list";

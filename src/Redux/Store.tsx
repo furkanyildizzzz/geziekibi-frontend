@@ -5,6 +5,7 @@ import LayoutSlice from "./Reducers/LayoutSlice";
 import ThemeCustomizerSlice from "./Reducers/ThemeCustomizerSlice";
 import ProductSlice from "./Reducers/ProductSlice";
 import FilterSlice from "./Reducers/FilterSlice";
+import AddProductSlice from "./Reducers/AddProductSlice";
 
 const Store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const Store = configureStore({
     filterData: FilterSlice,
     cartData: CartSlice,
     themeCustomizer: ThemeCustomizerSlice,
+    addProduct: AddProductSlice,
   },
 });
 

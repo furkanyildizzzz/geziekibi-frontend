@@ -29,7 +29,7 @@ export const MenuList: MenuItem[] | undefined = [
         active: false,
         children: [
           {
-            path: "/tours/add_tour",
+            path: "/tour/add_tour",
             title: "Add Tour",
             type: "link",
           },
