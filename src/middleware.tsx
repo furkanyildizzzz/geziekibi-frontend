@@ -27,7 +27,7 @@ export function middleware(request: NextRequest) {
 
   // Redirect to the main page if already authenticated and on an auth page
   if (!isExpired && path.startsWith("/auth")) {
-    return NextResponse.redirect(new URL("/tour/categories", request.url));
+    return NextResponse.redirect(new URL("/tour/add_tour", request.url));
   }
 
   return NextResponse.next();

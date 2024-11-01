@@ -16,10 +16,8 @@ const TourGallery = () => {
 
   const updateFiles = (incomingFiles: ExtFile[]) => {
     setFiles(incomingFiles);
-    console.log({ name: "gallery", value: incomingFiles[0].file?.name });
-    dispatch(
-      setFormValue({ name: "gallery", value: incomingFiles[0].file?.name })
-    );
+    console.log({ name: "gallery", value: incomingFiles });
+    dispatch(setFormValue({ name: "gallery", value: incomingFiles }));
   };
 
   const removeFile = (id: string | number | undefined) => {

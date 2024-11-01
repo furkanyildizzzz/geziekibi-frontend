@@ -14,9 +14,7 @@ const TourTwo = () => {
 
   const updateFiles = (incomingFiles: ExtFile[]) => {
     setFiles(incomingFiles);
-    dispatch(
-      setFormValue({ name: "image", value: incomingFiles[0].file?.name })
-    );
+    dispatch(setFormValue({ name: "image", value: incomingFiles[0].file }));
   };
 
   const removeFile = (id: string | number | undefined) => {

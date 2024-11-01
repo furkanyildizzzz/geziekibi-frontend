@@ -93,11 +93,11 @@ const TabTwo = () => {
                   <Col xs="12">
                     <Input
                       type="text"
-                      name="additionalTag"
+                      name="tags"
                       onChange={(e) =>
                         dispatch(
                           setFormValue({
-                            name: "additionalTag",
+                            name: "tags",
                             value: e.target.value,
                           })
                         )

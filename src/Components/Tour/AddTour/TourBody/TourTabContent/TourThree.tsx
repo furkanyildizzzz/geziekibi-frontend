@@ -5,7 +5,7 @@ import CreateNewCategory from "./CreateNewCategory";
 import SelectFour from "./SelectFour";
 import SelectFive from "./SelectFive";
 
-const ProductThree = () => {
+const TourThree = () => {
   return (
     <div className="sidebar-body">
       <Form>
@@ -14,7 +14,6 @@ const ProductThree = () => {
             <Row className="g-3">
               <SelectOne />
               <SelectTwo />
-              <CreateNewCategory />
             </Row>
           </Col>
           <Col xs="12">
@@ -29,4 +28,4 @@ const ProductThree = () => {
   );
 };
 
-export default ProductThree;
+export default TourThree;
