@@ -12,18 +12,23 @@ export function middleware(request: NextRequest) {
   try {
     decodedToken = jwtDecode(token);
   } catch (error) {
-    // Handle decoding errors (invalid token)
+    // Invalid or missing token
     decodedToken = null;
   }
 
   const currentDate = new Date();
-
   const isExpired =
-    decodedToken && decodedToken.exp! * 1000 < currentDate.getTime();
-  if (path.split("/")[1] !== "auth" && isExpired)
+    !decodedToken || decodedToken.exp! * 1000 < currentDate.getTime();
+
+  // Redirect to login if token is missing or expired and not already on an auth page
+  if (isExpired && !path.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
-  if (path.split("/")[1] === "auth" && !isExpired)
-    return NextResponse.redirect(new URL(`/tour/categories`, request.url));
+  }
+
+  // Redirect to the main page if already authenticated and on an auth page
+  if (!isExpired && path.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/tour/categories", request.url));
+  }
 
   return NextResponse.next();
 }
