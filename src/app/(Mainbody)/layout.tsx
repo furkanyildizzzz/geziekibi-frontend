@@ -58,7 +58,7 @@ export default function RootLayout({
           <Footer />
         </div>
       </div>
-      <ThemeCustomizer />
+      {/* <ThemeCustomizer /> */}
       <ToastContainer />
       <TapTop />
     </>

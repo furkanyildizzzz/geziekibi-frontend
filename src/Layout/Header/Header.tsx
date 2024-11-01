@@ -13,20 +13,27 @@ const Header = () => {
     window.addEventListener("resize", () => {
       if (window.innerWidth < 992) {
         document.getElementById("page-headers")?.classList.add("close_icon");
-        document.getElementById("sidebar-wrappers")?.classList.add("close_icon");
+        document
+          .getElementById("sidebar-wrappers")
+          ?.classList.add("close_icon");
       } else {
         document.getElementById("page-headers")?.classList.remove("close_icon");
-        document.getElementById("sidebar-wrappers")?.classList.remove("close_icon");
+        document
+          .getElementById("sidebar-wrappers")
+          ?.classList.remove("close_icon");
       }
     });
   }, []);
 
   return (
-    <div className={`page-header ${toggleSidebar ? "close_icon" : ""}`} id="page-headers">
+    <div
+      className={`page-header ${toggleSidebar ? "close_icon" : ""}`}
+      id="page-headers"
+    >
       <Row className="header-wrapper m-0">
         <MobileView />
-        <HeaderMenu />
-        <RightHeaderSection/>
+        {/* <HeaderMenu /> */}
+        <RightHeaderSection />
       </Row>
     </div>
   );
