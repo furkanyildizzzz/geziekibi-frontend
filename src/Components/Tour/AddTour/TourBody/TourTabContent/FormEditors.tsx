@@ -1,8 +1,11 @@
+"use client";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
-import { useCallback } from "react";
+// import { useCallback } from "react";
 import SimpleMdeReact from "react-simplemde-editor";
 import { Col } from "reactstrap";
+import RichTextEditor from "@/Components/Editor/RichTextEditor";
+import { useCallback } from "react";
 
 type ImageUploadType = {
   (
@@ -32,13 +35,15 @@ const FormEditors = () => {
   const dispatch = useAppDispatch();
 
   const handleChange = useCallback((value: string) => {
-    // dispatch(setFormValue({ name: "title", value: value }));
-    setFormValue({ name: "title", value: value });
+    console.log({ value });
+    dispatch(setFormValue({ name: "body", value: value }));
   }, []);
   return (
     <Col xs="12">
       <div id="editor2">
-        <SimpleMdeReact
+        <RichTextEditor onChange={handleChange} />
+
+        {/* <SimpleMdeReact
           id="body"
           placeholder={mdeEditorText}
           onChange={(value) => handleChange(value)}
@@ -51,7 +56,7 @@ const FormEditors = () => {
             uploadImage: true,
             imageUploadFunction: imageUpload,
           }}
-        />
+        /> */}
       </div>
       <p className="mt-1 f-light detail-note">
         {"Improve product visibility by adding a compelling description."}

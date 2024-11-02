@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import "../../node_modules/@mantine/tiptap/styles.css";
 import "../../src/index.scss";
+import type { Metadata } from "next";
 import NoSsr from "@/utils/NoSsr";
 import { Outfit, Roboto } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
@@ -61,6 +62,11 @@ export default async function RootLayout({
           <script
             async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0"
+          ></script>
+          <script type="text/javascript" src="/assets/js/rte.js"></script>
+          <script
+            type="text/javascript"
+            src="/assets/js/plugins/all_plugins.js"
           ></script>
         </head>
         <body
