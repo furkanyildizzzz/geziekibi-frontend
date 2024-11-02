@@ -25,6 +25,7 @@ const TourOne = () => {
                   type="text"
                   required
                   name="title"
+                  value={formValue.title}
                   onChange={(e) =>
                     dispatch(
                       setFormValue({ name: "title", value: e.target.value })
@@ -46,6 +47,7 @@ const TourOne = () => {
                   className={formValue.spot !== "" ? "valid" : "is-invalid"}
                   type="textarea"
                   required
+                  value={formValue.spot}
                   name="spot"
                   onChange={(e) =>
                     dispatch(

@@ -1,26 +1,68 @@
-import { PublishStatus } from "@/Constant/constant";
+import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
+import {
+  ChooseTheStatus,
+  Drafts,
+  Publish,
+  PublishStatus,
+  Unpublish,
+} from "@/Constant/constant";
 import { useAppDispatch } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Col, Input, Label, Row } from "reactstrap";
 
-const SelectFour = () => {
-  const dispatch = useAppDispatch()
+export const DropDownData = [
+  { id: "PUBLISH", name: Publish, header: true },
+  { id: "DRAFT", name: Drafts },
+  { id: "UNPUBLISH", name: Unpublish },
+];
 
-  const handleStatus = (select:string) => {
-    dispatch(setFormValue({name:"status",value:select}))
-  }
+const SelectFour = () => {
+  const dispatch = useAppDispatch();
+
+  const handleStatus = (select: string) => {
+    dispatch(setFormValue({ name: "status", value: select }));
+  };
+
+  const handlePublishStatusChanged = (id: string) => {
+    dispatch(setFormValue({ name: "status", value: id }));
+  };
 
   return (
     <Col sm="6">
       <Row>
         <Col xs="12">
-          <Label for="validationServer01" check>{PublishStatus}<span className="txt-danger"> *</span></Label>
-          <Input type="select" name="status" onChange={(e)=>handleStatus(e.target.value)}>
-            <option>Publish</option>
-            <option>Drafts</option>
-            <option>Unpublish</option>
-          </Input>
-          <p className="f-light">Choose the status</p>
+          <Label for="validationServer01" check>
+            {PublishStatus}
+            <span className="txt-danger"> *</span>
+          </Label>
+
+          <DropDownComponent
+            id="id"
+            title={""}
+            isRequired={false}
+            labelKey="name"
+            multiple={false}
+            placeHolder=""
+            onChange={handlePublishStatusChanged}
+            options={DropDownData.map((item) => {
+              return {
+                name: item.name,
+                id: item.id.toString(),
+              };
+            })}
+            selectedOption={undefined}
+          />
+          {/* 
+          <Input
+            type="select"
+            name="status"
+            onChange={(e) => handleStatus(e.target.value)}
+          >
+            <option>{Publish}</option>
+            <option>{Drafts}</option>
+            <option>{Unpublish}</option>
+          </Input> */}
+          <p className="f-light">{ChooseTheStatus}</p>
         </Col>
       </Row>
     </Col>

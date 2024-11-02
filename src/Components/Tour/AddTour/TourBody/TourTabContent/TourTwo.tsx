@@ -1,7 +1,7 @@
 import TourGallery from "./TourGallery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import Link from "next/link";
 import { DragYourImageHere, Href, TourImage } from "@/Constant/constant";
 import { Form } from "reactstrap";
@@ -9,6 +9,7 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import SVG from "@/CommonComponent/SVG/Svg";
 
 const TourTwo = () => {
+  const { formValue } = useAppSelector((state) => state.addProduct);
   const [files, setFiles] = useState<ExtFile[]>([]);
   const dispatch = useAppDispatch();
 
@@ -20,6 +21,10 @@ const TourTwo = () => {
   const removeFile = (id: string | number | undefined) => {
     setFiles(files.filter((x: ExtFile) => x.id !== id));
   };
+
+  useEffect(() => {
+    setFiles(formValue.image);
+  }, []);
 
   return (
     <div className="sidebar-body">

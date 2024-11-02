@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "../../../public/assets/css/rte_theme_default.css";
+import { useAppSelector } from "@/Redux/Hooks";
 // Extend window interface to recognize `RichTextEditor`
 declare global {
   interface Window {
@@ -73,6 +74,8 @@ const uploadImageToServer = async (base64Image: string) => {
 };
 
 const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
+  const { formValue } = useAppSelector((state) => state.addProduct);
+
   const refDiv = useRef<HTMLDivElement | null>(null);
   const rteRef = useRef<any>(null);
 
@@ -117,7 +120,7 @@ const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
 
         if (RichTextEditor && refDiv.current) {
           rteRef.current = new RichTextEditor(refDiv.current, null);
-          rteRef.current.setHTMLCode("Hello World!");
+          rteRef.current.setHTMLCode(formValue.body);
 
           // Attach the onChange listener if available
           rteRef.current.attachEvent("change", handleContentChange);

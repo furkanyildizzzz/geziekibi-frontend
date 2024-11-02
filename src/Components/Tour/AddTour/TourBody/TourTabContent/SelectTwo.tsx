@@ -1,6 +1,11 @@
 import { Button, ButtonToolbar, Col, Label, Row } from "reactstrap";
 import { Typeahead, TypeaheadRef } from "react-bootstrap-typeahead";
-import { AddTag } from "@/Constant/constant";
+import {
+  AddTag,
+  ChooseATag,
+  Tours,
+  ToursCanBeTagged,
+} from "@/Constant/constant";
 import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
@@ -73,16 +78,16 @@ const SelectTwo = () => {
           /> */}
 
           <Typeahead
-            defaultSelected={MultiWithHeaderData.slice(0, 4)}
+            // defaultSelected={MultiWithHeaderData.slice(0, 4)}
             id="public-methods-example"
             labelKey="name"
             multiple
             options={tags}
-            placeholder="Choose a state..."
+            placeholder={ChooseATag}
             onChange={handleChange}
             ref={ref}
           />
-          <p className="f-light">Products can be tagged</p>
+          <p className="f-light">{ToursCanBeTagged} </p>
 
           <ButtonToolbar className="mt-3">
             <Button onClick={() => ref.current?.clear()}>Clear</Button>

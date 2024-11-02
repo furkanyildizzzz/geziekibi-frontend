@@ -1,12 +1,12 @@
 import { Col, Label, Row } from "reactstrap";
 import { Typeahead, TypeaheadRef } from "react-bootstrap-typeahead";
-import { useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { Option } from "react-bootstrap-typeahead/types/types";
 import { UseFormRegister, UseFormRegisterReturn } from "react-hook-form";
 
 interface DropDownComponentProps {
   id: string;
-  title: string;
+  title: ReactNode;
   labelKey: string;
   placeHolder: string | undefined;
   options: { name: string; id: string }[];

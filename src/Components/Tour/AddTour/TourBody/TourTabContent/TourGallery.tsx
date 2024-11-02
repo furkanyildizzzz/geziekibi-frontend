@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { Form } from "reactstrap";
 import {
   AddTourGalleryImages,
@@ -11,6 +11,8 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import SVG from "@/CommonComponent/SVG/Svg";
 
 const TourGallery = () => {
+  const { formValue } = useAppSelector((state) => state.addProduct);
+
   const [files, setFiles] = useState<ExtFile[]>([]);
   const dispatch = useAppDispatch();
 
@@ -24,6 +26,9 @@ const TourGallery = () => {
     setFiles(files.filter((x: ExtFile) => x.id !== id));
   };
 
+  useEffect(() => {
+    setFiles(formValue.gallery);
+  }, []);
   return (
     <div className="product-upload">
       <p>

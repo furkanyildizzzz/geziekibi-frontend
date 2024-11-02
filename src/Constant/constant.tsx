@@ -2002,15 +2002,21 @@ export const DarkLayout = "Dark Layout";
 
 //General
 export const DragYourImageHere = "Drag your image here, or";
+export const ChooseTheStatus = "Choose the status";
+export const Publish = "Publish";
+export const Drafts = "Drafts";
+export const Unpublish = "Unpublish";
 
 //Tag
 export const TagForm: string = "Tag Form";
 export const TagList: string = "Tag list";
+export const ChooseATag: string = "Choose a tag...";
 
 //Tour
 export const TourTitle: string = "Tour Title";
 export const TourSpot: string = "Tour Spot";
 export const Tours: string = "Tours";
+export const ToursCanBeTagged: string = "Tours can be tagged";
 export const TourForm: string = "Tour Form";
 export const TourList: string = "Tour list";
 export const AddTour: string = "Add Tour";
