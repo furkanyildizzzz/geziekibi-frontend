@@ -53,43 +53,41 @@ const DropDownComponent: React.FC<DropDownComponentProps> = ({
   };
 
   return (
-    <Col sm="6">
-      <Row className="g-2 product-tag">
-        <Col xs="12">
-          <Label className="d-block m-0" for="validationServer01" check>
-            {title}
-            {isRequired && <span className="txt-danger"> *</span>}
-          </Label>
-        </Col>
-        <Col xs="12">
-          <i
-            className="fa fa-angle-down"
-            style={{
-              textAlign: "center",
-              width: "12px",
-              lineHeight: "10px",
-              zIndex: 1,
-              position: "absolute",
-              top: "50%",
-              right: "2%",
-            }}
-          ></i>
-          <Typeahead
-            id={id}
-            inputProps={{ id, name: id }}
-            labelKey={labelKey}
-            multiple={multiple}
-            options={options}
-            selected={selectedState || selectedOption}
-            onChange={handleChange}
-            ref={typeaheadRef}
-            onBlur={handleBlur}
-            // {...register}
-          />
-          {placeHolder && <p className="f-light">{placeHolder}</p>}
-        </Col>
-      </Row>
-    </Col>
+    <Row className="g-2 product-tag">
+      <Col xs="12">
+        <Label className="d-block m-0" for="validationServer01" check>
+          {title}
+          {isRequired && <span className="txt-danger"> *</span>}
+        </Label>
+      </Col>
+      <Col xs="12">
+        <i
+          className="fa fa-angle-down"
+          style={{
+            textAlign: "center",
+            width: "12px",
+            lineHeight: "10px",
+            zIndex: 1,
+            position: "absolute",
+            top: "50%",
+            right: "2%",
+          }}
+        ></i>
+        <Typeahead
+          id={id}
+          inputProps={{ id, name: id }}
+          labelKey={labelKey}
+          multiple={multiple}
+          options={options}
+          selected={selectedState || selectedOption}
+          onChange={handleChange}
+          ref={typeaheadRef}
+          onBlur={handleBlur}
+          // {...register}
+        />
+        {placeHolder && <p className="f-light">{placeHolder}</p>}
+      </Col>
+    </Row>
   );
 };
 

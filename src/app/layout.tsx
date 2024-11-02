@@ -1,4 +1,3 @@
-import "../../node_modules/@mantine/tiptap/styles.css";
 import "../../src/index.scss";
 import type { Metadata } from "next";
 import NoSsr from "@/utils/NoSsr";

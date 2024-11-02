@@ -1,10 +1,16 @@
 import { Button, ButtonToolbar, Col, Label, Row } from "reactstrap";
 import { Typeahead, TypeaheadRef } from "react-bootstrap-typeahead";
 import { AddTag } from "@/Constant/constant";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Option } from "react-bootstrap-typeahead/types/types";
+import {
+  ApiResponse,
+  ErrorValidation,
+  TagSuccessResponse,
+} from "@/Types/ApiResponseType";
+import { getTagList } from "@/app/actions/tag/getTagList";
 
 export const MultiWithHeaderData = [
   { name: "NBA Teams", header: true },
@@ -22,6 +28,12 @@ export const MultiWithHeaderData = [
 ];
 
 const SelectTwo = () => {
+  const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
+    []
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+  const [tags, setTags] = useState<TagSuccessResponse[]>([]);
+
   const ref = useRef<TypeaheadRef>(null);
 
   const dispatch = useAppDispatch();
@@ -30,6 +42,19 @@ const SelectTwo = () => {
     console.log({ selected });
     dispatch(setFormValue({ name: "tags", value: selected }));
   };
+
+  const fetchTagList = async () => {
+    const response: ApiResponse<TagSuccessResponse[]> = await getTagList();
+    if ("data" in response) {
+      console.log({ response });
+      setTags([...response.data]);
+    }
+  };
+
+  useEffect(() => {
+    fetchTagList();
+  }, []);
+
   return (
     <Col sm="6">
       <Row className="g-2 product-tag">
@@ -52,7 +77,7 @@ const SelectTwo = () => {
             id="public-methods-example"
             labelKey="name"
             multiple
-            options={MultiWithHeaderData}
+            options={tags}
             placeholder="Choose a state..."
             onChange={handleChange}
             ref={ref}
