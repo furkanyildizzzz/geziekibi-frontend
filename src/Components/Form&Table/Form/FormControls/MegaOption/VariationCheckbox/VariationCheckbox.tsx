@@ -1,6 +1,16 @@
-import { Card, CardBody, Col, FormGroup, Input, Label, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+} from "reactstrap";
 import {
   ChooseServices,
+  CreateNewServiceHeading,
   ExcludedServices,
   IncludedServices,
 } from "@/Constant/constant";
@@ -11,11 +21,16 @@ import ThreeChoiceSwitch from "./ThreeChoiceSwitch";
 import VariationCheckboxUpgrade from "./VariationCheckboxUpgrade";
 import { useAppDispatch } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
+import { usePathname, useRouter } from "next/navigation";
 
 const VariationCheckbox = () => {
   const [services, setServices] = useState<ServiceSuccessResponse[]>([]);
   const [service, setService] = useState<ServiceSuccessResponse>();
+  const [refreshKey, setRefreshKey] = useState(0); // This will be updated to trigger rerender
+
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const fetchServiceList = async () => {
     const response: ApiResponse<ServiceSuccessResponse[]> =
@@ -29,25 +44,40 @@ const VariationCheckbox = () => {
     }
   };
 
+  const handleModalClosed = async () => {
+    const response: ApiResponse<ServiceSuccessResponse[]> =
+      await getServiceList();
+    if ("data" in response) {
+      setServices((prevServices) => {
+        // Create a map of previous services by ID
+        const prevServicesMap: Record<number, ServiceSuccessResponse> =
+          prevServices.reduce((map, service) => {
+            map[service.id] = service;
+            return map;
+          }, {} as Record<number, ServiceSuccessResponse>);
+
+        // Merge new data with old data, preserving specific properties
+        const updatedServices = response.data.map((newService) => {
+          const prevService = prevServicesMap[newService.id];
+          if (prevService) {
+            return {
+              ...newService,
+              selected: prevService.selected, // Preserve `selected` from the previous item
+            };
+          }
+          return newService;
+        });
+
+        return updatedServices;
+      });
+    }
+  };
+
   const handleServiceChange = (
     selected: "N" | "I" | "Y",
     id: number,
     name: string
   ) => {
-    // setServices((prevServices) => {
-    //   // Check if the service already exists in the array
-    //   const serviceExists = prevServices.some((service) => service.id === id);
-    //   // If the service exists, update the selection status, otherwise add it
-    //   const updatedServices = serviceExists
-    //     ? prevServices.map((service) =>
-    //         service.id === id
-    //           ? ({ ...service, selected } as ServiceSuccessResponse)
-    //           : service
-    //       )
-    //     : [...prevServices, { id, name, selected } as ServiceSuccessResponse];
-    //   return updatedServices;
-    // });
-    console.log({ service });
     setService((prev) => {
       return { id: Number(id), name, selected } as ServiceSuccessResponse;
     });
@@ -58,37 +88,54 @@ const VariationCheckbox = () => {
   }, []);
 
   useEffect(() => {
+    // Check if we are no longer on the modal path to refresh the component
+    console.log({ pathname });
+    if (pathname !== "/services/add-service") {
+      setRefreshKey((prev) => prev + 1);
+      handleModalClosed();
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     if (!service) return;
-    // dispatch(setFormValue({ name: "services", value: services }));
-    console.log("Service Selected Value:", service.selected);
+
     setServices((prevServices) => {
       // If the service exists, update the selection status, otherwise add it
       const updatedServices = prevServices.map((item) => {
         const isMatch = item.id === service.id;
-        console.log(`Checking ${item.id} === ${service.id}: ${isMatch}`);
         return isMatch ? { ...item, selected: service.selected } : item;
       });
-      console.log("Prev services:", prevServices);
-      console.log("Updated services:", updatedServices);
       dispatch(setFormValue({ name: "services", value: updatedServices }));
 
       return [...updatedServices];
     });
   }, [service]);
 
+  const handleAdd = () => {
+    router.push("/services/add-service");
+  };
   return (
     <Col sm="12">
       <Card>
         <CardBody>
           <Row className="g-1">
             <Col xl="12" md="12">
+              <div
+                key={refreshKey}
+                className="tag-buton"
+                style={{ display: "flex", justifyContent: "end" }}
+              >
+                <Button
+                  color="transparent"
+                  tag="a"
+                  className="button-primary bg-light-primary font-primary"
+                  onClick={handleAdd}
+                >
+                  <i className="me-2 fa fa-plus"> </i>
+                  {CreateNewServiceHeading}
+                </Button>
+              </div>
               <h6 className="sub-title">{ChooseServices}</h6>
-              <ThreeChoiceSwitch
-                key={-1}
-                id={-1}
-                name=""
-                onSelectChange={null}
-              ></ThreeChoiceSwitch>
               <div
                 className="card-wrapper border rounded-3 h-100 checkbox-checked"
                 style={{

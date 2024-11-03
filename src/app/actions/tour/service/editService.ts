@@ -10,7 +10,7 @@ export const editService = async (
   try {
     const data = CreateTourCategoryFormSchema.parse(formData);
     return await apiRequest<ServiceSuccessResponse>(
-      "service/" + id,
+      "tour/service/" + id,
       "POST",
       data
     );

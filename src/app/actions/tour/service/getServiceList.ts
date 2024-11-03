@@ -5,7 +5,7 @@ export const getServiceList = async (): Promise<
   ApiResponse<ServiceSuccessResponse[]>
 > => {
   const response = await apiRequest<ServiceSuccessResponse[]>(
-    "service/",
+    "tour/service/",
     "GET"
   );
 

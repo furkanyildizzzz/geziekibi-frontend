@@ -5,7 +5,7 @@ export const getServiceById = async (
   id: number
 ): Promise<ApiResponse<ServiceSuccessResponse>> => {
   const response = await apiRequest<ServiceSuccessResponse>(
-    "service/" + id,
+    "tour/service/" + id,
     "GET"
   );
 

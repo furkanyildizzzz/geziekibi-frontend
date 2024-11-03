@@ -1,4 +1,4 @@
-import TagListContainer from "@/Components/General/Tag/TagListContainer";
+import TagListContainer from "@/Components/Tag/TagListContainer";
 import { Metadata } from "next";
 import Head from "next/head";
 import React from "react";

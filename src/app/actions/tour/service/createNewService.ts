@@ -8,7 +8,11 @@ export const createNewService = async (
 ): Promise<ApiResponse<ServiceSuccessResponse>> => {
   try {
     const data = CreateServiceFormSchema.parse(formData);
-    return await apiRequest<ServiceSuccessResponse>("service/", "POST", data);
+    return await apiRequest<ServiceSuccessResponse>(
+      "tour/service/",
+      "POST",
+      data
+    );
   } catch (error) {
     console.log({ error });
     // Handle any other errors (if necessary)

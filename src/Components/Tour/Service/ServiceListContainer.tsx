@@ -12,6 +12,7 @@ import {
   ServiceList,
   Service,
   CreateNewServiceHeading,
+  DeleteSelectDataButton,
 } from "@/Constant/constant";
 import {
   ServiceSuccessResponse,
@@ -32,7 +33,10 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import { deleteService } from "@/app/actions/tour/service/deleteService";
+import {
+  deleteService,
+  deleteServices,
+} from "@/app/actions/tour/service/deleteService";
 
 const ServiceListContainer = () => {
   const [serviceList, setServiceList] = useState<ServiceSuccessResponse[]>([]);
@@ -94,6 +98,10 @@ const ServiceListContainer = () => {
     router.push("/services/add-service");
   };
 
+  const handleRowSelected = useCallback((state: any) => {
+    setSelectedRows(state.selectedRows);
+  }, []);
+
   const handleDelete = async (name: string, id: number) => {
     try {
       setIsLoading(true);
@@ -104,6 +112,30 @@ const ServiceListContainer = () => {
       }
     } catch (error) {
       setErrorMessage("Failed to delete services. Please try again.");
+    } finally {
+      setIsLoading(false); // Reset loading state
+    }
+  };
+
+  const handleMultipleDelete = async () => {
+    try {
+      setIsLoading(true);
+
+      if (
+        window.confirm(
+          `Are you sure you want to delete:\r ${selectedRows.map(
+            (r: ServiceSuccessResponse) => r.name
+          )} ?`
+        )
+      ) {
+        setToggleCleared(!toggleCleared);
+        const ids = selectedRows.map((item: ServiceSuccessResponse) => item.id);
+        await deleteServices(ids);
+        await fetchData();
+        setSelectedRows("");
+      }
+    } catch (error) {
+      setErrorMessage("Failed to delete tags. Please try again.");
     } finally {
       setIsLoading(false); // Reset loading state
     }
@@ -136,6 +168,15 @@ const ServiceListContainer = () => {
                 </div>
                 <div className="list-product">
                   <div className="table-responsive">
+                    {selectedRows.length !== 0 && (
+                      <Button
+                        color="secondary"
+                        onClick={handleMultipleDelete}
+                        className="mb-3"
+                      >
+                        {DeleteSelectDataButton}
+                      </Button>
+                    )}
                     <DataTable
                       className="custom-scrollbar"
                       data={filteredItems}
@@ -145,6 +186,9 @@ const ServiceListContainer = () => {
                       )}
                       striped
                       highlightOnHover
+                      selectableRows
+                      onSelectedRowsChange={handleRowSelected}
+                      clearSelectedRows={toggleCleared}
                       pagination
                       subHeader
                       progressPending={isLoading}
