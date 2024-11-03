@@ -5,7 +5,6 @@ import {
 import {
   ApiErrorResponse,
   ApiResponse,
-  TagSuccessResponse,
   TourCategorySuccessResponse,
 } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
@@ -16,7 +15,7 @@ import { ZodError, z } from "zod";
 export const editTourCategory = async (
   id: number,
   formData: FieldValues
-): Promise<ApiResponse<TagSuccessResponse>> => {
+): Promise<ApiResponse<TourCategorySuccessResponse>> => {
   try {
     const data = CreateTourCategoryFormSchema.parse(formData);
     return await apiRequest<TourCategorySuccessResponse>(
@@ -34,7 +33,7 @@ export const editTourCategory = async (
 export const editTourCategoryEski = async (
   id: number,
   formData: FormData
-): Promise<ApiResponse<TagSuccessResponse>> => {
+): Promise<ApiResponse<TourCategorySuccessResponse>> => {
   const formObject = Object.fromEntries(formData.entries());
   const formattedObject: CreateTourCategorySchema = {
     name: formObject.name as string,

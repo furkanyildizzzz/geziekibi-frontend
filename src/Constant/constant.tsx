@@ -2003,9 +2003,9 @@ export const DarkLayout = "Dark Layout";
 //General
 export const DragYourImageHere = "Drag your image here, or";
 export const ChooseTheStatus = "Choose the status";
-export const Publish = "Publish";
-export const Drafts = "Drafts";
-export const Unpublish = "Unpublish";
+export const No = "No";
+export const Yes = "Yes";
+export const Inherit = "Inherit";
 
 //Tag
 export const TagForm: string = "Tag Form";
@@ -2026,6 +2026,11 @@ export const TourGalery: string = "Tour Gallery";
 export const TypesOfTourDiscountConstant: string = "Types of tour discount";
 export const ChooseServices: string =
   "Which of the following services do you want to include in tour?";
+export const IncludedServices = "Included Services";
+export const ExcludedServices = "Included Services";
+export const Publish = "Publish";
+export const Drafts = "Drafts";
+export const Unpublish = "Unpublish";
 //Tour - Category
 export const CategoryForm: string = "Category Form";
 export const CategoryList: string = "Category list";

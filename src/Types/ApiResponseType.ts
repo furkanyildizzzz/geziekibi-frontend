@@ -32,3 +32,9 @@ export type TourCategorySuccessResponse = {
   parent: TourCategorySuccessResponse;
   subCategories: TourCategorySuccessResponse[];
 };
+export type ServiceSuccessResponse = {
+  id: number;
+  name: string;
+  description: string;
+  selected: "N" | "I" | "Y";
+};
