@@ -62,8 +62,9 @@ export default async function RootLayout({
             async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0"
           ></script>
-          <script type="text/javascript" src="/assets/js/rte.js"></script>
+          <script async type="text/javascript" src="/assets/js/rte.js"></script>
           <script
+            async
             type="text/javascript"
             src="/assets/js/plugins/all_plugins.js"
           ></script>
