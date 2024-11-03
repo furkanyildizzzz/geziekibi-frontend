@@ -6,7 +6,7 @@ import {
 } from "@/Constant/constant";
 import { useEffect, useState } from "react";
 import { ApiResponse, ServiceSuccessResponse } from "@/Types/ApiResponseType";
-import { getServiceList } from "@/app/actions/service/getServiceList";
+import { getServiceList } from "@/app/actions/tour/service/getServiceList";
 import ThreeChoiceSwitch from "./ThreeChoiceSwitch";
 import VariationCheckboxUpgrade from "./VariationCheckboxUpgrade";
 import { useAppDispatch } from "@/Redux/Hooks";

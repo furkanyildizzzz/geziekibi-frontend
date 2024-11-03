@@ -2012,6 +2012,14 @@ export const TagForm: string = "Tag Form";
 export const TagList: string = "Tag list";
 export const ChooseATag: string = "Choose a tag...";
 
+//Service
+export const Service: string = "Service";
+export const ServiceName: string = "Service Name";
+export const ServiceForm: string = "Service Form";
+export const ServiceList: string = "Service list";
+export const EditServiceHeading: string = "Edit Service";
+export const CreateNewServiceHeading: string = "Create New Service";
+
 //Tour
 export const TourTitle: string = "Tour Title";
 export const TourSpot: string = "Tour Spot";
@@ -2031,6 +2039,7 @@ export const ExcludedServices = "Included Services";
 export const Publish = "Publish";
 export const Drafts = "Drafts";
 export const Unpublish = "Unpublish";
+
 //Tour - Category
 export const CategoryForm: string = "Category Form";
 export const CategoryList: string = "Category list";

@@ -3,7 +3,7 @@ import { ApiResponse, ServiceSuccessResponse } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
 import { FieldValues } from "react-hook-form";
 
-export const editTourCategory = async (
+export const editService = async (
   id: number,
   formData: FieldValues
 ): Promise<ApiResponse<ServiceSuccessResponse>> => {
