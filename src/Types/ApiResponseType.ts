@@ -38,3 +38,4 @@ export type ServiceSuccessResponse = {
   description: string;
   selected: "N" | "I" | "Y";
 };
+export type SingleFileUploadSuccessResponse = { imageUrl: string };

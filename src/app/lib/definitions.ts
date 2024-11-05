@@ -60,3 +60,73 @@ export const CreateServiceFormSchema = z.object({
   description: z.string().optional(),
 });
 export type CreateServiceSchema = z.infer<typeof CreateServiceFormSchema>;
+
+const fileSizeLimit = 5 * 1024 * 1024; // 5MB
+
+// Image Schema
+export const SINGLE_IMAGE_SCHEMA = z
+  .instanceof(File)
+  .refine(
+    (file) =>
+      [
+        "image/png",
+        "image/jpeg",
+        "image/jpg",
+        "image/svg+xml",
+        "image/gif",
+      ].includes(file.type),
+    { message: "Invalid image file type" }
+  )
+  .refine((file) => file.size <= fileSizeLimit, {
+    message: "File size should not exceed 5MB",
+  });
+export type SINGLEIMAGESCHEMA = z.infer<typeof SINGLE_IMAGE_SCHEMA>;
+
+// Document Schema
+export const DOCUMENT_SCHEMA = z
+  .instanceof(File)
+  .refine(
+    (file) =>
+      [
+        "application/pdf",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ].includes(file.type),
+    { message: "Invalid document file type" }
+  )
+  .refine((file) => file.size <= fileSizeLimit, {
+    message: "File size should not exceed 5MB",
+  });
+export type DOCUMENTSCHEMA = z.infer<typeof DOCUMENT_SCHEMA>;
+
+export const MULTIPLE_IMAGE_SCHEMA = z
+  .unknown()
+  .transform((value) => {
+    return value as FileList;
+  })
+  .refine((list) => list.length > 0, "No files selected")
+  .refine((list) => list.length <= 5, "Maximum 5 files allowed")
+  .transform((list) => Array.from(list))
+  .refine(
+    (files) => {
+      const allowedTypes: { [key: string]: boolean } = {
+        "image/jpeg": true,
+        "image/png": true,
+        "application/pdf": true,
+        "application/msword": true,
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+          true,
+      };
+      return files.every((file) => allowedTypes[file.type]);
+    },
+    { message: "Invalid file type. Allowed types: JPG, PNG, PDF, DOC, DOCX" }
+  )
+  .refine(
+    (files) => {
+      return files.every((file) => file.size <= fileSizeLimit);
+    },
+    {
+      message: "File size should not exceed 5MB",
+    }
+  );
+export type MULTIPLEIMAGESCHEMA = z.infer<typeof MULTIPLE_IMAGE_SCHEMA>;

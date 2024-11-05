@@ -1,6 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../public/assets/css/rte_theme_default.css";
 import { useAppSelector } from "@/Redux/Hooks";
+import {
+  uploadSingleBase64Image,
+  uploadSingleFile,
+} from "@/app/actions/upload/uploadFile";
 // Extend window interface to recognize `RichTextEditor`
 declare global {
   interface Window {
@@ -51,34 +55,26 @@ const uploadImageToServer = async (base64Image: string) => {
   const file = new File([blob], "image.jpg", { type: "image/jpeg" });
   console.log({ file: file });
 
-  return "url";
-  // try {
-  //   const response = await fetch("/api/upload-image", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ image: base64Image }),
-  //   });
+  try {
+    const response = await uploadSingleFile(file);
 
-  //   if (!response.ok) {
-  //     throw new Error("Failed to upload image");
-  //   }
-
-  //   const data = await response.json();
-  //   return data.url; // Assuming the server returns { url: "image_url" }
-  // } catch (error) {
-  //   console.error("Image upload error:", error);
-  //   return null;
-  // }
+    if ("errorType" in response) {
+      return "";
+    }
+    const { imageUrl } = response.data;
+    return imageUrl; // Assuming the server returns { url: "image_url" }
+  } catch (error) {
+    console.error("Image upload error:", error);
+    return "";
+  }
 };
 
 const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
   const { formValue } = useAppSelector((state) => state.addProduct);
-
+  const [dummy, setDummy] = useState("");
   const refDiv = useRef<HTMLDivElement | null>(null);
   const rteRef = useRef<any>(null);
-
+  const [editor, setEditor] = useState<any>();
   const handleContentChange = async () => {
     if (!rteRef.current) return;
 
@@ -103,12 +99,6 @@ const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
     onChange(content);
   };
 
-  const btnClick = () => {
-    if (rteRef.current) {
-      alert(rteRef.current.getHTMLCode());
-    }
-  };
-
   useEffect(() => {
     const initializeEditor = async () => {
       try {
@@ -129,6 +119,7 @@ const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
         }
       } catch (error) {
         console.error(error);
+        return;
       }
     };
 
@@ -140,17 +131,12 @@ const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
         rteRef.current.off("change", handleContentChange); // Adjust based on actual API
       }
     };
-  }, []);
+  }, [dummy]);
 
   return (
     <div className="RichTextEditor">
       <header className="RichTextEditor-header">
         <div ref={refDiv}></div>
-
-        <hr />
-        <div>
-          <button onClick={btnClick}>Show HTML Code</button>
-        </div>
       </header>
     </div>
   );
