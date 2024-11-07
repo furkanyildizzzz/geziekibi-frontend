@@ -38,12 +38,10 @@ const DropDownComponent: React.FC<DropDownComponentProps> = ({
   };
 
   const handleChange = (selected: Option[]): void => {
-    console.log({ selected });
     setSelectedState(selected);
     const id = selected.length
       ? (selected[0] as Record<string, any>["id"]).id
       : 0;
-    console.log({ id });
     if (onChange) {
       onChange(id);
     }

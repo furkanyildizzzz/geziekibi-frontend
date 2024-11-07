@@ -11,20 +11,20 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Col, Input, Label, Row } from "reactstrap";
 
 export const DropDownData = [
-  { id: "PUBLISH", name: Publish, header: true },
-  { id: "DRAFT", name: Drafts },
-  { id: "UNPUBLISH", name: Unpublish },
+  { id: "publish", name: Publish, header: true },
+  { id: "draft", name: Drafts },
+  { id: "unpublish", name: Unpublish },
 ];
 
 const SelectFour = () => {
   const dispatch = useAppDispatch();
 
   const handleStatus = (select: string) => {
-    dispatch(setFormValue({ name: "status", value: select }));
+    dispatch(setFormValue({ name: "publishStatus", value: select }));
   };
 
   const handlePublishStatusChanged = (id: string) => {
-    dispatch(setFormValue({ name: "status", value: id }));
+    dispatch(setFormValue({ name: "publishStatus", value: id }));
   };
 
   return (
@@ -55,7 +55,7 @@ const SelectFour = () => {
           {/* 
           <Input
             type="select"
-            name="status"
+            name="publishStatus"
             onChange={(e) => handleStatus(e.target.value)}
           >
             <option>{Publish}</option>

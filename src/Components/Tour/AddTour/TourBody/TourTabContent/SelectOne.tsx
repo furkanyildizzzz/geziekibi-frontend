@@ -25,7 +25,7 @@ const SelectOne = () => {
   const dispatch = useAppDispatch();
 
   const handleCategory = (select: string) => {
-    dispatch(setFormValue({ name: "category", value: select }));
+    dispatch(setFormValue({ name: "categoryId", value: select }));
   };
 
   const fetchTourCategoryList = async () => {
@@ -42,7 +42,7 @@ const SelectOne = () => {
   }, []);
 
   const handleCategoryIdChanged = (id: string) => {
-    dispatch(setFormValue({ name: "category", value: Number(id) }));
+    dispatch(setFormValue({ name: "categoryId", value: Number(id) }));
   };
 
   return (

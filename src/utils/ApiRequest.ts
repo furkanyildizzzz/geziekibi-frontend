@@ -18,17 +18,23 @@ export async function apiRequest<T>(
   body?: any
 ): Promise<ApiResponse<T>> {
   try {
-    const token = Cookies.get("token"); // Replace 'yourTokenKey' with your actual key
+    const token = Cookies.get("token");
 
+    // Determine if body is FormData
+    const isFormData = body instanceof FormData;
+    // Set headers, omitting "Content-Type" if body is FormData
     const headers: HeadersInit = {
-      "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(!isFormData ? { "Content-Type": "application/json" } : {}),
     };
 
+    // Prepare body
+    const requestBody = isFormData ? body : JSON.stringify(body);
+    console.log({ isFormData });
     const response = await fetch(`http://localhost:4000/v1/${url}`, {
       method,
       headers,
-      body: body ? JSON.stringify(body) : undefined,
+      body: requestBody,
     });
 
     const result = await processApiResponse<T>(response);
@@ -78,7 +84,7 @@ export async function apiRequestFile<T>(
   }
 }
 
-async function processApiResponse<T>(
+async function processApiResponseEski<T>(
   response: Response
 ): Promise<ApiResponse<T>> {
   const result = await response.json();
@@ -86,5 +92,36 @@ async function processApiResponse<T>(
     return result as ApiSuccessResponse<T>;
   } else {
     return result as ApiErrorResponse;
+  }
+}
+
+async function processApiResponse<T>(
+  response: Response
+): Promise<ApiResponse<T>> {
+  if (response.ok) {
+    // Attempt to parse JSON if present, otherwise return an empty response
+    const text = await response.text();
+    if (text) {
+      try {
+        return JSON.parse(text) as ApiSuccessResponse<T>;
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+        throw new Error("Invalid JSON response from server.");
+      }
+    } else {
+      return {
+        message: "No content",
+        data: null,
+      } as ApiSuccessResponse<T>;
+    }
+  } else {
+    // Handle error responses as JSON if available
+    const errorText = await response.text();
+    try {
+      const errorJson = errorText ? JSON.parse(errorText) : {};
+      return { success: false, ...errorJson } as ApiErrorResponse;
+    } catch (e) {
+      return { errorMessage: errorText || "Unknown error" } as ApiErrorResponse;
+    }
   }
 }

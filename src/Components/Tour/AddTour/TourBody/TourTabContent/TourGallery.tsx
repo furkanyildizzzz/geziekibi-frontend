@@ -19,7 +19,9 @@ const TourGallery = () => {
   const updateFiles = (incomingFiles: ExtFile[]) => {
     setFiles(incomingFiles);
     console.log({ name: "gallery", value: incomingFiles });
-    dispatch(setFormValue({ name: "gallery", value: incomingFiles }));
+    dispatch(
+      setFormValue({ name: "gallery", value: incomingFiles.map((s) => s.file) })
+    );
   };
 
   const removeFile = (id: string | number | undefined) => {
@@ -38,7 +40,7 @@ const TourGallery = () => {
       <Dropzone
         onChange={(files) => updateFiles(files)}
         value={files}
-        maxFiles={1}
+        maxFiles={5}
         header={false}
         footer={false}
         minHeight="80px"

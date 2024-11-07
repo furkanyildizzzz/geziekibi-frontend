@@ -44,14 +44,12 @@ const SelectTwo = () => {
   const dispatch = useAppDispatch();
 
   const handleChange = (selected: Option[]) => {
-    console.log({ selected });
     dispatch(setFormValue({ name: "tags", value: selected }));
   };
 
   const fetchTagList = async () => {
     const response: ApiResponse<TagSuccessResponse[]> = await getTagList();
     if ("data" in response) {
-      console.log({ response });
       setTags([...response.data]);
     }
   };

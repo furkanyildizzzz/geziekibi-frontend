@@ -27,11 +27,9 @@ const TourFour = () => {
             </Label>
             <Input
               type="number"
-              name="initialPrice"
+              name="price"
               onChange={(e) =>
-                dispatch(
-                  setFormValue({ name: "initialPrice", value: e.target.value })
-                )
+                dispatch(setFormValue({ name: "price", value: e.target.value }))
               }
             />
           </Col>

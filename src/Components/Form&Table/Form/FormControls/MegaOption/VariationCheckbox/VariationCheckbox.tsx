@@ -105,7 +105,7 @@ const VariationCheckbox = () => {
         const isMatch = item.id === service.id;
         return isMatch ? { ...item, selected: service.selected } : item;
       });
-      dispatch(setFormValue({ name: "services", value: updatedServices }));
+      dispatch(setFormValue({ name: "tourServices", value: updatedServices }));
 
       return [...updatedServices];
     });

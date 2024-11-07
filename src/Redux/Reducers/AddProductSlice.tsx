@@ -10,13 +10,14 @@ const initialState: AddProductSliceType = {
     body: "",
     image: [],
     gallery: [],
-    category: "",
-    status: "",
+    categoryId: "",
+    publishStatus: "",
+    publishDate: "",
     initialCost: "",
-    initialPrice: "",
+    price: "",
     currency: "",
     tags: "",
-    services: [],
+    tourServices: [],
   },
 };
 
