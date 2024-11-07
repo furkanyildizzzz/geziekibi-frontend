@@ -3,60 +3,6 @@ import "./ThreeChoiceSwitch.css"; // Import the CSS htmlFor styles
 import styled from "styled-components";
 import { Inherit, No, Yes } from "@/Constant/constant";
 
-const ThreeChoiceSwitch: React.FC<{ key: any; id: number }> = ({ key, id }) => {
-  const [selected, setSelected] = useState<"Y" | "I" | "N">("I"); // Default to 'Inherit'
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelected(event.target.value as "Y" | "I" | "N");
-  };
-
-  useEffect(() => {}, [selected]);
-
-  return (
-    <div className="switch" key={id}>
-      <input
-        id={"switch-y-" + id}
-        name="tripple"
-        type="radio"
-        value="Y"
-        className="switch-input"
-        {...(selected === "Y" ? { checked: true } : {})}
-        onChange={handleChange} // Update state on change
-      />
-      <label htmlFor={"switch-y-" + id} className="switch-label switch-label-y">
-        Yes
-      </label>
-
-      <input
-        id={"switch-i-" + id}
-        name="tripple"
-        type="radio"
-        value="I"
-        className="switch-input"
-        {...(selected === "I" ? { checked: true } : {})}
-        onChange={handleChange} // Update state on change
-      />
-      <label htmlFor={"switch-i-" + id} className="switch-label switch-label-i">
-        Inherit
-      </label>
-
-      <input
-        id={"switch-n-" + id}
-        name="tripple"
-        type="radio"
-        value="N"
-        className="switch-input"
-        {...(selected === "N" ? { checked: true } : {})}
-        onChange={handleChange} // Update state on change
-      />
-      <label htmlFor={"switch-n-" + id} className="switch-label switch-label-n">
-        No
-      </label>
-      <span className="switch-selector"></span>
-    </div>
-  );
-};
-
 // Styled Components
 const SwitchContainer = styled.div`
   position: relative;
@@ -100,7 +46,7 @@ const SwitchSelector = styled.span<{ position: number }>`
   transform: translateX(${({ position }) => position * 100}%);
 `;
 
-const ThreeChoiceSwitch3: React.FC<{
+const ThreeChoiceSwitch: React.FC<{
   id: number;
   name: string;
   onSelectChange: Function | null;
@@ -109,7 +55,6 @@ const ThreeChoiceSwitch3: React.FC<{
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { serviceId, serviceName } = event.target.dataset;
-    console.log({ serviceId, serviceName });
     setSelected(event.target.value as "N" | "I" | "Y");
     if (onSelectChange) {
       onSelectChange(event.target.value, serviceId, serviceName);
@@ -169,4 +114,4 @@ const ThreeChoiceSwitch3: React.FC<{
   );
 };
 
-export default ThreeChoiceSwitch3;
+export default ThreeChoiceSwitch;
