@@ -35,7 +35,6 @@ const FormEditors = () => {
   const dispatch = useAppDispatch();
 
   const handleChange = useCallback((value: string) => {
-    console.log({ value });
     dispatch(setFormValue({ name: "body", value: value }));
   }, []);
   return (

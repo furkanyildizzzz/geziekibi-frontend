@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import "../../../public/assets/css/rte_theme_default.css";
 import { useAppSelector } from "@/Redux/Hooks";
 import {
@@ -47,13 +47,10 @@ function base64ToBlob(base64: string, type: string): Blob {
 
 // Function to upload base64 image and get the URL
 const uploadImageToServer = async (base64Image: string) => {
-  console.log({ base64Image });
-
   // Convert base64 string to a Blob
   const base64String = base64Image.split(",")[1];
   const blob = base64ToBlob(base64String, "image/jpeg");
   const file = new File([blob], "image.jpg", { type: "image/jpeg" });
-  console.log({ file: file });
 
   try {
     const response = await uploadSingleFile(file);
@@ -71,10 +68,8 @@ const uploadImageToServer = async (base64Image: string) => {
 
 const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
   const { formValue } = useAppSelector((state) => state.addProduct);
-  const [dummy, setDummy] = useState("");
   const refDiv = useRef<HTMLDivElement | null>(null);
   const rteRef = useRef<any>(null);
-  const [editor, setEditor] = useState<any>();
   const handleContentChange = async () => {
     if (!rteRef.current) return;
 
@@ -99,30 +94,31 @@ const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
     onChange(content);
   };
 
-  useEffect(() => {
-    const initializeEditor = async () => {
-      try {
-        await loadScript("/assets/js/rte.js");
-        await loadScript("/assets/js/all_plugins.js");
+  const initializeEditor = useCallback(async () => {
+    try {
+      await loadScript("/assets/js/rte.js");
+      await loadScript("/assets/js/all_plugins.js");
 
-        const RichTextEditor =
-          window.RichTextEditor?.default || window.RichTextEditor;
+      const RichTextEditor =
+        window.RichTextEditor?.default || window.RichTextEditor;
+      // rteRef.current.setHTMLCode(formValue.body);
 
-        if (RichTextEditor && refDiv.current) {
-          rteRef.current = new RichTextEditor(refDiv.current, null);
-          rteRef.current.setHTMLCode(formValue.body);
+      if (RichTextEditor && refDiv.current) {
+        rteRef.current = new RichTextEditor(refDiv.current, null);
+        rteRef.current.setHTMLCode(formValue.body);
 
-          // Attach the onChange listener if available
-          rteRef.current.attachEvent("change", handleContentChange);
-        } else {
-          console.error("RichTextEditor is not available on window");
-        }
-      } catch (error) {
-        console.error(error);
-        return;
+        // Attach the onChange listener if available
+        rteRef.current.attachEvent("change", handleContentChange);
+      } else {
+        console.error("RichTextEditor is not available on window");
       }
-    };
+    } catch (error) {
+      console.error(error);
+      return;
+    }
+  }, [formValue]);
 
+  useEffect(() => {
     initializeEditor();
 
     return () => {
@@ -131,7 +127,7 @@ const RichTextEditor: React.FC<{ onChange: Function }> = ({ onChange }) => {
         rteRef.current.off("change", handleContentChange); // Adjust based on actual API
       }
     };
-  }, [dummy]);
+  }, [initializeEditor]);
 
   return (
     <div className="RichTextEditor">

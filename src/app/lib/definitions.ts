@@ -170,7 +170,7 @@ export const TourValidationSchema = z.object({
       })
     )
     .optional(),
-  category: z.object({ id: z.number() }).optional(), // Category is referenced by `id`
+  categoryId: z.number({ message: "Category is required" }), // Category is referenced by `id`
   tourServices: z
     .array(
       z.object({

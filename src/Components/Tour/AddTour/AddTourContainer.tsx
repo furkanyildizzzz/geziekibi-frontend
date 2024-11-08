@@ -1,14 +1,53 @@
 "use client";
-import React from "react";
-import { AddTour, ECommerce, TourForm } from "@/Constant/constant";
+import React, { useEffect, useState } from "react";
+import {
+  AddTour,
+  ECommerce,
+  EditTour,
+  Tour,
+  TourForm,
+} from "@/Constant/constant";
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import TourBody from "./TourBody/TourBody";
 import Breadcrumbs from "@/CommonComponent/Breadcrumb";
+import { ErrorValidation } from "@/Types/ApiResponseType";
+import { getTourById } from "@/app/actions/tour/self/getTourById";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
+const AddTourContainer = ({ id }: { id?: number }) => {
+  const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
+    []
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+  const { formValue } = useAppSelector((state) => state.addProduct);
+  const dispatch = useAppDispatch();
+  const fetchTour = async (id: number) => {
+    const response = await getTourById(id);
+    if ("data" in response) {
+      Object.entries(response.data).forEach(([key, value]: [string, any]) => {
+        // console.log({ name: key, value: value });
+        dispatch(setFormValue({ name: key, value: value }));
+      });
+    }
+  };
 
-const AddTourContainer = () => {
+  useEffect(() => {
+    if (id) {
+      fetchTour(id);
+    }
+  }, []);
+
   return (
     <>
-      <Breadcrumbs pageTitle={AddTour} parent={ECommerce} title={AddTour} />
+      {formValue.id ? (
+        <Breadcrumbs
+          pageTitle={formValue.title}
+          parent={Tour}
+          title={formValue.title}
+        />
+      ) : (
+        <Breadcrumbs pageTitle={AddTour} parent={ECommerce} title={AddTour} />
+      )}
       <Container fluid>
         <Row>
           <Col xs="12">

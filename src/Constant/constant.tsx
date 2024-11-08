@@ -2028,6 +2028,7 @@ export const ToursCanBeTagged: string = "Tours can be tagged";
 export const TourForm: string = "Tour Form";
 export const TourList: string = "Tour list";
 export const AddTour: string = "Add Tour";
+export const EditTour: string = "Edit Tour";
 export const TourImage: string = "Tour Image";
 export const AddTourGalleryImages: string = "Add Product Tour Images";
 export const TourGalery: string = "Tour Gallery";
@@ -2039,6 +2040,7 @@ export const ExcludedServices = "Included Services";
 export const Publish = "Publish";
 export const Drafts = "Drafts";
 export const Unpublish = "Unpublish";
+export const CreateNewTourHeading: string = "Create New Tour";
 
 //Tour - Category
 export const CategoryForm: string = "Category Form";

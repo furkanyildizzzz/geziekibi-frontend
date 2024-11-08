@@ -37,22 +37,26 @@ export type ServiceSuccessResponse = {
   name: string;
   description: string;
   selected: "N" | "I" | "Y";
+  type: "included" | "excluded";
 };
 export type SingleFileUploadSuccessResponse = { imageUrl: string };
+export type TourService = {
+  id: number;
+  type: string;
+  service: ServiceSuccessResponse;
+};
 export type TourSuccessResponse = {
   id: number;
   title: string;
   spot: string;
   body: Text;
   type: string;
+  image: string;
+  gallery: string[];
   publishStatus: string;
   publishDate: Date;
   category: TourCategorySuccessResponse;
   prices: { name: string; description: string; price: number }[];
   tags: TagSuccessResponse[];
-  tourServices: {
-    id: number;
-    type: string;
-    service: { id: number; name: string; description: string };
-  }[];
+  tourServices: TourService[];
 };

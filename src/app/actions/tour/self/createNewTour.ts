@@ -31,9 +31,9 @@ export const createNewTour = async (
         formData.append(key, value);
       }
     });
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}, ${pair[1]}`);
-    }
+    // for (let pair of formData.entries()) {
+    //   console.log(`${pair[0]}, ${pair[1]}`);
+    // }
     return await apiRequest<TourSuccessResponse>("tour/", "POST", formData);
   } catch (error) {
     console.log({ error });

@@ -50,9 +50,9 @@ const ThreeChoiceSwitch: React.FC<{
   id: number;
   name: string;
   onSelectChange: Function | null;
-}> = ({ id, name, onSelectChange }) => {
-  const [selected, setSelected] = useState<"N" | "I" | "Y">("I"); // Default to 'Inherit'
-
+  isSelected: "N" | "I" | "Y";
+}> = ({ id, name, onSelectChange, isSelected }) => {
+  const [selected, setSelected] = useState<"N" | "I" | "Y">(isSelected); // Default to 'Inherit'
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { serviceId, serviceName } = event.target.dataset;
     setSelected(event.target.value as "N" | "I" | "Y");

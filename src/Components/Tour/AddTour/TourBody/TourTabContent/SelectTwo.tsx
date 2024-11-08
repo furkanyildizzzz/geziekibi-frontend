@@ -7,7 +7,7 @@ import {
   ToursCanBeTagged,
 } from "@/Constant/constant";
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Option } from "react-bootstrap-typeahead/types/types";
 import {
@@ -42,6 +42,7 @@ const SelectTwo = () => {
   const ref = useRef<TypeaheadRef>(null);
 
   const dispatch = useAppDispatch();
+  const { formValue } = useAppSelector((state) => state.addProduct);
 
   const handleChange = (selected: Option[]) => {
     dispatch(setFormValue({ name: "tags", value: selected }));
@@ -68,13 +69,6 @@ const SelectTwo = () => {
           </Label>
         </Col>
         <Col xs="12">
-          {/* <Typeahead
-            id="multiple-typeahead"
-            labelKey="name"
-            multiple
-            options={MultiWithHeaderData}
-          /> */}
-
           <Typeahead
             // defaultSelected={MultiWithHeaderData.slice(0, 4)}
             id="public-methods-example"
@@ -84,6 +78,11 @@ const SelectTwo = () => {
             placeholder={ChooseATag}
             onChange={handleChange}
             ref={ref}
+            selected={
+              formValue.tags.length
+                ? formValue.tags.map((tag: { id: number; name: string }) => tag)
+                : undefined
+            }
           />
           <p className="f-light">{ToursCanBeTagged} </p>
 

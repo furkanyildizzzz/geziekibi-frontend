@@ -1,5 +1,5 @@
 import { AddCategory } from "@/Constant/constant";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Col, Input, Label, Row } from "reactstrap";
 import CreateNewCategory from "./CreateNewCategory";
@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { getTourCategoryList } from "@/app/actions/tour/category/getTourCategoryList";
 import DisplayError from "@/utils/DisplayError";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
+import { Option } from "react-bootstrap-typeahead/types/types";
 
 const SelectOne = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -22,17 +23,18 @@ const SelectOne = () => {
     TourCategorySuccessResponse[]
   >([]);
 
+  const { formValue } = useAppSelector((state) => state.addProduct);
+
   const dispatch = useAppDispatch();
 
   const handleCategory = (select: string) => {
-    dispatch(setFormValue({ name: "categoryId", value: select }));
+    dispatch(setFormValue({ name: "category", value: select }));
   };
 
   const fetchTourCategoryList = async () => {
     const response: ApiResponse<TourCategorySuccessResponse[]> =
       await getTourCategoryList();
     if ("data" in response) {
-      console.log({ response });
       setTourCategories([...response.data]);
     }
   };
@@ -42,7 +44,12 @@ const SelectOne = () => {
   }, []);
 
   const handleCategoryIdChanged = (id: string) => {
-    dispatch(setFormValue({ name: "categoryId", value: Number(id) }));
+    dispatch(
+      setFormValue({
+        name: "category",
+        value: tourCategories.find((s) => (s.id = Number(id))),
+      })
+    );
   };
 
   return (
@@ -69,7 +76,16 @@ const SelectOne = () => {
                 id: item.id.toString(),
               };
             })}
-            selectedOption={undefined}
+            selectedOption={
+              formValue.category
+                ? [
+                    {
+                      name: formValue.category.name,
+                      id: formValue.category.id.toString(),
+                    },
+                  ]
+                : undefined
+            }
           />
           <DisplayError
             errorsValidation={errorsValidation}

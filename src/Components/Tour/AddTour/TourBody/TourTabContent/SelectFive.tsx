@@ -3,10 +3,11 @@ import ReactDatePicker from "react-datepicker";
 import { useState } from "react";
 import { PublishDateTime } from "@/Constant/constant";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 
 const SelectFive = () => {
   const dispatch = useAppDispatch();
+  const { formValue } = useAppSelector((state) => state.addProduct);
   const [startDate, setStartDate] = useState(new Date());
   const handleChange = (date: Date) => {
     setStartDate(date);
@@ -25,6 +26,7 @@ const SelectFive = () => {
               className="form-control flatpickr-input"
               selected={startDate}
               onChange={handleChange}
+              value={new Date(formValue.publishDate).toLocaleDateString()}
             />
           </div>
         </Col>

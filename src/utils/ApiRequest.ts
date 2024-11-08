@@ -30,7 +30,6 @@ export async function apiRequest<T>(
 
     // Prepare body
     const requestBody = isFormData ? body : JSON.stringify(body);
-    console.log({ isFormData });
     const response = await fetch(`http://localhost:4000/v1/${url}`, {
       method,
       headers,

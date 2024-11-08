@@ -9,6 +9,7 @@ import {
 } from "@/Constant/constant";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import SVG from "@/CommonComponent/SVG/Svg";
+import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 
 const TourGallery = () => {
   const { formValue } = useAppSelector((state) => state.addProduct);
@@ -37,6 +38,21 @@ const TourGallery = () => {
         {TourGalery}
         <span className="txt-danger"> *</span>
       </p>
+      {formValue.gallery.length > 0 && (
+        <AlreadyUploadedDropzone
+          images={formValue.gallery}
+          onRemove={(image: string) => {
+            dispatch(
+              setFormValue({
+                name: "gallery",
+                value: [
+                  ...formValue.gallery.filter((x: string) => x !== image),
+                ],
+              })
+            );
+          }}
+        />
+      )}
       <Dropzone
         onChange={(files) => updateFiles(files)}
         value={files}
@@ -46,14 +62,14 @@ const TourGallery = () => {
         minHeight="80px"
         name="gallery"
       >
-        {files.map((file: ExtFile) => (
+        {/* {files.map((file: ExtFile) => (
           <FileMosaic
             key={file.id}
             {...file}
             onDelete={removeFile}
             info={true}
           />
-        ))}
+        ))} */}
         {files.length === 0 && (
           <Form className="dropzone dropzone-light dz-clickable py-5">
             <div className="dz-message needsclick">

@@ -14,12 +14,16 @@ import {
   ExcludedServices,
   IncludedServices,
 } from "@/Constant/constant";
-import { useEffect, useState } from "react";
-import { ApiResponse, ServiceSuccessResponse } from "@/Types/ApiResponseType";
+import { useCallback, useEffect, useState } from "react";
+import {
+  ApiResponse,
+  ServiceSuccessResponse,
+  TourService,
+} from "@/Types/ApiResponseType";
 import { getServiceList } from "@/app/actions/tour/service/getServiceList";
 import ThreeChoiceSwitch from "./ThreeChoiceSwitch";
 import VariationCheckboxUpgrade from "./VariationCheckboxUpgrade";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -27,22 +31,32 @@ const VariationCheckbox = () => {
   const [services, setServices] = useState<ServiceSuccessResponse[]>([]);
   const [service, setService] = useState<ServiceSuccessResponse>();
   const [refreshKey, setRefreshKey] = useState(0); // This will be updated to trigger rerender
-
   const dispatch = useAppDispatch();
+  const { formValue } = useAppSelector((state) => state.addProduct);
   const router = useRouter();
   const pathname = usePathname();
 
-  const fetchServiceList = async () => {
+  const fetchServiceList = useCallback(async () => {
     const response: ApiResponse<ServiceSuccessResponse[]> =
       await getServiceList();
     if ("data" in response) {
-      setServices(
-        response.data.map((item) => {
-          return { ...item, selected: "I" };
-        })
-      );
+      setServices((previousServices) => {
+        return response.data.map((item) => {
+          const comingService = formValue.tourServices.find(
+            (s: TourService) => s.service?.id === item.id
+          );
+          if (comingService) {
+            return {
+              ...comingService.service,
+              selected: comingService.type === "included" ? "Y" : "N",
+            };
+          } else {
+            return { ...item, selected: "I" };
+          }
+        });
+      });
     }
-  };
+  }, [formValue]);
 
   const handleModalClosed = async () => {
     const response: ApiResponse<ServiceSuccessResponse[]> =
@@ -85,11 +99,10 @@ const VariationCheckbox = () => {
 
   useEffect(() => {
     fetchServiceList();
-  }, []);
+  }, [fetchServiceList]);
 
   useEffect(() => {
     // Check if we are no longer on the modal path to refresh the component
-    console.log({ pathname });
     if (pathname !== "/services/add-service") {
       setRefreshKey((prev) => prev + 1);
       handleModalClosed();
@@ -106,7 +119,6 @@ const VariationCheckbox = () => {
         return isMatch ? { ...item, selected: service.selected } : item;
       });
       dispatch(setFormValue({ name: "tourServices", value: updatedServices }));
-
       return [...updatedServices];
     });
   }, [service]);
@@ -145,7 +157,7 @@ const VariationCheckbox = () => {
                   paddingBottom: "0",
                 }}
               >
-                {services.map(({ id, name }, index) => (
+                {services.map(({ id, name, selected }, index) => (
                   <div className="payment-wrapper" key={index}>
                     <div
                       className="payment-first"
@@ -156,10 +168,11 @@ const VariationCheckbox = () => {
                       }}
                     >
                       <ThreeChoiceSwitch
-                        key={id}
+                        key={`${id}-${index}-${selected}`}
                         id={id}
                         name={name}
                         onSelectChange={handleServiceChange}
+                        isSelected={selected}
                       />
                       <span>{name}</span>
                     </div>

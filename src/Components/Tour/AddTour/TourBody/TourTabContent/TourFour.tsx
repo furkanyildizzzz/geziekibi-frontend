@@ -1,6 +1,6 @@
 import { Col, Form, Input, Label, Row } from "reactstrap";
 import { ChooseYourCurrency, SellingPrice } from "@/Constant/constant";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 
@@ -12,6 +12,7 @@ export const DropDownData = [
 
 const TourFour = () => {
   const dispatch = useAppDispatch();
+  const { formValue } = useAppSelector((state) => state.addProduct);
 
   const handleCurrencyIdChanged = (id: string) => {
     dispatch(setFormValue({ name: "currency", value: Number(id) }));
@@ -28,6 +29,7 @@ const TourFour = () => {
             <Input
               type="number"
               name="price"
+              value={formValue.price}
               onChange={(e) =>
                 dispatch(setFormValue({ name: "price", value: e.target.value }))
               }
@@ -48,7 +50,13 @@ const TourFour = () => {
                   id: item.id.toString(),
                 };
               })}
-              selectedOption={[{ ...DropDownData[0] }]}
+              selectedOption={
+                formValue.publishStatus
+                  ? DropDownData.filter(
+                      (data) => data.id === formValue.currency
+                    )
+                  : undefined
+              }
             />
 
             {/* <Input

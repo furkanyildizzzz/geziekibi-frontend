@@ -6,7 +6,7 @@ import {
   PublishStatus,
   Unpublish,
 } from "@/Constant/constant";
-import { useAppDispatch } from "@/Redux/Hooks";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Col, Input, Label, Row } from "reactstrap";
 
@@ -18,6 +18,7 @@ export const DropDownData = [
 
 const SelectFour = () => {
   const dispatch = useAppDispatch();
+  const { formValue } = useAppSelector((state) => state.addProduct);
 
   const handleStatus = (select: string) => {
     dispatch(setFormValue({ name: "publishStatus", value: select }));
@@ -50,7 +51,13 @@ const SelectFour = () => {
                 id: item.id.toString(),
               };
             })}
-            selectedOption={undefined}
+            selectedOption={
+              formValue.publishStatus
+                ? DropDownData.filter(
+                    (data) => data.id === formValue.publishStatus
+                  )
+                : undefined
+            }
           />
           {/* 
           <Input
