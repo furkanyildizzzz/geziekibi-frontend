@@ -2049,7 +2049,8 @@ export const Yurtici: string = "Yurtiçi Turlar";
 export const Yurtdisi: string = "Yurtdışı Turlar";
 export const Gunubirlik: string = "Günübirlik Turlar";
 export const ChooseTheTourType = "Choose the tour type";
-
+export const StartDate = "Start Date";
+export const FinishDate = "Finish Date";
 //Tour - Category
 export const CategoryForm: string = "Category Form";
 export const CategoryList: string = "Category list";

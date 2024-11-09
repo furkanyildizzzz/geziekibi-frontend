@@ -14,6 +14,8 @@ const initialState: AddProductSliceType = {
     tourType: "",
     publishStatus: "",
     publishDate: "",
+    startDate: "",
+    finishDate: "",
     price: "",
     currency: "",
     tags: "",

@@ -37,6 +37,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const lng = await detectLanguage();
+  console.log({ lng });
 
   return (
     <I18nProvider language={lng}>
