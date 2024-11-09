@@ -38,21 +38,21 @@ const TourOne = () => {
   const dispatch = useAppDispatch();
 
   const [startDate, setStartDate] = useState<Date>(new Date());
-  const [finishDate, setFinishDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
     dispatch(setFormValue({ name: "startDate", value: date }));
   };
 
-  const handleFinishDateChange = (date: Date) => {
-    setFinishDate(date);
-    dispatch(setFormValue({ name: "finishDate", value: date }));
+  const handleEndDateChange = (date: Date) => {
+    setEndDate(date);
+    dispatch(setFormValue({ name: "endDate", value: date }));
   };
 
   const initiateDates = useCallback(async () => {
     setStartDate(formValue.startDate || new Date());
-    setFinishDate(formValue.finishDate || new Date());
+    setEndDate(formValue.endDate || new Date());
   }, [formValue]);
 
   useEffect(() => {
@@ -126,8 +126,8 @@ const TourOne = () => {
               <div className="input-group flatpicker-calender product-date">
                 <ReactDatePicker
                   className="form-control flatpickr-input"
-                  selected={finishDate}
-                  onChange={handleFinishDateChange}
+                  selected={endDate}
+                  onChange={handleEndDateChange}
                   locale={tr}
                   dateFormat="P p"
                   showTimeSelect

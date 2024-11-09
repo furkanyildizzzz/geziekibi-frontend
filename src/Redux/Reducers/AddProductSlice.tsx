@@ -15,7 +15,7 @@ const initialState: AddProductSliceType = {
     publishStatus: "",
     publishDate: "",
     startDate: "",
-    finishDate: "",
+    endDate: "",
     price: "",
     currency: "",
     tags: "",
