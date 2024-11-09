@@ -11,6 +11,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
 import { ErrorValidation } from "@/Types/ApiResponseType";
+import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
 
 const CreateNewTagModal = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -41,6 +42,7 @@ const CreateNewTagModal = () => {
         setErrorsValidation(response.errorsValidation!);
       else setErrorMessage(response.errorMessage);
     } else {
+      ShowSuccess(response.message);
       router.back(); // Close modal by navigating back
     }
     return;

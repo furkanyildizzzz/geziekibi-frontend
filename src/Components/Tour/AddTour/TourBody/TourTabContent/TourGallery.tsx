@@ -19,9 +19,11 @@ const TourGallery = () => {
 
   const updateFiles = (incomingFiles: ExtFile[]) => {
     setFiles(incomingFiles);
-    console.log({ name: "gallery", value: incomingFiles });
     dispatch(
-      setFormValue({ name: "gallery", value: incomingFiles.map((s) => s.file) })
+      setFormValue({
+        name: "galleryImages",
+        value: incomingFiles.map((s) => s.file),
+      })
     );
   };
 
@@ -30,23 +32,20 @@ const TourGallery = () => {
   };
 
   useEffect(() => {
-    setFiles(formValue.gallery);
+    setFiles(formValue.galleryImages);
   }, []);
   return (
     <div className="product-upload">
-      <p>
-        {TourGalery}
-        <span className="txt-danger"> *</span>
-      </p>
-      {formValue.gallery.length > 0 && (
+      <p>{TourGalery}</p>
+      {formValue.galleryImages.length > 0 && (
         <AlreadyUploadedDropzone
-          images={formValue.gallery}
+          images={formValue.galleryImages}
           onRemove={(image: string) => {
             dispatch(
               setFormValue({
-                name: "gallery",
+                name: "galleryImages",
                 value: [
-                  ...formValue.gallery.filter((x: string) => x !== image),
+                  ...formValue.galleryImages.filter((x: string) => x !== image),
                 ],
               })
             );
@@ -60,16 +59,16 @@ const TourGallery = () => {
         header={false}
         footer={false}
         minHeight="80px"
-        name="gallery"
+        name="galleryImages"
       >
-        {/* {files.map((file: ExtFile) => (
+        {files.map((file: ExtFile) => (
           <FileMosaic
             key={file.id}
             {...file}
             onDelete={removeFile}
             info={true}
           />
-        ))} */}
+        ))}
         {files.length === 0 && (
           <Form className="dropzone dropzone-light dz-clickable py-5">
             <div className="dz-message needsclick">

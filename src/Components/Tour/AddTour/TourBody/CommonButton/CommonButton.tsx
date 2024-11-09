@@ -1,4 +1,5 @@
 import { createNewTour } from "@/app/actions/tour/self/createNewTour";
+import ShowValidationError from "@/CommonComponent/Toast/Error/ShowValidationError";
 import SVG from "@/CommonComponent/SVG/Svg";
 import { Next, Previous, Submit } from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
@@ -12,25 +13,27 @@ const CommonButton = () => {
   const dispatch = useAppDispatch();
 
   const handleNext = () => {
-    handleSubmit();
-
-    // console.log({ tabId, navId, formValue });
-    // if (!formValue.title || !formValue.spot) dispatch(setNavId(1));
-    // else if (!formValue.image || !formValue.gallery) dispatch(setNavId(2));
-    // else if (!formValue.category || !formValue.status) dispatch(setNavId(3));
-    // else if (!formValue.initialPrice || !formValue.currency)
-    //   dispatch(setNavId(4));
-    // else if (
-    //   !formValue.stock ||
-    //   !formValue.lowStock ||
-    //   !formValue.sku ||
-    //   !formValue.quantity ||
-    //   !formValue.restock
-    // )
-    //   dispatch(setNavId(5));
-    // else {
-    //   handleSubmit();
-    // }
+    console.log({ tabId, navId, formValue });
+    if (!formValue.title || !formValue.spot) dispatch(setNavId(1));
+    else if (!formValue.primaryImages.length) dispatch(setNavId(2));
+    else if (
+      !formValue.tourType ||
+      !formValue.category ||
+      !formValue.publishStatus
+    )
+      dispatch(setNavId(3));
+    else if (!formValue.prices.length) dispatch(setNavId(4));
+    else if (
+      !formValue.stock ||
+      !formValue.lowStock ||
+      !formValue.sku ||
+      !formValue.quantity ||
+      !formValue.restock
+    )
+      dispatch(setNavId(5));
+    else {
+      handleSubmit();
+    }
   };
   const handlePrevious = () => {
     if (navId > 1) {
@@ -71,11 +74,11 @@ const CommonButton = () => {
     const response = await createNewTour(formValue);
     console.log({ response });
 
-    // if ("errorType" in response) {
-    //   if (response.errorType == "Validation")
-    //     setErrorsValidation(response.errorsValidation!);
-    //   else setErrorMessage(response.errorMessage);
-    // }
+    if ("errorType" in response) {
+      if (response.errorType == "Validation") {
+        ShowValidationError(response.errorsValidation!);
+      }
+    }
   };
 
   return (

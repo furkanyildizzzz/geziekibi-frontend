@@ -58,8 +58,8 @@ const uploadImageToServer = async (base64Image: string) => {
     if ("errorType" in response) {
       return "";
     }
-    const { imageUrl } = response.data;
-    return imageUrl; // Assuming the server returns { url: "image_url" }
+    const { url } = response.data;
+    return url; // Assuming the server returns { url: "image_url" }
   } catch (error) {
     console.error("Image upload error:", error);
     return "";

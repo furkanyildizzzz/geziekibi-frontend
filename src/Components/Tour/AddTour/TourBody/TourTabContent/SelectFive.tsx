@@ -1,6 +1,6 @@
 import { Col, Label, Row } from "reactstrap";
 import ReactDatePicker from "react-datepicker";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { PublishDateTime } from "@/Constant/constant";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
@@ -8,12 +8,19 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 const SelectFive = () => {
   const dispatch = useAppDispatch();
   const { formValue } = useAppSelector((state) => state.addProduct);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const handleChange = (date: Date) => {
     setStartDate(date);
     dispatch(setFormValue({ name: "publishDate", value: date }));
   };
 
+  const initiatePublishDate = useCallback(async () => {
+    setStartDate(formValue.publishDate || new Date());
+  }, [formValue]);
+
+  useEffect(() => {
+    initiatePublishDate();
+  }, [initiatePublishDate]);
   return (
     <Col sm="6">
       <Row>
@@ -26,7 +33,7 @@ const SelectFive = () => {
               className="form-control flatpickr-input"
               selected={startDate}
               onChange={handleChange}
-              value={new Date(formValue.publishDate).toLocaleDateString()}
+              // value={new Date(formValue.publishDate).toLocaleDateString()}
             />
           </div>
         </Col>

@@ -2006,6 +2006,9 @@ export const ChooseTheStatus = "Choose the status";
 export const No = "No";
 export const Yes = "Yes";
 export const Inherit = "Inherit";
+export const TourType: string = "Tour Type";
+export const SellingPriceName: string = "Name";
+export const SellingCurrency: string = "Currency";
 
 //Tag
 export const TagForm: string = "Tag Form";
@@ -2038,9 +2041,14 @@ export const ChooseServices: string =
 export const IncludedServices = "Included Services";
 export const ExcludedServices = "Included Services";
 export const Publish = "Publish";
+export const Draft = "Draft";
 export const Drafts = "Drafts";
 export const Unpublish = "Unpublish";
 export const CreateNewTourHeading: string = "Create New Tour";
+export const Yurtici: string = "Yurtiçi Turlar";
+export const Yurtdisi: string = "Yurtdışı Turlar";
+export const Gunubirlik: string = "Günübirlik Turlar";
+export const ChooseTheTourType = "Choose the tour type";
 
 //Tour - Category
 export const CategoryForm: string = "Category Form";

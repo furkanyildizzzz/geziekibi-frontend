@@ -1,83 +1,288 @@
-import { Col, Form, Input, Label, Row } from "reactstrap";
-import { ChooseYourCurrency, SellingPrice } from "@/Constant/constant";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Form,
+  FormGroup,
+  Input,
+  InputGroup,
+  Label,
+  Row,
+} from "reactstrap";
+import {
+  Add,
+  AddTask,
+  Cancel,
+  ChooseYourCurrency,
+  Description,
+  SellingCurrency,
+  SellingPrice,
+  SellingPriceName,
+} from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  CreateTourPriceFormSchema,
+  CreateTourPriceSchema,
+} from "@/app/lib/definitions";
+import { useCallback, useEffect, useState } from "react";
+import {
+  ErrorValidation,
+  TourPriceSuccessResponse,
+} from "@/Types/ApiResponseType";
+import DisplayError from "@/utils/DisplayError";
+import { createNewTourPrice } from "@/app/actions/tour/price/createNewTourPrice";
+import { current } from "@reduxjs/toolkit";
+import { CurrencyDisplayNames, CurrencyEnum } from "@/app/lib/enums";
+import AddTourPriceForm from "./AddTourPriceForm";
+import { number } from "zod";
+import TourPriceRow from "./TourPriceList";
 
 export const DropDownData = [
-  { id: "1", name: "TL ₺", header: true },
-  { id: "2", name: "Dolar $" },
-  { id: "3", name: "Euro €" },
+  {
+    id: CurrencyEnum.TRY,
+    name: CurrencyDisplayNames[CurrencyEnum.TRY],
+    header: true,
+  },
+  {
+    id: CurrencyEnum.EUR,
+    name: CurrencyDisplayNames[CurrencyEnum.EUR],
+  },
+  {
+    id: CurrencyEnum.USD,
+    name: CurrencyDisplayNames[CurrencyEnum.USD],
+  },
 ];
 
 const TourFour = () => {
+  const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
+    []
+  );
+  const [errorMessage, setErrorMessage] = useState("");
+
   const dispatch = useAppDispatch();
   const { formValue } = useAppSelector((state) => state.addProduct);
 
-  const handleCurrencyIdChanged = (id: string) => {
-    dispatch(setFormValue({ name: "currency", value: Number(id) }));
+  const [formList, setFormList] = useState<{ id: number; name: string }[]>([
+    { id: 1, name: "" },
+  ]);
+
+  const [priceList, setPriceList] = useState<TourPriceSuccessResponse[]>([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isLoading },
+    getValues,
+    setValue,
+    reset,
+  } = useForm({
+    resolver: zodResolver(CreateTourPriceFormSchema),
+    defaultValues: {
+      id: 0,
+      name: "New Price",
+      price: 4500,
+      currency: CurrencyEnum.TRY,
+      description: "",
+    },
+  });
+
+  const initiatePriceList = useCallback(async () => {
+    setPriceList(formValue.prices);
+  }, [formValue]);
+
+  useEffect(() => {
+    initiatePriceList();
+  }, [initiatePriceList]);
+
+  const onSubmit = (data: TourPriceSuccessResponse) => {
+    //Aynı isimle gelen kaydi ekleme
+    console.log({ formValue });
+    if (
+      formValue.prices.find(
+        (s: TourPriceSuccessResponse) =>
+          s.name === data.name &&
+          s.currency === data.currency &&
+          s.description === data.description
+      )
+    ) {
+      setErrorMessage(`Price name:${data.name} is already added`);
+      return;
+    }
+
+    const newPrice = {
+      ...data,
+      rowId:
+        priceList.length > 0 ? priceList[priceList.length - 1].rowId + 1 : 1,
+    };
+
+    setPriceList((prev) => {
+      return [...prev, newPrice];
+    });
+
+    dispatch(
+      setFormValue({ name: "prices", value: [...formValue.prices, newPrice] })
+    );
+
+    reset();
   };
 
-  return (
-    <div className="sidebar-body">
-      <Form className="price-wrapper">
-        <Row className="g-3 custom-input">
-          <Col sm="6">
-            <Label check>
-              {SellingPrice} <span className="txt-danger">*</span>
-            </Label>
-            <Input
-              type="number"
-              name="price"
-              value={formValue.price}
-              onChange={(e) =>
-                dispatch(setFormValue({ name: "price", value: e.target.value }))
-              }
-            />
-          </Col>
-          <Col sm="6">
-            <DropDownComponent
-              id="id"
-              title={ChooseYourCurrency}
-              isRequired={false}
-              labelKey="name"
-              multiple={false}
-              placeHolder=""
-              onChange={handleCurrencyIdChanged}
-              options={DropDownData.map((item) => {
-                return {
-                  name: item.name,
-                  id: item.id.toString(),
-                };
-              })}
-              selectedOption={
-                formValue.publishStatus
-                  ? DropDownData.filter(
-                      (data) => data.id === formValue.currency
-                    )
-                  : undefined
-              }
-            />
+  const handleRemovePrice = (rowId: number) => {
+    dispatch(
+      setFormValue({
+        name: "prices",
+        value: formValue.prices.filter(
+          (s: TourPriceSuccessResponse) => s.rowId !== rowId
+        ),
+      })
+    );
+    setPriceList((prev: TourPriceSuccessResponse[]) => [
+      ...prev.filter((s) => s.rowId !== rowId),
+    ]);
+    console.log({ formValue });
+  };
 
-            {/* <Input
-              type="select"
-              defaultValue={"TL ₺"}
-              name="currency"
-              onChange={(e) =>
-                dispatch(
-                  setFormValue({ name: "currency", value: e.target.value })
-                )
-              }
-            >
-              <option>TL ₺</option>
-              <option>Dollar $</option>
-              <option>Euro €</option>
-            </Input> */}
+  const handleCurrencyChanged = (id: string) => {
+    setValue("currency", id as CurrencyEnum);
+  };
+  return (
+    <Card className="sidebar-body">
+      <CardHeader className="b-bottom">
+        <div className="todo-list-header">
+          <Form
+            className="theme-form"
+            onSubmit={handleSubmit((data) => {
+              onSubmit(data as TourPriceSuccessResponse);
+            })}
+          >
+            <Row>
+              <Col xs="3">
+                <FormGroup>
+                  <Label for="name" check>
+                    {SellingPriceName} <span className="txt-danger"> *</span>
+                  </Label>
+                  <input
+                    type="text"
+                    className="m-0 form-control"
+                    id="name"
+                    required
+                    {...register("name")}
+                  />
+                  <DisplayError
+                    errors={errors}
+                    errorsValidation={errorsValidation}
+                    keyProp="name"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="2">
+                <FormGroup>
+                  <Label for="price" check>
+                    {SellingPrice} <span className="txt-danger"> *</span>
+                  </Label>
+                  <input
+                    type="number"
+                    className="m-0 form-control"
+                    id="price"
+                    {...register("price")}
+                  />
+                  <DisplayError
+                    errors={errors}
+                    // errorsValidation={errorsValidation}
+                    keyProp="price"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="2">
+                <FormGroup>
+                  <Label for="currency" check>
+                    {SellingCurrency} <span className="txt-danger"> *</span>
+                  </Label>
+                  <DropDownComponent
+                    id="id"
+                    title={""}
+                    isRequired={false}
+                    labelKey="name"
+                    multiple={false}
+                    placeHolder=""
+                    onChange={handleCurrencyChanged}
+                    options={DropDownData.map((item) => {
+                      return {
+                        name: item.name,
+                        id: item.id.toString(),
+                      };
+                    })}
+                    selectedOption={[
+                      {
+                        id: CurrencyEnum.TRY,
+                        name: CurrencyDisplayNames[CurrencyEnum.TRY],
+                      },
+                    ]}
+                  />
+                  <DisplayError
+                    errors={errors}
+                    errorsValidation={errorsValidation}
+                    keyProp="currency"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="3">
+                <FormGroup>
+                  <Label for="description" check>
+                    {Description}
+                  </Label>
+                  <input
+                    type="text"
+                    className="m-0 form-control"
+                    id="description"
+                    {...register("description")}
+                  />
+                  <DisplayError
+                    errors={errors}
+                    errorsValidation={errorsValidation}
+                    keyProp="description"
+                  />
+                </FormGroup>
+              </Col>
+              <Col xs="1" style={{ alignSelf: "center", cursor: "pointer" }}>
+                <Button color="primary" type="submit" disabled={isLoading}>
+                  {" "}
+                  {Add}
+                </Button>
+              </Col>
+            </Row>
+            {/* {!isSubmitted && (
+        <Row style={{ justifyContent: "flex-end" }}>
+          <Col xs="3">
+            <Button color="primary" type="submit" disabled={isLoading}>
+              {" "}
+              {Add}
+            </Button>
           </Col>
-          {/* <TypesOfProduct /> */}
         </Row>
-      </Form>
-    </div>
+      )} */}
+          </Form>
+        </div>
+      </CardHeader>
+
+      <CardBody>
+        <div className="todo">
+          <div className="todo-list-wrapper custom-scrollbar">
+            <div className="todo-list-container">
+              <TourPriceRow
+                priceList={priceList}
+                handleRemovePrice={handleRemovePrice}
+              />
+            </div>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
 

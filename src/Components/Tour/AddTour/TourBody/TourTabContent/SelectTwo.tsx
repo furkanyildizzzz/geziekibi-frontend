@@ -3,6 +3,7 @@ import { Typeahead, TypeaheadRef } from "react-bootstrap-typeahead";
 import {
   AddTag,
   ChooseATag,
+  CreateNewTagHeading,
   Tours,
   ToursCanBeTagged,
 } from "@/Constant/constant";
@@ -16,6 +17,8 @@ import {
   TagSuccessResponse,
 } from "@/Types/ApiResponseType";
 import { getTagList } from "@/app/actions/tag/getTagList";
+import CreateNewTag from "@/Components/Tag/CreateNewTag";
+import { usePathname, useRouter } from "next/navigation";
 
 export const MultiWithHeaderData = [
   { name: "NBA Teams", header: true },
@@ -44,6 +47,9 @@ const SelectTwo = () => {
   const dispatch = useAppDispatch();
   const { formValue } = useAppSelector((state) => state.addProduct);
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const handleChange = (selected: Option[]) => {
     dispatch(setFormValue({ name: "tags", value: selected }));
   };
@@ -57,7 +63,11 @@ const SelectTwo = () => {
 
   useEffect(() => {
     fetchTagList();
-  }, []);
+  }, [pathname]);
+
+  const handleAdd = () => {
+    router.push("/tags/add-tag");
+  };
 
   return (
     <Col sm="6">
@@ -85,10 +95,24 @@ const SelectTwo = () => {
             }
           />
           <p className="f-light">{ToursCanBeTagged} </p>
-
+        </Col>
+      </Row>
+      <Row>
+        <Col xs="6">
           <ButtonToolbar className="mt-3">
             <Button onClick={() => ref.current?.clear()}>Clear</Button>
           </ButtonToolbar>
+        </Col>
+        <Col xs="6">
+          <Button
+            color="transparent"
+            tag="a"
+            className="button-primary bg-light-primary font-primary"
+            onClick={handleAdd}
+          >
+            <i className="me-2 fa fa-plus"> </i>
+            {CreateNewTagHeading}
+          </Button>
         </Col>
       </Row>
     </Col>

@@ -4,12 +4,18 @@ import SelectTwo from "./SelectTwo";
 import CreateNewCategory from "./CreateNewCategory";
 import SelectFour from "./SelectFour";
 import SelectFive from "./SelectFive";
+import SelectThree from "./SelectThree";
 
 const TourThree = () => {
   return (
     <div className="sidebar-body">
       <Form>
         <Row className="g-lg-4 g-3">
+          <Col xs="12">
+            <Row className="g-3">
+              <SelectThree />
+            </Row>
+          </Col>
           <Col xs="12">
             <Row className="g-3">
               <SelectOne />

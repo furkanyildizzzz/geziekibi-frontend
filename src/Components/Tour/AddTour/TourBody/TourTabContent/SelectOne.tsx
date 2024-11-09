@@ -1,7 +1,7 @@
-import { AddCategory } from "@/Constant/constant";
+import { AddCategory, CreateNewCategoryHeading } from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
-import { Col, Input, Label, Row } from "reactstrap";
+import { Button, Col, Input, Label, Row } from "reactstrap";
 import CreateNewCategory from "./CreateNewCategory";
 import {
   ApiResponse,
@@ -13,6 +13,7 @@ import { getTourCategoryList } from "@/app/actions/tour/category/getTourCategory
 import DisplayError from "@/utils/DisplayError";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import { Option } from "react-bootstrap-typeahead/types/types";
+import { usePathname, useRouter } from "next/navigation";
 
 const SelectOne = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -26,6 +27,8 @@ const SelectOne = () => {
   const { formValue } = useAppSelector((state) => state.addProduct);
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleCategory = (select: string) => {
     dispatch(setFormValue({ name: "category", value: select }));
@@ -41,15 +44,19 @@ const SelectOne = () => {
 
   useEffect(() => {
     fetchTourCategoryList();
-  }, []);
+  }, [pathname]);
 
   const handleCategoryIdChanged = (id: string) => {
     dispatch(
       setFormValue({
         name: "category",
-        value: tourCategories.find((s) => (s.id = Number(id))),
+        value: tourCategories.find((s) => s.id === Number(id)),
       })
     );
+  };
+
+  const handleAdd = () => {
+    router.push("/tour/category/add-category");
   };
 
   return (
@@ -91,23 +98,21 @@ const SelectOne = () => {
             errorsValidation={errorsValidation}
             keyProp="parentid"
           />{" "}
-          {/* <Input
-            type="select"
-            name="category"
-            defaultValue="Toys & games"
-            onChange={(e) => handleCategory(e.target.value)}
-          >
-            <option>Toys & games</option>
-            <option>Sportswear </option>
-            <option>Jewellery </option>
-            <option>Furniture and Decor</option>
-            <option>Health, Personal Care, and Beauty</option>
-            <option>Auto and Parts </option>
-            <option>Baby Care Products</option>
-          </Input> */}
           <p className="f-light">A product can be added to a category</p>
         </Col>
-        <CreateNewCategory />
+      </Row>
+      <Row>
+        <Col xs="8">
+          <Button
+            color="transparent"
+            tag="a"
+            className="button-primary bg-light-primary font-primary"
+            onClick={handleAdd}
+          >
+            <i className="me-2 fa fa-plus"> </i>
+            {CreateNewCategoryHeading}
+          </Button>
+        </Col>
       </Row>
     </Col>
   );

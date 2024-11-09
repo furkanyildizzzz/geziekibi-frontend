@@ -1,3 +1,4 @@
+import { PublishStatusDisplayNames, PublishStatusEnum } from "@/app/lib/enums";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import {
   ChooseTheStatus,
@@ -11,9 +12,19 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { Col, Input, Label, Row } from "reactstrap";
 
 export const DropDownData = [
-  { id: "publish", name: Publish, header: true },
-  { id: "draft", name: Drafts },
-  { id: "unpublish", name: Unpublish },
+  {
+    id: PublishStatusEnum.PUBLISH,
+    name: PublishStatusDisplayNames[PublishStatusEnum.PUBLISH],
+    header: true,
+  },
+  {
+    id: PublishStatusEnum.DRAFT,
+    name: PublishStatusDisplayNames[PublishStatusEnum.DRAFT],
+  },
+  {
+    id: PublishStatusEnum.UNPUBLISH,
+    name: PublishStatusDisplayNames[PublishStatusEnum.UNPUBLISH],
+  },
 ];
 
 const SelectFour = () => {

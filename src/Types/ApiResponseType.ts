@@ -39,7 +39,13 @@ export type ServiceSuccessResponse = {
   selected: "N" | "I" | "Y";
   type: "included" | "excluded";
 };
-export type SingleFileUploadSuccessResponse = { imageUrl: string };
+export type CloudinaryImage = {
+  publicId: string;
+  url: string;
+  secureUrl: string;
+  format: string;
+  createdAt: Date;
+};
 export type TourService = {
   id: number;
   type: string;
@@ -51,12 +57,21 @@ export type TourSuccessResponse = {
   spot: string;
   body: Text;
   type: string;
-  image: string;
-  gallery: string[];
+  primaryImages: CloudinaryImage[];
+  galleryImages: CloudinaryImage[];
   publishStatus: string;
   publishDate: Date;
   category: TourCategorySuccessResponse;
   prices: { name: string; description: string; price: number }[];
   tags: TagSuccessResponse[];
   tourServices: TourService[];
+};
+
+export type TourPriceSuccessResponse = {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  currency: string;
+  rowId: number;
 };

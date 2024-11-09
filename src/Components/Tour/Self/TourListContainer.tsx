@@ -96,7 +96,7 @@ const TourListContainer = () => {
 
   const handleEdit = async (id: number) => {
     // router.push(`/tour/${id}`);
-    window.open("/tour/${id}", "_blank");
+    window.open(`/tour/${id}`, "_blank");
   };
 
   const handleAdd = () => {

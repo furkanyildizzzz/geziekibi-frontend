@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CurrencyEnum, PublishStatusEnum, TourTypeEnum } from "./enums";
 
 export const SignupFormSchema = z
   .object({
@@ -137,19 +138,11 @@ export const TourValidationSchema = z.object({
   spot: z.string().min(1, { message: "Spot is required" }),
   body: z.string().optional(), // 'text' type is generally optional in validation
   publishStatus: z
-    .nativeEnum({
-      PUBLISH: "publish",
-      DRAFT: "draft",
-      UNPUBLISH: "unpublish",
-    })
-    .default("draft"),
-  type: z
-    .nativeEnum({
-      YURTDISI: "yurtdisi",
-      YURTICI: "yurtici",
-      GUNUBIRLIK: "gunubirlik",
-    })
-    .default("yurtdisi"),
+    .nativeEnum(PublishStatusEnum, { message: "Publish status required" })
+    .default(PublishStatusEnum.DRAFT),
+  tourType: z
+    .nativeEnum(TourTypeEnum, { message: "Tour type required" })
+    .default(TourTypeEnum.YURTICI),
   publishDate: z
     .date({
       message: "Invalid date format",
@@ -180,3 +173,22 @@ export const TourValidationSchema = z.object({
     )
     .optional(),
 });
+
+export const CreateTourPriceFormSchema = z.object({
+  id: z.number().optional(),
+  name: z
+    .string({ message: "Please enter valid category name" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+  price: z.preprocess(
+    (value) => parseFloat(value as string), // Convert to a number first
+    z
+      .number({ message: "Price is required" })
+      .positive({ message: "Price must be a positive number" })
+  ),
+  currency: z
+    .nativeEnum(CurrencyEnum, { message: "Currency required" })
+    .default(CurrencyEnum.TRY),
+  description: z.string().optional(),
+});
+export type CreateTourPriceSchema = z.infer<typeof CreateTourPriceFormSchema>;

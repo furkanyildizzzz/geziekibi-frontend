@@ -1,7 +1,13 @@
 import { TourValidationSchema } from "@/app/lib/definitions";
-import { ApiResponse, TourSuccessResponse } from "@/Types/ApiResponseType";
+import {
+  ApiErrorResponse,
+  ApiResponse,
+  ErrorValidation,
+  TourSuccessResponse,
+} from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
 import { FieldValues } from "react-hook-form";
+import { ZodError } from "zod";
 
 export const createNewTour = async (
   formFields: FieldValues
@@ -36,8 +42,20 @@ export const createNewTour = async (
     // }
     return await apiRequest<TourSuccessResponse>("tour/", "POST", formData);
   } catch (error) {
-    console.log({ error });
-    // Handle any other errors (if necessary)
+    if (error instanceof ZodError) {
+      const errorsValidation: ErrorValidation[] = error.errors.map((issue) => ({
+        [issue.path.join(".")]: issue.message,
+      }));
+
+      return {
+        errorType: "Validation",
+        errorMessage: "Validation error",
+        errors: error.errors.map((issue) => issue.message),
+        errorRaw: error,
+        errorsValidation,
+        stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+      } as ApiErrorResponse;
+    }
     throw error;
   }
 };

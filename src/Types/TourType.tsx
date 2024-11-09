@@ -1,5 +1,12 @@
 import SVG from "@/CommonComponent/SVG/Svg";
 import { TourCategorySuccessResponse } from "./ApiResponseType";
+import { Draft, Publish, Unpublish } from "@/Constant/constant";
+import {
+  PublishStatusDisplayNames,
+  PublishStatusEnum,
+  TourTypeDisplayNames,
+  TourTypeEnum,
+} from "@/app/lib/enums";
 
 export interface TourListTableName {
   title?: string;
@@ -86,7 +93,8 @@ export const TourListTableDataColumn = (
   },
   {
     name: "Type",
-    selector: (row: TourListTableDataColumnType) => `${row.type}`,
+    selector: (row: TourListTableDataColumnType) =>
+      `${TourTypeDisplayNames[row.type as TourTypeEnum]}`,
     sortable: true,
   },
 
@@ -98,7 +106,8 @@ export const TourListTableDataColumn = (
 
   {
     name: "Publish Status",
-    selector: (row: TourListTableDataColumnType) => `${row.publishStatus}`,
+    selector: (row: TourListTableDataColumnType) =>
+      `${PublishStatusDisplayNames[row.type as PublishStatusEnum]}`,
     sortable: true,
   },
 

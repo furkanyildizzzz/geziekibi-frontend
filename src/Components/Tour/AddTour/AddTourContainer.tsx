@@ -10,7 +10,10 @@ import {
 import { Card, CardBody, CardHeader, Col, Container, Row } from "reactstrap";
 import TourBody from "./TourBody/TourBody";
 import Breadcrumbs from "@/CommonComponent/Breadcrumb";
-import { ErrorValidation } from "@/Types/ApiResponseType";
+import {
+  ErrorValidation,
+  TourPriceSuccessResponse,
+} from "@/Types/ApiResponseType";
 import { getTourById } from "@/app/actions/tour/self/getTourById";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
@@ -25,7 +28,11 @@ const AddTourContainer = ({ id }: { id?: number }) => {
     const response = await getTourById(id);
     if ("data" in response) {
       Object.entries(response.data).forEach(([key, value]: [string, any]) => {
-        // console.log({ name: key, value: value });
+        if (key === "prices") {
+          value = value.map((val: TourPriceSuccessResponse, index: number) => {
+            return { ...val, rowId: index + 1 };
+          });
+        }
         dispatch(setFormValue({ name: key, value: value }));
       });
     }
