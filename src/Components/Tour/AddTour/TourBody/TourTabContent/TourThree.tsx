@@ -13,11 +13,6 @@ const TourThree = () => {
         <Row className="g-lg-4 g-3">
           <Col xs="12">
             <Row className="g-3">
-              <SelectThree />
-            </Row>
-          </Col>
-          <Col xs="12">
-            <Row className="g-3">
               <SelectOne />
               <SelectTwo />
             </Row>

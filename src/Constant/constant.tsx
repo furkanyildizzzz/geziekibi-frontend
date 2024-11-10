@@ -2039,7 +2039,7 @@ export const TypesOfTourDiscountConstant: string = "Types of tour discount";
 export const ChooseServices: string =
   "Which of the following services do you want to include in tour?";
 export const IncludedServices = "Included Services";
-export const ExcludedServices = "Included Services";
+export const ExcludedServices = "Excluded Services";
 export const Publish = "Publish";
 export const Draft = "Draft";
 export const Drafts = "Drafts";

@@ -5,6 +5,7 @@ const initialState: AddProductSliceType = {
   navId: 1,
   tabId: 1,
   formValue: {
+    id: 0,
     title: "",
     spot: "",
     body: "",
@@ -16,7 +17,7 @@ const initialState: AddProductSliceType = {
     publishDate: "",
     startDate: "",
     endDate: "",
-    price: "",
+    prices: [],
     currency: "",
     tags: "",
     tourServices: [],

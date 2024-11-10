@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { CurrencyEnum, PublishStatusEnum, TourTypeEnum } from "./enums";
+import {
+  CurrencyEnum,
+  PublishStatusEnum,
+  TourServiceTypeEnum,
+  TourTypeEnum,
+} from "./enums";
 
 export const SignupFormSchema = z
   .object({
@@ -137,6 +142,12 @@ export const TourValidationSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
   spot: z.string().min(1, { message: "Spot is required" }),
   body: z.string().optional(), // 'text' type is generally optional in validation
+  startDate: z.date({
+    message: "Invalid start date format",
+  }),
+  endDate: z.date({
+    message: "Invalid end date format",
+  }),
   publishStatus: z
     .nativeEnum(PublishStatusEnum, { message: "Publish status required" })
     .default(PublishStatusEnum.DRAFT),
@@ -145,7 +156,7 @@ export const TourValidationSchema = z.object({
     .default(TourTypeEnum.YURTICI),
   publishDate: z
     .date({
-      message: "Invalid date format",
+      message: "Invalid publish date format",
     })
     .optional(),
   image: z.any().optional(), // Allow any file object for image
@@ -156,18 +167,26 @@ export const TourValidationSchema = z.object({
   prices: z
     .array(
       z.object({
+        name: z.string({ message: "Price name required" }).trim(),
         price: z
           .number()
           .positive({ message: "Price amount must be positive" }),
         currency: z.string().min(1, { message: "Currency is required" }),
+        description: z.string().optional(),
       })
     )
     .optional(),
-  categoryId: z.number({ message: "Category is required" }), // Category is referenced by `id`
+  category: z.object({
+    id: z.number({ message: "Category is required" }),
+    name: z.string().optional(),
+  }),
   tourServices: z
     .array(
       z.object({
         id: z.number(),
+        type: z.nativeEnum(TourServiceTypeEnum, {
+          message: "Servie type required",
+        }),
         name: z.string().min(1, { message: "Service name is required" }),
       })
     )

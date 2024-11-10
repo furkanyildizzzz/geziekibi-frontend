@@ -1,3 +1,5 @@
+import { TourServiceTypeEnum } from "@/app/lib/enums";
+
 export type ApiResponse<T = any> = ApiErrorResponse | ApiSuccessResponse<T>;
 
 export interface ApiErrorResponse extends Response {
@@ -36,8 +38,7 @@ export type ServiceSuccessResponse = {
   id: number;
   name: string;
   description: string;
-  selected: "N" | "I" | "Y";
-  type: "included" | "excluded";
+  type: TourServiceTypeEnum;
 };
 export type CloudinaryImage = {
   publicId: string;
@@ -48,7 +49,7 @@ export type CloudinaryImage = {
 };
 export type TourService = {
   id: number;
-  type: string;
+  type: TourServiceTypeEnum;
   service: ServiceSuccessResponse;
 };
 export type TourSuccessResponse = {
