@@ -31,3 +31,16 @@ export const CurrencyDisplayNames: { [key in CurrencyEnum]: string } = {
   [CurrencyEnum.EUR]: "Euro €",
   [CurrencyEnum.USD]: "Dolar $",
 };
+
+export enum TourServiceTypeEnum {
+  INCLUDED = "included",
+  INHERIT = "inherit",
+  EXCLUDED = "excluded",
+}
+export const TourServiceTypeEnumDisplayNames: {
+  [key in TourServiceTypeEnum]: string;
+} = {
+  [TourServiceTypeEnum.INCLUDED]: "Included",
+  [TourServiceTypeEnum.INHERIT]: "Inherit",
+  [TourServiceTypeEnum.EXCLUDED]: "Excluded",
+};

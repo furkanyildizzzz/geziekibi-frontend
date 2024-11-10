@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./ThreeChoiceSwitch.css"; // Import the CSS htmlFor styles
 import styled from "styled-components";
 import { Inherit, No, Yes } from "@/Constant/constant";
+import { TourServiceTypeEnum } from "@/app/lib/enums";
 
 // Styled Components
 const SwitchContainer = styled.div`
@@ -50,14 +51,18 @@ const ThreeChoiceSwitch: React.FC<{
   id: number;
   name: string;
   onSelectChange: Function | null;
-  isSelected: "N" | "I" | "Y";
-}> = ({ id, name, onSelectChange, isSelected }) => {
-  const [selected, setSelected] = useState<"N" | "I" | "Y">(isSelected); // Default to 'Inherit'
+  type: TourServiceTypeEnum;
+}> = ({ id, name, onSelectChange, type }) => {
+  const [selected, setSelected] = useState<TourServiceTypeEnum>(type); // Default to 'Inherit'
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { serviceId, serviceName } = event.target.dataset;
-    setSelected(event.target.value as "N" | "I" | "Y");
+    setSelected(event.target.value as TourServiceTypeEnum);
     if (onSelectChange) {
-      onSelectChange(event.target.value, serviceId, serviceName);
+      onSelectChange(
+        event.target.value as TourServiceTypeEnum,
+        serviceId,
+        serviceName
+      );
     }
   };
 
@@ -69,13 +74,16 @@ const ThreeChoiceSwitch: React.FC<{
         id={`switch-n-${id}`}
         name="triple"
         type="radio"
-        value="N"
-        checked={selected === "N"}
+        value="excluded"
+        checked={selected === TourServiceTypeEnum.EXCLUDED}
         onChange={handleChange}
         data-service-id={id}
         data-service-name={name}
       />
-      <SwitchLabel htmlFor={`switch-n-${id}`} isActive={selected === "N"}>
+      <SwitchLabel
+        htmlFor={`switch-n-${id}`}
+        isActive={selected === TourServiceTypeEnum.EXCLUDED}
+      >
         {No}
       </SwitchLabel>
 
@@ -83,13 +91,16 @@ const ThreeChoiceSwitch: React.FC<{
         id={`switch-i-${id}`}
         name="triple"
         type="radio"
-        value="I"
-        checked={selected === "I"}
+        value="inherit"
+        checked={selected === TourServiceTypeEnum.INHERIT}
         onChange={handleChange}
         data-service-id={id}
         data-service-name={name}
       />
-      <SwitchLabel htmlFor={`switch-i-${id}`} isActive={selected === "I"}>
+      <SwitchLabel
+        htmlFor={`switch-i-${id}`}
+        isActive={selected === TourServiceTypeEnum.INHERIT}
+      >
         {Inherit}
       </SwitchLabel>
 
@@ -97,18 +108,27 @@ const ThreeChoiceSwitch: React.FC<{
         id={`switch-y-${id}`}
         name="triple"
         type="radio"
-        value="Y"
-        checked={selected === "Y"}
+        value="included"
+        checked={selected === TourServiceTypeEnum.INCLUDED}
         onChange={handleChange}
         data-service-id={id}
         data-service-name={name}
       />
-      <SwitchLabel htmlFor={`switch-y-${id}`} isActive={selected === "Y"}>
+      <SwitchLabel
+        htmlFor={`switch-y-${id}`}
+        isActive={selected === TourServiceTypeEnum.INCLUDED}
+      >
         {Yes}
       </SwitchLabel>
 
       <SwitchSelector
-        position={selected === "N" ? 0 : selected === "I" ? 1 : 2}
+        position={
+          selected === TourServiceTypeEnum.EXCLUDED
+            ? 0
+            : selected === TourServiceTypeEnum.INHERIT
+            ? 1
+            : 2
+        }
       />
     </SwitchContainer>
   );

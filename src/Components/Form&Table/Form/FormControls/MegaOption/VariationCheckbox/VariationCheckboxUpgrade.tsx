@@ -1,3 +1,4 @@
+import { TourServiceTypeEnum } from "@/app/lib/enums";
 import { UpgradeSpanText, UpgradeTitle } from "@/Constant/constant";
 import { ServiceSuccessResponse } from "@/Types/ApiResponseType";
 import { Col, Input } from "reactstrap";
@@ -29,7 +30,7 @@ export const UpgradeVariationData = [
 interface ServicesBox {
   title: string;
   textColor: string;
-  services: { id: number; name: string; selected: string }[];
+  services: { id: number; name: string; type: TourServiceTypeEnum }[];
 }
 
 const ServicesBox: React.FC<ServicesBox> = ({ title, textColor, services }) => {
