@@ -23,25 +23,11 @@ const CommonButton = () => {
     )
       dispatch(setNavId(3));
     else if (!formValue.prices.length) dispatch(setNavId(4));
-    else if (
-      !formValue.stock ||
-      !formValue.lowStock ||
-      !formValue.sku ||
-      !formValue.quantity ||
-      !formValue.restock
-    )
-      dispatch(setNavId(5));
-    else {
-      handleSubmit();
-    }
+    dispatch(setNavId(5));
   };
   const handlePrevious = () => {
     if (navId > 1) {
-      if (tabId > 1) {
-        dispatch(setTabId(tabId - 1));
-      } else {
-        dispatch(setNavId(navId - 1));
-      }
+      dispatch(setNavId(navId - 1));
     }
   };
 
@@ -91,17 +77,31 @@ const CommonButton = () => {
           </div>
         </Button>
       )}
-      <Button
-        color="transparent"
-        className="ms-2"
-        onClick={handleNext}
-        type={navId === 5 ? "button" : "submit"}
-      >
-        <div className="d-flex align-items-center gap-sm-2 gap-1">
-          {navId === 5 ? Submit : Next}
-          <SVG iconId="front-arrow" />
-        </div>
-      </Button>
+      {navId === 5 ? (
+        <Button
+          color="transparent"
+          className="ms-2"
+          onClick={handleSubmit}
+          type={"submit"}
+        >
+          <div className="d-flex align-items-center gap-sm-2 gap-1">
+            {Submit}
+            <SVG iconId="front-arrow" />
+          </div>
+        </Button>
+      ) : (
+        <Button
+          color="transparent"
+          className="ms-2"
+          onClick={handleNext}
+          type={"button"}
+        >
+          <div className="d-flex align-items-center gap-sm-2 gap-1">
+            {Next}
+            <SVG iconId="front-arrow" />
+          </div>
+        </Button>
+      )}
     </div>
   );
 };
