@@ -1,5 +1,11 @@
+import TourGallery from "./TourGallery";
 import { useCallback, useEffect, useState } from "react";
-import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";
+import {
+  Dropzone,
+  ExtFile,
+  FileMosaic,
+  ImagePreview,
+} from "@dropzone-ui/react";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import Link from "next/link";
 import { DragYourImageHere, Href, TourImage } from "@/Constant/constant";
@@ -8,8 +14,9 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import SVG from "@/CommonComponent/SVG/Svg";
 import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { CloudinaryImage } from "@/Types/ApiResponseType";
+import TourImagesDropzone from "./TourPrimaryImages";
 
-const TourGalleryImages = () => {
+const TourPrimaryImages = () => {
   const { formValue } = useAppSelector((state) => state.addProduct);
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
@@ -17,16 +24,16 @@ const TourGalleryImages = () => {
 
   const updateFiles = (files: ExtFile[]) => {
     setFiles(files);
-    dispatch(setFormValue({ name: "galleryImages", value: files }));
+    dispatch(setFormValue({ name: "primaryImages", value: files }));
   };
 
   const removeFile = (id: string | number | undefined) => {
-    dispatch(setFormValue({ name: "galleryImages", value: [] }));
+    dispatch(setFormValue({ name: "primaryImages", value: [] }));
     setFiles(files.filter((x: ExtFile) => x.id !== id));
   };
 
   const setExistingImages = useCallback(async () => {
-    setExistingFiles(formValue.galleryImages);
+    setExistingFiles(formValue.primaryImages);
   }, [formValue]);
 
   useEffect(() => {
@@ -44,8 +51,7 @@ const TourGalleryImages = () => {
           images={existingFiles}
           onRemove={(publicId: string) => {
             console.log({ publicId });
-            console.log({ existingFiles });
-            dispatch(setFormValue({ name: "galleryImages", value: [] }));
+            dispatch(setFormValue({ name: "primaryImages", value: [] }));
             setExistingFiles([]);
           }}
         />
@@ -53,11 +59,11 @@ const TourGalleryImages = () => {
       <Dropzone
         onChange={(files) => updateFiles(files)}
         value={files}
-        maxFiles={5}
+        maxFiles={1}
         header={false}
         footer={false}
         minHeight="80px"
-        name="galleryImages"
+        name="primaryImages"
       >
         {files.map((file: ExtFile) => (
           <FileMosaic
@@ -87,4 +93,4 @@ const TourGalleryImages = () => {
   );
 };
 
-export default TourGalleryImages;
+export default TourPrimaryImages;
