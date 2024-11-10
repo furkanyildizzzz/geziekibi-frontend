@@ -41,7 +41,7 @@ import { current } from "@reduxjs/toolkit";
 import { CurrencyDisplayNames, CurrencyEnum } from "@/app/lib/enums";
 import AddTourPriceForm from "./AddTourPriceForm";
 import { number } from "zod";
-import TourPriceRow from "./TourPriceList";
+import TourPriceList from "./TourPriceList";
 
 export const DropDownData = [
   {
@@ -92,42 +92,51 @@ const TourFour = () => {
     },
   });
 
-  const initiatePriceList = useCallback(async () => {
+  const setExistingPriceList = useCallback(async () => {
     setPriceList(formValue.prices);
   }, [formValue]);
 
   useEffect(() => {
-    initiatePriceList();
-  }, [initiatePriceList]);
+    if (formValue.id > 0 && priceList.length === 0) {
+      setExistingPriceList();
+    }
+  }, [setExistingPriceList]);
 
   const onSubmit = (data: TourPriceSuccessResponse) => {
     //Aynı isimle gelen kaydi ekleme
     console.log({ formValue });
     if (
-      formValue.prices.find(
+      priceList?.find(
         (s: TourPriceSuccessResponse) =>
           s.name === data.name &&
           s.currency === data.currency &&
           s.description === data.description
       )
     ) {
-      setErrorMessage(`Price name:${data.name} is already added`);
+      setErrorMessage(`Price "${data.name}" already exits`);
       return;
     }
 
     const newPrice = {
       ...data,
       rowId:
-        priceList.length > 0 ? priceList[priceList.length - 1].rowId + 1 : 1,
+        priceList?.length > 0 ? priceList[priceList.length - 1].rowId + 1 : 1,
     };
+    console.log({ priceList });
+    console.log({ newPrice });
 
     setPriceList((prev) => {
-      return [...prev, newPrice];
+      if (prev) return [...prev, newPrice];
+      return [newPrice];
     });
 
-    dispatch(
-      setFormValue({ name: "prices", value: [...formValue.prices, newPrice] })
-    );
+    if (formValue.prices?.length) {
+      dispatch(
+        setFormValue({ name: "prices", value: [...formValue.prices, newPrice] })
+      );
+    } else {
+      dispatch(setFormValue({ name: "prices", value: [newPrice] }));
+    }
 
     reset();
   };
@@ -136,7 +145,7 @@ const TourFour = () => {
     dispatch(
       setFormValue({
         name: "prices",
-        value: formValue.prices.filter(
+        value: formValue.prices?.filter(
           (s: TourPriceSuccessResponse) => s.rowId !== rowId
         ),
       })
@@ -154,6 +163,7 @@ const TourFour = () => {
     <Card className="sidebar-body">
       <CardHeader className="b-bottom">
         <div className="todo-list-header">
+          <DisplayError errorMessage={errorMessage} />
           <Form
             className="theme-form"
             onSubmit={handleSubmit((data) => {
@@ -274,7 +284,7 @@ const TourFour = () => {
         <div className="todo">
           <div className="todo-list-wrapper custom-scrollbar">
             <div className="todo-list-container">
-              <TourPriceRow
+              <TourPriceList
                 priceList={priceList}
                 handleRemovePrice={handleRemovePrice}
               />
