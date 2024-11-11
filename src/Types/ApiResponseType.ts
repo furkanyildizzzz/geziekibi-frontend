@@ -34,11 +34,17 @@ export type TourCategorySuccessResponse = {
   parent: TourCategorySuccessResponse;
   subCategories: TourCategorySuccessResponse[];
 };
-export type ServiceSuccessResponse = {
+export type TourServiceSuccessResponse = {
   id: number;
   name: string;
   description: string;
   type: TourServiceTypeEnum;
+  service: ServiceSuccessResponse;
+};
+export type ServiceSuccessResponse = {
+  id: number;
+  name: string;
+  description: string;
 };
 export type CloudinaryImage = {
   publicId: string;
