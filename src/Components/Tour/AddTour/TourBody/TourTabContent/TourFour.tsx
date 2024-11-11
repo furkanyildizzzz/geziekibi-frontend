@@ -66,7 +66,9 @@ const TourFour = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useAppDispatch();
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading: isLoadingTour } = useAppSelector(
+    (state) => state.addProduct
+  );
 
   const [formList, setFormList] = useState<{ id: number; name: string }[]>([
     { id: 1, name: "" },
@@ -142,17 +144,19 @@ const TourFour = () => {
   };
 
   const handleRemovePrice = (rowId: number) => {
-    dispatch(
-      setFormValue({
-        name: "prices",
-        value: formValue.prices?.filter(
-          (s: TourPriceSuccessResponse) => s.rowId !== rowId
-        ),
-      })
-    );
-    setPriceList((prev: TourPriceSuccessResponse[]) => [
-      ...prev.filter((s) => s.rowId !== rowId),
-    ]);
+    if (!isLoadingTour) {
+      dispatch(
+        setFormValue({
+          name: "prices",
+          value: formValue.prices?.filter(
+            (s: TourPriceSuccessResponse) => s.rowId !== rowId
+          ),
+        })
+      );
+      setPriceList((prev: TourPriceSuccessResponse[]) => [
+        ...prev.filter((s) => s.rowId !== rowId),
+      ]);
+    }
     console.log({ formValue });
   };
 
@@ -181,6 +185,7 @@ const TourFour = () => {
                     className="m-0 form-control"
                     id="name"
                     required
+                    disabled={isLoadingTour}
                     {...register("name")}
                   />
                   <DisplayError
@@ -199,6 +204,7 @@ const TourFour = () => {
                     type="number"
                     className="m-0 form-control"
                     id="price"
+                    disabled={isLoadingTour}
                     {...register("price")}
                   />
                   <DisplayError
@@ -221,6 +227,7 @@ const TourFour = () => {
                     multiple={false}
                     placeHolder=""
                     onChange={handleCurrencyChanged}
+                    isDisabled={isLoadingTour}
                     options={DropDownData.map((item) => {
                       return {
                         name: item.name,
@@ -250,6 +257,7 @@ const TourFour = () => {
                     type="text"
                     className="m-0 form-control"
                     id="description"
+                    disabled={isLoadingTour}
                     {...register("description")}
                   />
                   <DisplayError
@@ -260,7 +268,11 @@ const TourFour = () => {
                 </FormGroup>
               </Col>
               <Col xs="1" style={{ alignSelf: "center", cursor: "pointer" }}>
-                <Button color="primary" type="submit" disabled={isLoading}>
+                <Button
+                  color="primary"
+                  type="submit"
+                  disabled={isLoading || isLoadingTour}
+                >
                   {" "}
                   {Add}
                 </Button>

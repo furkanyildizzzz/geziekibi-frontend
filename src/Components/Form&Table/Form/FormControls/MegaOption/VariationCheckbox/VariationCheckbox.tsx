@@ -423,7 +423,7 @@ const VariationCheckbox = () => {
   const [tourService, setTourService] = useState<TourServiceSuccessResponse>();
   const [refreshKey, setRefreshKey] = useState(0); // This will be updated to trigger rerender
   const dispatch = useAppDispatch();
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -545,6 +545,7 @@ const VariationCheckbox = () => {
                   color="transparent"
                   tag="a"
                   className="button-primary bg-light-primary font-primary"
+                  disabled={isLoading}
                   onClick={handleAdd}
                 >
                   <i className="me-2 fa fa-plus"> </i>

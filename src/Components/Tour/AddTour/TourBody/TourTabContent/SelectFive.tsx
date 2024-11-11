@@ -7,15 +7,15 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 
 const SelectFive = () => {
   const dispatch = useAppDispatch();
-  const { formValue } = useAppSelector((state) => state.addProduct);
-  const [startDate, setStartDate] = useState<Date>(new Date());
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
+  const [today, setToday] = useState<Date | null>(new Date());
   const handleChange = (date: Date) => {
-    setStartDate(date);
+    setToday(date);
     dispatch(setFormValue({ name: "publishDate", value: date }));
   };
 
   const initiatePublishDate = useCallback(async () => {
-    setStartDate(formValue.publishDate || new Date());
+    setToday(new Date(formValue.publishDate));
   }, [formValue]);
 
   useEffect(() => {
@@ -29,12 +29,12 @@ const SelectFive = () => {
             {PublishDateTime}
           </Label>
           <div className="input-group flatpicker-calender product-date">
-            <ReactDatePicker
+            {/* <ReactDatePicker
               className="form-control flatpickr-input"
-              selected={startDate}
+              selected={today}
               onChange={handleChange}
-              // value={new Date(formValue.publishDate).toLocaleDateString()}
-            />
+              disabled={isLoading}
+            /> */}
           </div>
         </Col>
       </Row>

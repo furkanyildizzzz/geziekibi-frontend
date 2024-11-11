@@ -24,7 +24,7 @@ const SelectOne = () => {
     TourCategorySuccessResponse[]
   >([]);
 
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -77,6 +77,7 @@ const SelectOne = () => {
             multiple={false}
             placeHolder=""
             onChange={handleCategoryIdChanged}
+            isDisabled={isLoading}
             options={tourCategories.map((item) => {
               return {
                 name: item.name,
@@ -106,6 +107,7 @@ const SelectOne = () => {
           <Button
             color="transparent"
             tag="a"
+            disabled={isLoading}
             className="button-primary bg-light-primary font-primary"
             onClick={handleAdd}
           >

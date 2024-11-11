@@ -45,7 +45,7 @@ const SelectTwo = () => {
   const ref = useRef<TypeaheadRef>(null);
 
   const dispatch = useAppDispatch();
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -88,6 +88,7 @@ const SelectTwo = () => {
             placeholder={ChooseATag}
             onChange={handleChange}
             ref={ref}
+            disabled={isLoading}
             selected={
               formValue.tags.length
                 ? formValue.tags.map((tag: { id: number; name: string }) => tag)
@@ -100,13 +101,16 @@ const SelectTwo = () => {
       <Row>
         <Col xs="6">
           <ButtonToolbar className="mt-3">
-            <Button onClick={() => ref.current?.clear()}>Clear</Button>
+            <Button onClick={() => ref.current?.clear()} disabled={isLoading}>
+              Clear
+            </Button>
           </ButtonToolbar>
         </Col>
         <Col xs="6">
           <Button
             color="transparent"
             tag="a"
+            disabled={isLoading}
             className="button-primary bg-light-primary font-primary"
             onClick={handleAdd}
           >

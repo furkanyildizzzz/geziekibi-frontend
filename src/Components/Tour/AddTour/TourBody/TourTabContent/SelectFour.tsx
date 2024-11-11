@@ -29,7 +29,7 @@ export const DropDownData = [
 
 const SelectFour = () => {
   const dispatch = useAppDispatch();
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
 
   const handleStatus = (select: string) => {
     dispatch(setFormValue({ name: "publishStatus", value: select }));
@@ -56,6 +56,7 @@ const SelectFour = () => {
             multiple={false}
             placeHolder=""
             onChange={handlePublishStatusChanged}
+            isDisabled={isLoading}
             options={DropDownData.map((item) => {
               return {
                 name: item.name,

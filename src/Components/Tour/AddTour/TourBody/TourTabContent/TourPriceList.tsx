@@ -12,7 +12,7 @@ const TourPriceList = ({
   priceList: TourPriceSuccessResponse[];
   handleRemovePrice: Function;
 }) => {
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const dispatch = useAppDispatch();
 
   return (

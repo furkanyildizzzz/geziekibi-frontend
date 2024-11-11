@@ -17,7 +17,7 @@ import { CloudinaryImage } from "@/Types/ApiResponseType";
 import TourImagesDropzone from "./TourPrimaryImages";
 
 const TourPrimaryImages = () => {
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
   const dispatch = useAppDispatch();
@@ -63,6 +63,7 @@ const TourPrimaryImages = () => {
         multiple={true}
         header={false}
         footer={false}
+        disabled={isLoading}
         minHeight="80px"
         name="primaryImages"
       >

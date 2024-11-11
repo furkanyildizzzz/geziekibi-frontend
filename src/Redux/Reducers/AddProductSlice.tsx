@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState: AddProductSliceType = {
   navId: 1,
   tabId: 1,
+  isLoading: false,
   formValue: {
     id: 0,
     title: "",
@@ -34,11 +35,15 @@ const AddProductSlice = createSlice({
     setTabId: (state, action) => {
       state.tabId = action.payload;
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
     setFormValue: (state, action) => {
       state.formValue[action.payload.name] = action.payload.value;
     },
   },
 });
-export const { setNavId, setFormValue, setTabId } = AddProductSlice.actions;
+export const { setNavId, setFormValue, setTabId, setIsLoading } =
+  AddProductSlice.actions;
 
 export default AddProductSlice.reducer;

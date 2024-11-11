@@ -673,6 +673,7 @@ export const InlineStyles: string = "Inline style";
 export const VerticalStyles: string = "Vertical style";
 export const HorizontalStyles: string = "Horizontal style";
 export const Submit: string = "Submit";
+export const Loading: string = "Loading";
 
 //Form Widgets - Datepicker
 export const CalendarDefault: string = "Default calendar";

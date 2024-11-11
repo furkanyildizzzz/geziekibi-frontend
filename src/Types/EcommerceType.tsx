@@ -173,6 +173,7 @@ export interface InvoicePrintType {
 export interface AddProductSliceType {
   navId: number;
   tabId: number;
+  isLoading: boolean;
   formValue: any;
 }
 

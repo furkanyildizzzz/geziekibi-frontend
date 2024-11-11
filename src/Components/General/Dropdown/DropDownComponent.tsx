@@ -14,6 +14,7 @@ interface DropDownComponentProps {
   multiple: boolean | undefined;
   isRequired: boolean | undefined;
   onChange: Function | undefined;
+  isDisabled?: boolean;
 }
 
 const DropDownComponent: React.FC<DropDownComponentProps> = ({
@@ -26,6 +27,7 @@ const DropDownComponent: React.FC<DropDownComponentProps> = ({
   isRequired,
   placeHolder,
   onChange,
+  isDisabled = false,
 }) => {
   const typeaheadRef = useRef<TypeaheadRef>(null);
 
@@ -82,6 +84,7 @@ const DropDownComponent: React.FC<DropDownComponentProps> = ({
           ref={typeaheadRef}
           onBlur={handleBlur}
           // {...register}
+          disabled={isDisabled}
         />
         {placeHolder && <p className="f-light">{placeHolder}</p>}
       </Col>

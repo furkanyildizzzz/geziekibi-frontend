@@ -10,7 +10,7 @@ import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzo
 import { CloudinaryImage } from "@/Types/ApiResponseType";
 
 const TourGalleryImages = () => {
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
   const dispatch = useAppDispatch();
@@ -52,6 +52,7 @@ const TourGalleryImages = () => {
       )}
       <Dropzone
         onChange={(files) => updateFiles(files)}
+        disabled={isLoading}
         value={files}
         maxFiles={5}
         header={false}

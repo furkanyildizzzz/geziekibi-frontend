@@ -1,14 +1,21 @@
 import { createNewTour } from "@/app/actions/tour/self/createNewTour";
 import ShowValidationError from "@/CommonComponent/Toast/Error/ShowValidationError";
 import SVG from "@/CommonComponent/SVG/Svg";
-import { Next, Previous, Submit } from "@/Constant/constant";
+import { Loading, Next, Previous, Submit } from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { setNavId, setTabId } from "@/Redux/Reducers/AddProductSlice";
+import {
+  setFormValue,
+  setNavId,
+  setIsLoading,
+  setTabId,
+} from "@/Redux/Reducers/AddProductSlice";
 import { Button } from "reactstrap";
 import { editTour } from "@/app/actions/tour/self/editTour";
+import { useEffect } from "react";
+import { LoadingButton } from "@/Components/Button/Loading";
 
 const CommonButton = () => {
-  const { navId, formValue, tabId } = useAppSelector(
+  const { navId, formValue, tabId, isLoading } = useAppSelector(
     (state) => state.addProduct
   );
   const dispatch = useAppDispatch();
@@ -32,26 +39,41 @@ const CommonButton = () => {
     }
   };
 
+  useEffect(() => {
+    console.log({ formValue, isLoading });
+  }, [isLoading]);
+
   const handleSubmit = async () => {
-    console.log({ formValue });
+    dispatch(setIsLoading(true));
+    try {
+      // Create a 5-second delay
+      await new Promise((resolve) => setTimeout(resolve, 5000));
 
-    const response =
-      formValue.id > 0
-        ? await editTour(formValue.id, formValue)
-        : await createNewTour(formValue);
-    console.log({ response });
+      // Place any actual submission logic here
+      // const response =
+      //   formValue.id > 0
+      //     ? await editTour(formValue.id, formValue)
+      //     : await createNewTour(formValue);
+      // console.log({ response });
 
-    if ("errorType" in response) {
-      if (response.errorType == "Validation") {
-        ShowValidationError(response.errorsValidation!);
-      }
+      // if ("errorType" in response) {
+      //   if (response.errorType == "Validation") {
+      //     ShowValidationError(response.errorsValidation!);
+      //   }
+      // }
+    } finally {
+      dispatch(setIsLoading(false));
     }
   };
 
   return (
     <div className="product-buttons border-0">
       {navId > 1 && (
-        <Button color="transparent" onClick={handlePrevious}>
+        <Button
+          color="transparent"
+          disabled={isLoading}
+          onClick={handlePrevious}
+        >
           <div className="d-flex align-items-center gap-sm-2 gap-1">
             <SVG iconId="back-arrow" />
             {Previous}
@@ -64,10 +86,10 @@ const CommonButton = () => {
           className="ms-2"
           onClick={handleSubmit}
           type={"submit"}
+          disabled={isLoading}
         >
           <div className="d-flex align-items-center gap-sm-2 gap-1">
-            {Submit}
-            <SVG iconId="front-arrow" />
+            {isLoading ? <LoadingButton /> : Submit}
           </div>
         </Button>
       ) : (
@@ -76,6 +98,7 @@ const CommonButton = () => {
           className="ms-2"
           onClick={handleNext}
           type={"button"}
+          disabled={isLoading}
         >
           <div className="d-flex align-items-center gap-sm-2 gap-1">
             {Next}

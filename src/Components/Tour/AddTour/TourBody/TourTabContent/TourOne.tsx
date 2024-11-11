@@ -34,11 +34,11 @@ export const DropDownData = [
 ];
 
 const TourOne = () => {
-  const { formValue } = useAppSelector((state) => state.addProduct);
+  const { isLoading, formValue } = useAppSelector((state) => state.addProduct);
   const dispatch = useAppDispatch();
 
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(new Date());
 
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
@@ -51,8 +51,8 @@ const TourOne = () => {
   };
 
   const initiateDates = useCallback(async () => {
-    setStartDate(formValue.startDate || new Date());
-    setEndDate(formValue.endDate || new Date());
+    setStartDate(new Date(formValue.startDate));
+    setEndDate(new Date(formValue.endDate));
   }, [formValue]);
 
   useEffect(() => {
@@ -82,6 +82,7 @@ const TourOne = () => {
                 multiple={false}
                 placeHolder=""
                 onChange={handleTourTypeChanged}
+                isDisabled={isLoading}
                 options={DropDownData.map((item) => {
                   return {
                     name: item.name,
@@ -107,14 +108,15 @@ const TourOne = () => {
                 {StartDate} <span className="txt-danger"> *</span>
               </Label>
               <div className="input-group flatpicker-calender product-date">
-                <ReactDatePicker
+                {/* <ReactDatePicker
                   className="form-control flatpickr-input"
                   selected={startDate}
                   onChange={handleStartDateChange}
                   locale={tr}
-                  dateFormat="P p"
+                  dateFormat="yyyy/MM/dd HH:mm"
                   showTimeSelect
-                />
+                  disabled={isLoading}
+                /> */}
               </div>
             </FormGroup>
           </Col>
@@ -124,14 +126,15 @@ const TourOne = () => {
                 {FinishDate} <span className="txt-danger"> *</span>
               </Label>
               <div className="input-group flatpicker-calender product-date">
-                <ReactDatePicker
+                {/* <ReactDatePicker
                   className="form-control flatpickr-input"
                   selected={endDate}
                   onChange={handleEndDateChange}
                   locale={tr}
-                  dateFormat="P p"
+                  dateFormat="yyyy/MM/dd HH:mm"
                   showTimeSelect
-                />
+                  disabled={isLoading}
+                /> */}
               </div>
             </FormGroup>
           </Col>
@@ -149,6 +152,7 @@ const TourOne = () => {
                   required
                   name="title"
                   value={formValue.title}
+                  disabled={isLoading}
                   onChange={(e) =>
                     dispatch(
                       setFormValue({ name: "title", value: e.target.value })
@@ -172,6 +176,7 @@ const TourOne = () => {
                   required
                   value={formValue.spot}
                   name="spot"
+                  disabled={isLoading}
                   onChange={(e) =>
                     dispatch(
                       setFormValue({ name: "spot", value: e.target.value })

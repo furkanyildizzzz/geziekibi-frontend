@@ -3,6 +3,7 @@ import "./ThreeChoiceSwitch.css"; // Import the CSS htmlFor styles
 import styled from "styled-components";
 import { Inherit, No, Yes } from "@/Constant/constant";
 import { TourServiceTypeEnum } from "@/app/lib/enums";
+import { useAppSelector } from "@/Redux/Hooks";
 
 // Styled Components
 const SwitchContainer = styled.div`
@@ -54,6 +55,7 @@ const ThreeChoiceSwitch: React.FC<{
   type: TourServiceTypeEnum;
 }> = ({ id, name, onSelectChange, type }) => {
   const [selected, setSelected] = useState<TourServiceTypeEnum>(type); // Default to 'Inherit'
+  const { isLoading } = useAppSelector((state) => state.addProduct);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { serviceId, serviceName } = event.target.dataset;
     setSelected(event.target.value as TourServiceTypeEnum);
@@ -79,6 +81,7 @@ const ThreeChoiceSwitch: React.FC<{
         onChange={handleChange}
         data-service-id={id}
         data-service-name={name}
+        disabled={isLoading}
       />
       <SwitchLabel
         htmlFor={`switch-n-${id}`}
@@ -96,6 +99,7 @@ const ThreeChoiceSwitch: React.FC<{
         onChange={handleChange}
         data-service-id={id}
         data-service-name={name}
+        disabled={isLoading}
       />
       <SwitchLabel
         htmlFor={`switch-i-${id}`}
@@ -113,6 +117,7 @@ const ThreeChoiceSwitch: React.FC<{
         onChange={handleChange}
         data-service-id={id}
         data-service-name={name}
+        disabled={isLoading}
       />
       <SwitchLabel
         htmlFor={`switch-y-${id}`}
