@@ -37,8 +37,8 @@ const TourOne = () => {
   const { isLoading, formValue } = useAppSelector((state) => state.addProduct);
   const dispatch = useAppDispatch();
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
@@ -51,8 +51,14 @@ const TourOne = () => {
   };
 
   const initiateDates = useCallback(async () => {
-    setStartDate(new Date(formValue.startDate));
-    setEndDate(new Date(formValue.endDate));
+    const startDateValue = formValue.startDate
+      ? new Date(formValue.startDate)
+      : new Date();
+    setStartDate(new Date(startDateValue));
+    const endDateValue = formValue.endDate
+      ? new Date(formValue.endDate)
+      : new Date();
+    setStartDate(new Date(endDateValue));
   }, [formValue]);
 
   useEffect(() => {
@@ -108,7 +114,7 @@ const TourOne = () => {
                 {StartDate} <span className="txt-danger"> *</span>
               </Label>
               <div className="input-group flatpicker-calender product-date">
-                {/* <ReactDatePicker
+                <ReactDatePicker
                   className="form-control flatpickr-input"
                   selected={startDate}
                   onChange={handleStartDateChange}
@@ -116,7 +122,7 @@ const TourOne = () => {
                   dateFormat="yyyy/MM/dd HH:mm"
                   showTimeSelect
                   disabled={isLoading}
-                /> */}
+                />
               </div>
             </FormGroup>
           </Col>
@@ -126,7 +132,7 @@ const TourOne = () => {
                 {FinishDate} <span className="txt-danger"> *</span>
               </Label>
               <div className="input-group flatpicker-calender product-date">
-                {/* <ReactDatePicker
+                <ReactDatePicker
                   className="form-control flatpickr-input"
                   selected={endDate}
                   onChange={handleEndDateChange}
@@ -134,7 +140,7 @@ const TourOne = () => {
                   dateFormat="yyyy/MM/dd HH:mm"
                   showTimeSelect
                   disabled={isLoading}
-                /> */}
+                />
               </div>
             </FormGroup>
           </Col>

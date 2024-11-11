@@ -8,14 +8,18 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 const SelectFive = () => {
   const dispatch = useAppDispatch();
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
-  const [today, setToday] = useState<Date | null>(new Date());
+  const [date, setDate] = useState<Date>();
   const handleChange = (date: Date) => {
-    setToday(date);
+    setDate(date);
     dispatch(setFormValue({ name: "publishDate", value: date }));
   };
 
   const initiatePublishDate = useCallback(async () => {
-    setToday(new Date(formValue.publishDate));
+    const dateValue = formValue.publishDate
+      ? new Date(formValue.publishDate)
+      : new Date();
+
+    setDate(dateValue);
   }, [formValue]);
 
   useEffect(() => {
@@ -29,12 +33,12 @@ const SelectFive = () => {
             {PublishDateTime}
           </Label>
           <div className="input-group flatpicker-calender product-date">
-            {/* <ReactDatePicker
+            <ReactDatePicker
               className="form-control flatpickr-input"
-              selected={today}
+              selected={date}
               onChange={handleChange}
               disabled={isLoading}
-            /> */}
+            />
           </div>
         </Col>
       </Row>
