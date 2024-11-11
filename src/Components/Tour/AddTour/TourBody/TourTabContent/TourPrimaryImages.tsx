@@ -37,7 +37,7 @@ const TourPrimaryImages = () => {
   }, [formValue]);
 
   useEffect(() => {
-    if (formValue.id && !existingFiles.length) setExistingImages();
+    if (formValue.id > 0 && existingFiles.length === 0) setExistingImages();
   }, [setExistingImages]);
 
   return (
@@ -60,6 +60,7 @@ const TourPrimaryImages = () => {
         onChange={(files) => updateFiles(files)}
         value={files}
         maxFiles={1}
+        multiple={true}
         header={false}
         footer={false}
         minHeight="80px"
