@@ -1,4 +1,4 @@
-import { TourValidationSchema } from "@/app/lib/definitions";
+import { TourValidationFormSchema } from "@/app/lib/definitions";
 import {
   ApiErrorResponse,
   ApiResponse,
@@ -10,10 +10,12 @@ import { FieldValues } from "react-hook-form";
 import { ZodError } from "zod";
 
 export const createNewTour = async (
-  formFields: FieldValues
+  formFields: FieldValues,
+  id: number = 0
 ): Promise<ApiResponse<TourSuccessResponse>> => {
   try {
-    const data = TourValidationSchema.parse(formFields);
+    console.log({ id, formFields });
+    const data = TourValidationFormSchema.parse(formFields);
     // Create a new FormData instance
     const formData = new FormData();
 
@@ -22,9 +24,10 @@ export const createNewTour = async (
       if (value instanceof Date) {
         // If the value is a Date object, convert it to an ISO string
         formData.append(key, value.toISOString()); // e.g., "2023-11-06T12:34:56.789Z"
-      } else if (key === "image") {
-        formData.append(key, value);
-      } else if (key === "gallery" && value.length) {
+      } else if (
+        (key === "primaryImages" || key === "galleryImages") &&
+        value.length > 0
+      ) {
         for (let index = 0; index < value.length; index++) {
           const file = value[index];
           formData.append(key, file);
@@ -40,7 +43,15 @@ export const createNewTour = async (
     // for (let pair of formData.entries()) {
     //   console.log(`${pair[0]}, ${pair[1]}`);
     // }
-    return await apiRequest<TourSuccessResponse>("tour/", "POST", formData);
+    if (id > 0) {
+      return await apiRequest<TourSuccessResponse>(
+        "tour/" + id,
+        "POST",
+        formData
+      );
+    } else {
+      return await apiRequest<TourSuccessResponse>("tour/", "POST", formData);
+    }
   } catch (error) {
     if (error instanceof ZodError) {
       const errorsValidation: ErrorValidation[] = error.errors.map((issue) => ({
