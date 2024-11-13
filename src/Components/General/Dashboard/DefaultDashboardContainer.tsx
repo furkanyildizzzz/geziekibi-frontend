@@ -14,15 +14,6 @@ import { CloudLightning } from "react-feather";
 const DefaultDashboardContainer = () => {
   return (
     <>
-      <button
-        onClick={async () => {
-          let resp = await fetch("/api/ekim");
-
-          console.log(await resp.json());
-        }}
-      >
-        test
-      </button>
       <Breadcrumbs
         pageTitle={DefaultDashboardTitle}
         parent={DashboardTitle}

@@ -14,8 +14,8 @@ const Language = () => {
   const [selectedLang, setSelectedLang] = useState<any>({});
   const Language = Cookies.get("i18next");
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState("EN");
-  const [flag, setFlag] = useState("us");
+  const [lang, setLang] = useState("TR");
+  const [flag, setFlag] = useState("tr");
   const dispatch = useAppDispatch();
 
   const changeLanguage = (lng: LanguageDataType) => {
@@ -33,7 +33,9 @@ const Language = () => {
   };
 
   useEffect(() => {
-    const defaultLanguage = LanguageData.find((data) => data.languageParameter == currentLanguage);
+    const defaultLanguage = LanguageData.find(
+      (data) => data.languageParameter == currentLanguage
+    );
     setSelectedLang(defaultLanguage);
     router.refresh();
   }, [currentLanguage, router]);
@@ -64,8 +66,14 @@ const Language = () => {
         </div>
         <div className={`more_lang ${open ? "active" : ""}`}>
           {LanguageData.map((data, index) => (
-            <div className="lang selected" key={index} onClick={() => changeLanguage(data)}>
-              <i className={`flag-icon fi flag-icon-${data.languageIconClassName}`}></i>
+            <div
+              className="lang selected"
+              key={index}
+              onClick={() => changeLanguage(data)}
+            >
+              <i
+                className={`flag-icon fi flag-icon-${data.languageIconClassName}`}
+              ></i>
               <span className="lang-txt ms-1">
                 {data.languageName}
                 {data.subTitle && <span> ({data.subTitle})</span>}

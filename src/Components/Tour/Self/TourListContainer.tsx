@@ -56,7 +56,7 @@ const TourListContainer = () => {
             publishDate: s.publishDate,
             category: s.category?.name, //TourCategorySuccessResponse,
             prices: s.prices,
-            imageUrl: s.primaryImages ? s.primaryImages[0].url : "",
+            imageUrl: s.primaryImages.length ? s.primaryImages[0].url : "",
           };
         }),
       ]);

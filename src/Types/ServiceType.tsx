@@ -1,5 +1,7 @@
 import SVG from "@/CommonComponent/SVG/Svg";
 import { TourCategorySuccessResponse } from "./ApiResponseType";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export interface ServiceListTableName {
   name?: string;
@@ -39,36 +41,40 @@ const ServiceListTableAction = (props: {
 export const ServiceListTableDataColumn = (
   editHandler: (id: number) => Promise<void>,
   deleteHandler: (name: string, id: number) => Promise<void>
-) => [
-  {
-    name: "Action",
-    cell: (row: ServiceListTableDataColumnType) => (
-      <ServiceListTableAction
-        name={row.name}
-        id={row.id}
-        handleEdit={editHandler}
-        handleDelete={deleteHandler}
-      />
-    ),
-    grow: 0,
-  },
-  {
-    name: "Service Name",
-    selector: (row: ServiceListTableDataColumnType) => `${row.name}`,
-    cell: (row: ServiceListTableDataColumnType) => (
-      <TourCategoryListTableTagName name={row.name} />
-    ),
-    sortable: true,
-    grow: 1,
-  },
+) => {
+  const { t } = useTranslation("common");
 
-  {
-    name: "Description",
-    selector: (row: ServiceListTableDataColumnType) => `${row.description}`,
-    cell: (row: ServiceListTableDataColumnType) => (
-      <TourCategoryListTableTagName name={row.description} />
-    ),
-    sortable: true,
-    grow: 1,
-  },
-];
+  return [
+    {
+      name: t("Actions"),
+      cell: (row: ServiceListTableDataColumnType) => (
+        <ServiceListTableAction
+          name={row.name}
+          id={row.id}
+          handleEdit={editHandler}
+          handleDelete={deleteHandler}
+        />
+      ),
+      grow: 0,
+    },
+    {
+      name: t("ServiceName"),
+      selector: (row: ServiceListTableDataColumnType) => `${row.name}`,
+      cell: (row: ServiceListTableDataColumnType) => (
+        <TourCategoryListTableTagName name={row.name} />
+      ),
+      sortable: true,
+      grow: 1,
+    },
+
+    {
+      name: t("Description"),
+      selector: (row: ServiceListTableDataColumnType) => `${row.description}`,
+      cell: (row: ServiceListTableDataColumnType) => (
+        <TourCategoryListTableTagName name={row.description} />
+      ),
+      sortable: true,
+      grow: 1,
+    },
+  ];
+};

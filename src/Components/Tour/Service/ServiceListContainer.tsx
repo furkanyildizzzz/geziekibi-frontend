@@ -37,6 +37,7 @@ import {
   deleteService,
   deleteServices,
 } from "@/app/actions/tour/service/deleteService";
+import { useTranslation } from "react-i18next";
 
 const ServiceListContainer = () => {
   const [serviceList, setServiceList] = useState<ServiceSuccessResponse[]>([]);
@@ -48,6 +49,7 @@ const ServiceListContainer = () => {
 
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const fetchData = async () => {
     const response = await getServiceList();
@@ -91,11 +93,11 @@ const ServiceListContainer = () => {
   }, [filterText]);
 
   const handleEdit = async (id: number) => {
-    router.push(`/services/${id}`);
+    router.push(`/tour/services/${id}`);
   };
 
   const handleAdd = () => {
-    router.push("/services/add-service");
+    router.push("/tour/services/add-service");
   };
 
   const handleRowSelected = useCallback((state: any) => {
@@ -144,9 +146,9 @@ const ServiceListContainer = () => {
   return (
     <>
       <Breadcrumbs
-        pageTitle={ServiceList}
-        parent={Service}
-        title={ServiceList}
+        pageTitle={t("ServiceList")}
+        parent={t("Tour")}
+        title={t("ServiceList")}
       />
       <Container fluid>
         <Row>
@@ -162,7 +164,7 @@ const ServiceListContainer = () => {
                       onClick={handleAdd}
                     >
                       <i className="me-2 fa fa-plus"> </i>
-                      {CreateNewServiceHeading}
+                      {t("CreateNewServiceHeading")}
                     </Button>
                   </div>
                 </div>
@@ -170,11 +172,11 @@ const ServiceListContainer = () => {
                   <div className="table-responsive">
                     {selectedRows.length !== 0 && (
                       <Button
-                        color="secondary"
+                        color="danger"
                         onClick={handleMultipleDelete}
                         className="mb-3"
                       >
-                        {DeleteSelectDataButton}
+                        {t("DeleteSelectDataButton")}
                       </Button>
                     )}
                     <DataTable

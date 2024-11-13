@@ -6,6 +6,7 @@ import {
   CreateTourCategorySchema,
 } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
+import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import {
@@ -25,6 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const AddTourCategoryModal = () => {
@@ -38,6 +40,7 @@ const AddTourCategoryModal = () => {
   >([]);
 
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const {
     register,
@@ -84,7 +87,7 @@ const AddTourCategoryModal = () => {
   };
 
   return (
-    <ModalComponent title={CreateNewTourCategoryHeading}>
+    <ModalComponent title={t("CreateNewTourCategoryHeading")}>
       <div className="page-body">
         <Col xs="12">
           <DisplayError errorMessage={errorMessage} />
@@ -97,7 +100,7 @@ const AddTourCategoryModal = () => {
             <Row>
               <FormGroup>
                 <Label for="name" check>
-                  {CategoryName} <span className="txt-danger"> *</span>
+                  {t("CategoryName")} <span className="txt-danger"> *</span>
                 </Label>
                 <input
                   type="text"
@@ -116,7 +119,7 @@ const AddTourCategoryModal = () => {
             <Row>
               <FormGroup>
                 <Label for="description" check>
-                  {Description}
+                  {t("Description")}
                 </Label>
                 <input
                   type="text"
@@ -135,7 +138,7 @@ const AddTourCategoryModal = () => {
               <FormGroup>
                 <DropDownComponent
                   id="parentid"
-                  title="Select Parent"
+                  title={t("SelectParentCategory")}
                   isRequired={false}
                   labelKey="name"
                   multiple={false}
@@ -157,26 +160,7 @@ const AddTourCategoryModal = () => {
               </FormGroup>
             </Row>
 
-            <Row style={{ justifyContent: "flex-end" }}>
-              <Col xs="3">
-                <Button
-                  color="light"
-                  onClick={() => {
-                    router.back();
-                  }}
-                  disabled={isLoading}
-                >
-                  {" "}
-                  {Cancel}
-                </Button>
-              </Col>
-              <Col xs="3">
-                <Button color="primary" type="submit" disabled={isLoading}>
-                  {" "}
-                  {Add}
-                </Button>
-              </Col>
-            </Row>
+            <ModalButtons isLoading={isLoading} />
           </Form>
         </Col>
       </div>

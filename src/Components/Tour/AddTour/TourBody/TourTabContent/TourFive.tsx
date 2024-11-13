@@ -4,12 +4,14 @@ import TabOne from "./TabOne";
 import TabThree from "./TabThree";
 import TabTwo from "./TabTwo";
 import { setTabId } from "@/Redux/Reducers/AddProductSlice";
+import { useTranslation } from "react-i18next";
 
-export const TourFiveNavData = [" Services"];
+export const TourFiveNavData = ["Services"];
 
 const TourFive = () => {
   const { tabId } = useAppSelector((state) => state.addProduct);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("common");
 
   return (
     <div className="sidebar-body advance-options">
@@ -20,7 +22,7 @@ const TourFive = () => {
               active={tabId === i + 1 ? true : false}
               onClick={() => dispatch(setTabId(i + 1))}
             >
-              {data}
+              {t(data)}
             </NavLink>
           </NavItem>
         ))}

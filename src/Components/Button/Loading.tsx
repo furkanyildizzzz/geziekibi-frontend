@@ -1,4 +1,5 @@
 import { Loading } from "@/Constant/constant";
+import { useTranslation } from "react-i18next";
 import styled, { keyframes } from "styled-components";
 
 const spin = keyframes`
@@ -25,10 +26,11 @@ const Span = styled.span`
 `;
 
 export const LoadingButton = () => {
+  const { t } = useTranslation("common");
   return (
     <>
       <Span className="spinner" style={{}} />
-      {Loading}...
+      {t("Loading")}...
     </>
   );
 };

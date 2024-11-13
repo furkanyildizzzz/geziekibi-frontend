@@ -8,12 +8,14 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import SVG from "@/CommonComponent/SVG/Svg";
 import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { CloudinaryImage } from "@/Types/ApiResponseType";
+import { useTranslation } from "react-i18next";
 
 const TourGalleryImages = () => {
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("common");
 
   const updateFiles = (files: ExtFile[]) => {
     setFiles(files);
@@ -36,7 +38,7 @@ const TourGalleryImages = () => {
   return (
     <div className="product-upload">
       <p>
-        {TourImage}
+        {t("TourGallery")}
         <span className="txt-danger"> *</span>{" "}
       </p>
       {existingFiles.length > 0 && (
@@ -74,12 +76,12 @@ const TourGalleryImages = () => {
             <div className="dz-message needsclick">
               <SVG iconId="file-upload" />
               <h6>
-                {DragYourImageHere}
+                {t("DragYourImageHere")}
                 <Link className="txt-primary" href={Href}>
-                  &nbsp;browser
+                  &nbsp;{t("browser")}
                 </Link>
               </h6>
-              <span className="note needsclick">SVG,PNG,JPG or GIF</span>
+              <span className="note needsclick">SVG,PNG,JPG {t("or")} GIF</span>
             </div>
           </Form>
         )}

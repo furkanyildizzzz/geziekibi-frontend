@@ -22,6 +22,8 @@ import {
 } from "@/app/lib/definitions";
 import { ErrorValidation } from "@/Types/ApiResponseType";
 import { createNewService } from "@/app/actions/tour/service/createNewService";
+import { useTranslation } from "react-i18next";
+import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 
 const CreateNewServiceModal = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -30,6 +32,7 @@ const CreateNewServiceModal = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const {
     register,
@@ -59,7 +62,7 @@ const CreateNewServiceModal = () => {
   };
 
   return (
-    <ModalComponent title={CreateNewTagHeading}>
+    <ModalComponent title={t("CreateNewServiceHeading")}>
       <div className="page-body">
         <Col xs="12">
           <DisplayError errorMessage={errorMessage} />
@@ -72,7 +75,7 @@ const CreateNewServiceModal = () => {
             <Row>
               <FormGroup>
                 <Label for="name" check>
-                  {ServiceName} <span className="txt-danger"> *</span>
+                  {t("ServiceName")} <span className="txt-danger"> *</span>
                 </Label>
                 <input
                   type="text"
@@ -91,7 +94,7 @@ const CreateNewServiceModal = () => {
             <Row>
               <FormGroup>
                 <Label for="description" check>
-                  {Description}
+                  {t("Description")}
                 </Label>
                 <input
                   type="text"
@@ -106,26 +109,7 @@ const CreateNewServiceModal = () => {
                 />
               </FormGroup>
             </Row>
-            <Row style={{ justifyContent: "flex-end" }}>
-              <Col xs="3">
-                <Button
-                  color="light"
-                  onClick={() => {
-                    router.back();
-                  }}
-                  disabled={isLoading}
-                >
-                  {" "}
-                  {Cancel}
-                </Button>
-              </Col>
-              <Col xs="3">
-                <Button color="primary" type="submit" disabled={isLoading}>
-                  {" "}
-                  {Add}
-                </Button>
-              </Col>
-            </Row>
+            <ModalButtons isLoading={isLoading} />
           </Form>
         </Col>
       </div>

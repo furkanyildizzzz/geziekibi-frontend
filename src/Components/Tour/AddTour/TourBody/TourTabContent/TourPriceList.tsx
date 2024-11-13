@@ -2,6 +2,7 @@ import { CurrencyDisplayNames, CurrencyEnum } from "@/app/lib/enums";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { TourPriceSuccessResponse } from "@/Types/ApiResponseType";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Badge } from "reactstrap";
 
@@ -12,8 +13,7 @@ const TourPriceList = ({
   priceList: TourPriceSuccessResponse[];
   handleRemovePrice: Function;
 }) => {
-  const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
-  const dispatch = useAppDispatch();
+  const { t } = useTranslation("common");
 
   return (
     <div className="todo-list-body custom-scrollbar">
@@ -44,7 +44,7 @@ const TourPriceList = ({
                       >
                         <span
                           className="action-box large delete-btn"
-                          title="Delete Price"
+                          title={t("DeletePrice")}
                         >
                           <i className="icon">
                             <i className="icon-trash"></i>

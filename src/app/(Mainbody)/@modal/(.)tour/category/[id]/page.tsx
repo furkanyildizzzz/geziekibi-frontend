@@ -7,6 +7,7 @@ import {
   CreateTourCategorySchema,
 } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
+import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import {
   Cancel,
@@ -24,6 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Button, Col, Form, FormGroup, Input, Label } from "reactstrap";
 
 const EditTourCategoryModal = ({
@@ -44,6 +46,7 @@ const EditTourCategoryModal = ({
     useState<TourCategorySuccessResponse>();
 
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const {
     register,
@@ -64,7 +67,7 @@ const EditTourCategoryModal = ({
         id: response.data.id,
         name: response.data.name,
         description: response.data.description,
-        parentId: response.data.parent.id,
+        parentId: response.data.parent?.id,
       });
     }
   };
@@ -102,7 +105,9 @@ const EditTourCategoryModal = ({
   };
 
   return (
-    <ModalComponent title={EditTourCategoryHeading + ` "${getValues("name")}"`}>
+    <ModalComponent
+      title={t("EditTourCategoryHeading") + ` "${getValues("name")}"`}
+    >
       <Form
         className="theme-form"
         onSubmit={handleSubmit((data) =>
@@ -127,7 +132,7 @@ const EditTourCategoryModal = ({
           </FormGroup>
           <FormGroup>
             <Label for="name" check>
-              {CategoryName} <span className="txt-danger"> *</span>
+              {t("CategoryName")} <span className="txt-danger"> *</span>
             </Label>
             <input
               type="text"
@@ -145,7 +150,7 @@ const EditTourCategoryModal = ({
           </FormGroup>
           <FormGroup>
             <Label for="description" check>
-              {Description}
+              {t("Description")}
             </Label>
             <input
               type="text"
@@ -163,7 +168,7 @@ const EditTourCategoryModal = ({
           <FormGroup>
             <DropDownComponent
               id="parentid"
-              title="Select Parent"
+              title={t("SelectParentCategory")}
               isRequired={false}
               labelKey="name"
               multiple={false}
@@ -196,20 +201,7 @@ const EditTourCategoryModal = ({
           xs="12"
           style={{ display: "flex", justifyContent: "flex-end", gap: "3%" }}
         >
-          <Button
-            color="light"
-            onClick={() => {
-              router.back();
-            }}
-            disabled={isLoading}
-          >
-            {" "}
-            {Cancel}
-          </Button>
-          <Button color="primary" type="submit" disabled={isLoading}>
-            {" "}
-            {Edit}
-          </Button>
+          <ModalButtons isLoading={isLoading} />
         </Col>
       </Form>
     </ModalComponent>

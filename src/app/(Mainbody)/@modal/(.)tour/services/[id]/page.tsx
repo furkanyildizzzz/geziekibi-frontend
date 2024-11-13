@@ -27,12 +27,17 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { t } from "i18next";
+import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
+import { useTranslation } from "react-i18next";
 
 const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
   const [errorMessage, setErrorMessage] = useState("");
+
+  const { t } = useTranslation("common");
 
   const {
     register,
@@ -74,7 +79,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   };
 
   return (
-    <ModalComponent title={EditTagHeading + ` "${getValues("name")}"`}>
+    <ModalComponent title={t("Edit") + ` "${getValues("name")}"`}>
       <Col xs="12">
         <DisplayError errorMessage={errorMessage} />
         <Form
@@ -97,7 +102,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
           </FormGroup>
           <FormGroup>
             <Label for="name" check>
-              {ServiceName} <span className="txt-danger"> *</span>
+              {t("ServiceName")} <span className="txt-danger"> *</span>
             </Label>
             <input
               type="text"
@@ -114,7 +119,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
           </FormGroup>
           <FormGroup>
             <Label for="description" check>
-              {Description}
+              {t("Description")}
             </Label>
             <input
               type="text"
@@ -128,20 +133,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
               keyProp="description"
             />
           </FormGroup>
-          <Button
-            color="light"
-            onClick={() => {
-              router.back();
-            }}
-            disabled={isLoading}
-          >
-            {" "}
-            {Cancel}
-          </Button>
-          <Button color="primary" type="submit" disabled={isLoading}>
-            {" "}
-            {Edit}
-          </Button>
+          <ModalButtons isLoading={isLoading} />
         </Form>
       </Col>
     </ModalComponent>

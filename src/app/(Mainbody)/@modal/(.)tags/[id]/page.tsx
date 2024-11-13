@@ -3,6 +3,7 @@ import { editTag } from "@/app/actions/tag/editTag";
 import { getTagById } from "@/app/actions/tag/getTagById";
 import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
+import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 import { Cancel, EditTagHeading, TagName, Edit } from "@/Constant/constant";
 import useFormState from "@/hooks/useFormState";
 import { ErrorValidation, TagSuccessResponse } from "@/Types/ApiResponseType";
@@ -11,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
@@ -30,6 +32,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   });
 
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const fetchTagData = async () => {
     const response = await getTagById(Number(id));
@@ -59,7 +62,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   };
 
   return (
-    <ModalComponent title={EditTagHeading + ` "${getValues("name")}"`}>
+    <ModalComponent title={t("Edit") + ` "${getValues("name")}"`}>
       <Col xs="12">
         <DisplayError errorMessage={errorMessage} />
         <Form
@@ -82,7 +85,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
           </FormGroup>
           <FormGroup>
             <Label for="name" check>
-              {TagName} <span className="txt-danger"> *</span>
+              {t("TagName")} <span className="txt-danger"> *</span>
             </Label>
             <input
               type="text"
@@ -97,20 +100,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
               keyProp="name"
             />
           </FormGroup>
-          <Button
-            color="light"
-            onClick={() => {
-              router.back();
-            }}
-            disabled={isLoading}
-          >
-            {" "}
-            {Cancel}
-          </Button>
-          <Button color="primary" type="submit" disabled={isLoading}>
-            {" "}
-            {Edit}
-          </Button>
+          <ModalButtons isLoading={isLoading} />
         </Form>
       </Col>
     </ModalComponent>

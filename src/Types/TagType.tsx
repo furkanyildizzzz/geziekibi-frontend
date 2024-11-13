@@ -3,6 +3,7 @@ import Link from "next/link";
 import SVG from "@/CommonComponent/SVG/Svg";
 import { deleteTag } from "@/app/actions/tag/deleteTag";
 import { TagSuccessResponse } from "./ApiResponseType";
+import { useTranslation } from "react-i18next";
 
 export interface TagTableDataColumnType {
   id: number;
@@ -44,26 +45,30 @@ const TagListTableAction = (props: {
 export const TagListTableDataColumn = (
   editHandler: (id: number) => Promise<void>,
   deleteHandler: (name: string, id: number) => Promise<void>
-) => [
-  {
-    name: "Action",
-    cell: (row: TagListTableDataColumnType) => (
-      <TagListTableAction
-        name={row.name}
-        id={row.id}
-        handleEdit={editHandler}
-        handleDelete={deleteHandler}
-      />
-    ),
-    grow: 0,
-  },
-  {
-    name: "Tag Name",
-    selector: (row: TagListTableDataColumnType) => `${row.name}`,
-    cell: (row: TagListTableDataColumnType) => (
-      <TagListTableTagName name={row.name} />
-    ),
-    sortable: true,
-    grow: 1,
-  },
-];
+) => {
+  const { t } = useTranslation("common");
+
+  return [
+    {
+      name: t("Actions"),
+      cell: (row: TagListTableDataColumnType) => (
+        <TagListTableAction
+          name={row.name}
+          id={row.id}
+          handleEdit={editHandler}
+          handleDelete={deleteHandler}
+        />
+      ),
+      grow: 0,
+    },
+    {
+      name: t("TagName"),
+      selector: (row: TagListTableDataColumnType) => `${row.name}`,
+      cell: (row: TagListTableDataColumnType) => (
+        <TagListTableTagName name={row.name} />
+      ),
+      sortable: true,
+      grow: 1,
+    },
+  ];
+};

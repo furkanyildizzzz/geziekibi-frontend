@@ -29,6 +29,7 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { usePathname, useRouter } from "next/navigation";
 import { TourServiceTypeEnum } from "@/app/lib/enums";
+import { useTranslation } from "react-i18next";
 
 // const VariationCheckboxEski = () => {
 //   const [services, setServices] = useState<ServiceSuccessResponse[]>([]);
@@ -426,6 +427,7 @@ const VariationCheckbox = () => {
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation("common");
 
   const fetchServiceList2 = useCallback(async () => {
     setTourServices((previousTourServices) => {
@@ -549,10 +551,10 @@ const VariationCheckbox = () => {
                   onClick={handleAdd}
                 >
                   <i className="me-2 fa fa-plus"> </i>
-                  {CreateNewServiceHeading}
+                  {t("CreateNewServiceHeading")}
                 </Button>
               </div>
-              <h6 className="sub-title">{ChooseServices}</h6>
+              <h6 className="sub-title">{t("ChooseServices")}</h6>
               <div
                 className="card-wrapper border rounded-3 h-100 checkbox-checked"
                 style={{
@@ -589,7 +591,7 @@ const VariationCheckbox = () => {
               <Row>
                 <Col xl="6" md="12">
                   <VariationCheckboxUpgrade
-                    title={IncludedServices}
+                    title={t("IncludedServices")}
                     textColor="success"
                     services={tourServices
                       .filter((s) => s.type === TourServiceTypeEnum.INCLUDED)
@@ -598,7 +600,7 @@ const VariationCheckbox = () => {
                 </Col>
                 <Col xl="6" md="12">
                   <VariationCheckboxUpgrade
-                    title={ExcludedServices}
+                    title={t("ExcludedServices")}
                     textColor="danger"
                     services={tourServices
                       .filter((s) => s.type === TourServiceTypeEnum.EXCLUDED)

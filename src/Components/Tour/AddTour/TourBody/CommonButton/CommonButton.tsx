@@ -13,12 +13,14 @@ import { Button } from "reactstrap";
 import { editTour } from "@/app/actions/tour/self/editTour";
 import { useEffect } from "react";
 import { LoadingButton } from "@/Components/Button/Loading";
+import { useTranslation } from "react-i18next";
 
 const CommonButton = () => {
   const { navId, formValue, tabId, isLoading } = useAppSelector(
     (state) => state.addProduct
   );
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("common");
 
   const handleNext = () => {
     console.log({ tabId, navId, formValue });
@@ -47,20 +49,18 @@ const CommonButton = () => {
     dispatch(setIsLoading(true));
     try {
       // Create a 5-second delay
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
       // Place any actual submission logic here
-      // const response =
-      //   formValue.id > 0
-      //     ? await editTour(formValue.id, formValue)
-      //     : await createNewTour(formValue);
-      // console.log({ response });
-
-      // if ("errorType" in response) {
-      //   if (response.errorType == "Validation") {
-      //     ShowValidationError(response.errorsValidation!);
-      //   }
-      // }
+      const response =
+        formValue.id > 0
+          ? await editTour(formValue.id, formValue)
+          : await createNewTour(formValue);
+      console.log({ response });
+      if ("errorType" in response) {
+        if (response.errorType == "Validation") {
+          ShowValidationError(response.errorsValidation!);
+        }
+      }
     } finally {
       dispatch(setIsLoading(false));
     }
@@ -76,7 +76,7 @@ const CommonButton = () => {
         >
           <div className="d-flex align-items-center gap-sm-2 gap-1">
             <SVG iconId="back-arrow" />
-            {Previous}
+            {t("Previous")}
           </div>
         </Button>
       )}
@@ -89,7 +89,7 @@ const CommonButton = () => {
           disabled={isLoading}
         >
           <div className="d-flex align-items-center gap-sm-2 gap-1">
-            {isLoading ? <LoadingButton /> : Submit}
+            {isLoading ? <LoadingButton /> : t("Submit")}
           </div>
         </Button>
       ) : (
@@ -101,7 +101,7 @@ const CommonButton = () => {
           disabled={isLoading}
         >
           <div className="d-flex align-items-center gap-sm-2 gap-1">
-            {Next}
+            {t("Next")}
             <SVG iconId="front-arrow" />
           </div>
         </Button>

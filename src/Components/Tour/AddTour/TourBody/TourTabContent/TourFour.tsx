@@ -42,6 +42,7 @@ import { CurrencyDisplayNames, CurrencyEnum } from "@/app/lib/enums";
 import AddTourPriceForm from "./AddTourPriceForm";
 import { number } from "zod";
 import TourPriceList from "./TourPriceList";
+import { useTranslation } from "react-i18next";
 
 export const DropDownData = [
   {
@@ -60,6 +61,7 @@ export const DropDownData = [
 ];
 
 const TourFour = () => {
+  const { t } = useTranslation("common");
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
@@ -178,7 +180,8 @@ const TourFour = () => {
               <Col xs="3">
                 <FormGroup>
                   <Label for="name" check>
-                    {SellingPriceName} <span className="txt-danger"> *</span>
+                    {t("SellingPriceName")}{" "}
+                    <span className="txt-danger"> *</span>
                   </Label>
                   <input
                     type="text"
@@ -198,7 +201,7 @@ const TourFour = () => {
               <Col xs="2">
                 <FormGroup>
                   <Label for="price" check>
-                    {SellingPrice} <span className="txt-danger"> *</span>
+                    {t("SellingPrice")} <span className="txt-danger"> *</span>
                   </Label>
                   <input
                     type="number"
@@ -217,7 +220,8 @@ const TourFour = () => {
               <Col xs="2">
                 <FormGroup>
                   <Label for="currency" check>
-                    {SellingCurrency} <span className="txt-danger"> *</span>
+                    {t("SellingCurrency")}{" "}
+                    <span className="txt-danger"> *</span>
                   </Label>
                   <DropDownComponent
                     id="id"
@@ -251,7 +255,7 @@ const TourFour = () => {
               <Col xs="3">
                 <FormGroup>
                   <Label for="description" check>
-                    {Description}
+                    {t("Description")}
                   </Label>
                   <input
                     type="text"
@@ -274,7 +278,7 @@ const TourFour = () => {
                   disabled={isLoading || isLoadingTour}
                 >
                   {" "}
-                  {Add}
+                  {t("Add")}
                 </Button>
               </Col>
             </Row>

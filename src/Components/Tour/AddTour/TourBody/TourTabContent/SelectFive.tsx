@@ -4,11 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import { PublishDateTime } from "@/Constant/constant";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useTranslation } from "react-i18next";
 
 const SelectFive = () => {
   const dispatch = useAppDispatch();
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const [date, setDate] = useState<Date>();
+  const { t } = useTranslation("common");
+
   const handleChange = (date: Date) => {
     setDate(date);
     dispatch(setFormValue({ name: "publishDate", value: date }));
@@ -30,7 +33,7 @@ const SelectFive = () => {
       <Row>
         <Col xs="12">
           <Label for="validationServer01" check>
-            {PublishDateTime}
+            {t("PublishDateTime")}
           </Label>
           <div className="input-group flatpicker-calender product-date">
             <ReactDatePicker

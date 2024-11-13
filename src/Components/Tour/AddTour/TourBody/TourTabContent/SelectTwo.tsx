@@ -19,6 +19,7 @@ import {
 import { getTagList } from "@/app/actions/tag/getTagList";
 import CreateNewTag from "@/Components/Tag/CreateNewTag";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 export const MultiWithHeaderData = [
   { name: "NBA Teams", header: true },
@@ -49,6 +50,7 @@ const SelectTwo = () => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation("common");
 
   const handleChange = (selected: Option[]) => {
     dispatch(setFormValue({ name: "tags", value: selected }));
@@ -74,7 +76,7 @@ const SelectTwo = () => {
       <Row className="g-2 product-tag">
         <Col xs="12">
           <Label className="d-block m-0" for="validationServer01" check>
-            {AddTag}
+            {t("SelectTag")}
             <span className="txt-danger"> *</span>
           </Label>
         </Col>
@@ -85,7 +87,6 @@ const SelectTwo = () => {
             labelKey="name"
             multiple
             options={tags}
-            placeholder={ChooseATag}
             onChange={handleChange}
             ref={ref}
             disabled={isLoading}
@@ -95,14 +96,13 @@ const SelectTwo = () => {
                 : undefined
             }
           />
-          <p className="f-light">{ToursCanBeTagged} </p>
         </Col>
       </Row>
       <Row>
         <Col xs="6">
           <ButtonToolbar className="mt-3">
             <Button onClick={() => ref.current?.clear()} disabled={isLoading}>
-              Clear
+              {t("Clear")}
             </Button>
           </ButtonToolbar>
         </Col>
@@ -113,9 +113,10 @@ const SelectTwo = () => {
             disabled={isLoading}
             className="button-primary bg-light-primary font-primary"
             onClick={handleAdd}
+            style={{ width: "100%", padding: "10px" }}
           >
             <i className="me-2 fa fa-plus"> </i>
-            {CreateNewTagHeading}
+            {t("CreateNewTagHeading")}
           </Button>
         </Col>
       </Row>

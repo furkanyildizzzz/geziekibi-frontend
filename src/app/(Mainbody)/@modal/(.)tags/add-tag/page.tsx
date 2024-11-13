@@ -12,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
 import { ErrorValidation } from "@/Types/ApiResponseType";
 import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import { useTranslation } from "react-i18next";
+import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 
 const CreateNewTagModal = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -20,6 +22,7 @@ const CreateNewTagModal = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const {
     register,
@@ -49,7 +52,7 @@ const CreateNewTagModal = () => {
   };
 
   return (
-    <ModalComponent title={CreateNewTagHeading}>
+    <ModalComponent title={t("CreateNewTagHeading")}>
       <div className="page-body">
         <Col xs="12">
           <DisplayError errorMessage={errorMessage} />
@@ -60,7 +63,7 @@ const CreateNewTagModal = () => {
             <Row>
               <FormGroup>
                 <Label for="name" check>
-                  {TagName} <span className="txt-danger"> *</span>
+                  {t("TagName")} <span className="txt-danger"> *</span>
                 </Label>
                 <input
                   type="text"
@@ -76,26 +79,7 @@ const CreateNewTagModal = () => {
                 />
               </FormGroup>
             </Row>
-            <Row style={{ justifyContent: "flex-end" }}>
-              <Col xs="3">
-                <Button
-                  color="light"
-                  onClick={() => {
-                    router.back();
-                  }}
-                  disabled={isLoading}
-                >
-                  {" "}
-                  {Cancel}
-                </Button>
-              </Col>
-              <Col xs="3">
-                <Button color="primary" type="submit" disabled={isLoading}>
-                  {" "}
-                  {Add}
-                </Button>
-              </Col>
-            </Row>
+            <ModalButtons isLoading={isLoading} />
           </Form>
         </Col>
       </div>

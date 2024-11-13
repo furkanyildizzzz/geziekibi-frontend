@@ -17,6 +17,7 @@ import {
 import { getTourById } from "@/app/actions/tour/self/getTourById";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
+import { useTranslation } from "react-i18next";
 const AddTourContainer = ({ id }: { id?: number }) => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
@@ -24,6 +25,8 @@ const AddTourContainer = ({ id }: { id?: number }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const { formValue } = useAppSelector((state) => state.addProduct);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("common");
+
   const fetchTour = async (id: number) => {
     const response = await getTourById(id);
     if ("data" in response) {
@@ -52,18 +55,22 @@ const AddTourContainer = ({ id }: { id?: number }) => {
       {formValue.id ? (
         <Breadcrumbs
           pageTitle={formValue.title}
-          parent={Tour}
+          parent={t("Tour")}
           title={formValue.title}
         />
       ) : (
-        <Breadcrumbs pageTitle={AddTour} parent={ECommerce} title={AddTour} />
+        <Breadcrumbs
+          pageTitle={t("AddTour")}
+          parent={t("Tour")}
+          title={t("AddTour")}
+        />
       )}
       <Container fluid>
         <Row>
           <Col xs="12">
             <Card>
               <CardHeader>
-                <h4>{TourForm}</h4>
+                <h4>{t("TourForm")}</h4>
               </CardHeader>
               <CardBody>
                 <TourBody />

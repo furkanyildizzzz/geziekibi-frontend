@@ -29,6 +29,7 @@ import EditTagModal from "./EditTagModal";
 import { editTag } from "@/app/actions/tag/editTag";
 import { getTagById } from "@/app/actions/tag/getTagById";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 const TagListContainer = () => {
   const [tagList, setTagList] = useState<TagSuccessResponse[]>([]);
@@ -44,6 +45,7 @@ const TagListContainer = () => {
 
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const fetchData = async () => {
     const response = await getTagList();
@@ -168,7 +170,11 @@ const TagListContainer = () => {
   };
   return (
     <>
-      <Breadcrumbs pageTitle={TagList} parent={General} title={TagList} />
+      <Breadcrumbs
+        pageTitle={t("TagList")}
+        parent={t("General")}
+        title={t("TagList")}
+      />
       <Container fluid>
         <Row>
           <Col sm="12">
@@ -183,7 +189,7 @@ const TagListContainer = () => {
                       onClick={handleAdd}
                     >
                       <i className="me-2 fa fa-plus"> </i>
-                      {CreateNewTagHeading}
+                      {t("CreateNewTagHeading")}
                     </Button>
                   </div>
                 </div>
@@ -191,11 +197,11 @@ const TagListContainer = () => {
                   <div className="table-responsive">
                     {selectedRows.length !== 0 && (
                       <Button
-                        color="secondary"
+                        color="danger"
                         onClick={handleMultipleDelete}
                         className="mb-3"
                       >
-                        {DeleteSelectDataButton}
+                        {t("DeleteSelectDataButton")}
                       </Button>
                     )}
                     <DataTable

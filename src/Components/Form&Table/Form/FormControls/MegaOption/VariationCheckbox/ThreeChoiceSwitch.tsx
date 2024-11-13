@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Inherit, No, Yes } from "@/Constant/constant";
 import { TourServiceTypeEnum } from "@/app/lib/enums";
 import { useAppSelector } from "@/Redux/Hooks";
+import { useTranslation } from "react-i18next";
 
 // Styled Components
 const SwitchContainer = styled.div`
@@ -56,6 +57,8 @@ const ThreeChoiceSwitch: React.FC<{
 }> = ({ id, name, onSelectChange, type }) => {
   const [selected, setSelected] = useState<TourServiceTypeEnum>(type); // Default to 'Inherit'
   const { isLoading } = useAppSelector((state) => state.addProduct);
+  const { t } = useTranslation("common");
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { serviceId, serviceName } = event.target.dataset;
     setSelected(event.target.value as TourServiceTypeEnum);
@@ -73,24 +76,6 @@ const ThreeChoiceSwitch: React.FC<{
   return (
     <SwitchContainer>
       <SwitchInput
-        id={`switch-n-${id}`}
-        name="triple"
-        type="radio"
-        value="excluded"
-        checked={selected === TourServiceTypeEnum.EXCLUDED}
-        onChange={handleChange}
-        data-service-id={id}
-        data-service-name={name}
-        disabled={isLoading}
-      />
-      <SwitchLabel
-        htmlFor={`switch-n-${id}`}
-        isActive={selected === TourServiceTypeEnum.EXCLUDED}
-      >
-        {No}
-      </SwitchLabel>
-
-      <SwitchInput
         id={`switch-i-${id}`}
         name="triple"
         type="radio"
@@ -104,8 +89,9 @@ const ThreeChoiceSwitch: React.FC<{
       <SwitchLabel
         htmlFor={`switch-i-${id}`}
         isActive={selected === TourServiceTypeEnum.INHERIT}
+        style={{ fontSize: "0.75em" }}
       >
-        {Inherit}
+        {t("Pass")}
       </SwitchLabel>
 
       <SwitchInput
@@ -122,8 +108,9 @@ const ThreeChoiceSwitch: React.FC<{
       <SwitchLabel
         htmlFor={`switch-y-${id}`}
         isActive={selected === TourServiceTypeEnum.INCLUDED}
+        style={{ fontSize: "0.75em" }}
       >
-        {Yes}
+        {t("Included")}
       </SwitchLabel>
 
       <SwitchSelector

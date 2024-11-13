@@ -14,6 +14,7 @@ import DisplayError from "@/utils/DisplayError";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import { Option } from "react-bootstrap-typeahead/types/types";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 const SelectOne = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -29,6 +30,7 @@ const SelectOne = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation("common");
 
   const handleCategory = (select: string) => {
     dispatch(setFormValue({ name: "category", value: select }));
@@ -64,7 +66,7 @@ const SelectOne = () => {
       <Row className="g-2">
         <Col xs="12">
           <Label className="m-0">
-            {AddCategory}
+            {t("SelectCategory")}
             <span className="txt-danger"> *</span>
           </Label>
         </Col>
@@ -99,7 +101,6 @@ const SelectOne = () => {
             errorsValidation={errorsValidation}
             keyProp="parentid"
           />{" "}
-          <p className="f-light">A product can be added to a category</p>
         </Col>
       </Row>
       <Row>
@@ -112,7 +113,7 @@ const SelectOne = () => {
             onClick={handleAdd}
           >
             <i className="me-2 fa fa-plus"> </i>
-            {CreateNewCategoryHeading}
+            {t("CreateNewCategoryHeading")}
           </Button>
         </Col>
       </Row>

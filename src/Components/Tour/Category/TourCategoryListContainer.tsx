@@ -14,6 +14,7 @@ import { TourCategoryListTableDataColumn } from "@/Types/TourCategoryType";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import DataTable, { Alignment } from "react-data-table-component";
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Card,
@@ -37,6 +38,7 @@ const TourCategoryListContainer = () => {
 
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useTranslation("common");
 
   const fetchData = async () => {
     const response = await getTourCategoryList();
@@ -80,11 +82,11 @@ const TourCategoryListContainer = () => {
   }, [filterText]);
 
   const handleEdit = async (id: number) => {
-    router.push(`/tour/categories/${id}`);
+    router.push(`/tour/category/${id}`);
   };
 
   const handleAdd = () => {
-    router.push("/tour/categories/add-category");
+    router.push("/tour/category/add-category");
   };
 
   const handleDelete = async (name: string, id: number) => {
@@ -105,9 +107,9 @@ const TourCategoryListContainer = () => {
   return (
     <>
       <Breadcrumbs
-        pageTitle={CategoryList}
-        parent={Tour}
-        title={CategoryList}
+        pageTitle={t("CategoryList")}
+        parent={t("Tour")}
+        title={t("CategoryList")}
       />
       <Container fluid>
         <Row>
@@ -123,7 +125,7 @@ const TourCategoryListContainer = () => {
                       onClick={handleAdd}
                     >
                       <i className="me-2 fa fa-plus"> </i>
-                      {CreateNewCategoryHeading}
+                      {t("CreateNewCategoryHeading")}
                     </Button>
                   </div>
                 </div>

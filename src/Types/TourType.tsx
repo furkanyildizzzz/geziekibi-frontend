@@ -7,6 +7,7 @@ import {
   TourTypeDisplayNames,
   TourTypeEnum,
 } from "@/app/lib/enums";
+import { useTranslation } from "react-i18next";
 
 export interface TourListTableName {
   title?: string;
@@ -57,63 +58,68 @@ const TourListTableAction = (props: {
 export const TourListTableDataColumn = (
   editHandler: (id: number) => Promise<void>,
   deleteHandler: (name: string, id: number) => Promise<void>
-) => [
-  {
-    name: "Action",
-    cell: (row: TourListTableDataColumnType) => (
-      <TourListTableAction
-        name={row.title}
-        id={row.id}
-        handleEdit={editHandler}
-        handleDelete={deleteHandler}
-      />
-    ),
-    grow: 0,
-  },
-  {
-    name: "Title",
-    selector: (row: TourListTableDataColumnType) => `${row.title}`,
-    cell: (row: TourListTableDataColumnType) => (
-      <TourListTableTourImageAndName
-        title={row.title}
-        imageUrl={row.imageUrl}
-      />
-    ),
-    sortable: true,
-  },
+) => {
+  const { t } = useTranslation("common");
 
-  {
-    name: "Spot",
-    selector: (row: TourListTableDataColumnType) => `${row.spot}`,
-  },
-  {
-    name: "Category",
-    selector: (row: TourListTableDataColumnType) => `${row.category}`,
-    sortable: true,
-  },
-  {
-    name: "Type",
-    selector: (row: TourListTableDataColumnType) =>
-      `${TourTypeDisplayNames[row.type as TourTypeEnum]}`,
-    sortable: true,
-  },
+  return [
+    {
+      name: "Action",
+      cell: (row: TourListTableDataColumnType) => (
+        <TourListTableAction
+          name={row.title}
+          id={row.id}
+          handleEdit={editHandler}
+          handleDelete={deleteHandler}
+        />
+      ),
+      grow: 0,
+    },
+    {
+      name: t("Title"),
+      selector: (row: TourListTableDataColumnType) => `${row.title}`,
+      cell: (row: TourListTableDataColumnType) => (
+        <TourListTableTourImageAndName
+          title={row.title}
+          imageUrl={row.imageUrl}
+        />
+      ),
+      sortable: true,
+      grow: 2,
+    },
 
-  {
-    name: "Price",
-    selector: (row: TourListTableDataColumnType) => `${row.prices[0]?.price}`,
-    sortable: true,
-  },
+    {
+      name: "Spot",
+      selector: (row: TourListTableDataColumnType) => `${row.spot}`,
+    },
+    {
+      name: "Category",
+      selector: (row: TourListTableDataColumnType) => `${row.category}`,
+      sortable: true,
+    },
+    {
+      name: "Type",
+      selector: (row: TourListTableDataColumnType) =>
+        `${TourTypeDisplayNames[row.type as TourTypeEnum]}`,
+      sortable: true,
+    },
 
-  {
-    name: "Publish Status",
-    selector: (row: TourListTableDataColumnType) =>
-      `${PublishStatusDisplayNames[row.type as PublishStatusEnum]}`,
-    sortable: true,
-  },
+    {
+      name: "Price",
+      selector: (row: TourListTableDataColumnType) => `${row.prices[0]?.price}`,
+      sortable: true,
+    },
 
-  {
-    name: "Publish Date",
-    selector: (row: TourListTableDataColumnType) => `${row.publishDate}`,
-    sortable: true,
-  },
-];
+    {
+      name: "Publish Status",
+      selector: (row: TourListTableDataColumnType) =>
+        `${PublishStatusDisplayNames[row.type as PublishStatusEnum]}`,
+      sortable: true,
+    },
+
+    {
+      name: "Publish Date",
+      selector: (row: TourListTableDataColumnType) => `${row.publishDate}`,
+      sortable: true,
+    },
+  ];
+};

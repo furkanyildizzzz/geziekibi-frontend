@@ -1,5 +1,6 @@
 import SVG from "@/CommonComponent/SVG/Svg";
 import { TourCategorySuccessResponse } from "./ApiResponseType";
+import { useTranslation } from "react-i18next";
 
 export interface TourCategoryListTableTag {
   name?: string;
@@ -40,37 +41,43 @@ const TourCategoryListTableAction = (props: {
 export const TourCategoryListTableDataColumn = (
   editHandler: (id: number) => Promise<void>,
   deleteHandler: (name: string, id: number) => Promise<void>
-) => [
-  {
-    name: "Action",
-    cell: (row: TourCategoryListTableDataColumnType) => (
-      <TourCategoryListTableAction
-        name={row.name}
-        id={row.id}
-        handleEdit={editHandler}
-        handleDelete={deleteHandler}
-      />
-    ),
-    grow: 0,
-  },
-  {
-    name: "Category Name",
-    selector: (row: TourCategoryListTableDataColumnType) => `${row.name}`,
-    cell: (row: TourCategoryListTableDataColumnType) => (
-      <TourCategoryListTableTagName name={row.name} />
-    ),
-    sortable: true,
-    grow: 1,
-  },
+) => {
+  const { t } = useTranslation("common");
 
-  {
-    name: "Master Name",
-    selector: (row: TourCategoryListTableDataColumnType) =>
-      `${row.parent.name}`,
-    cell: (row: TourCategoryListTableDataColumnType) => (
-      <TourCategoryListTableTagName name={row.parent ? row.parent.name : ""} />
-    ),
-    sortable: true,
-    grow: 1,
-  },
-];
+  return [
+    {
+      name: t("Actions"),
+      cell: (row: TourCategoryListTableDataColumnType) => (
+        <TourCategoryListTableAction
+          name={row.name}
+          id={row.id}
+          handleEdit={editHandler}
+          handleDelete={deleteHandler}
+        />
+      ),
+      grow: 0,
+    },
+    {
+      name: t("CategoryName"),
+      selector: (row: TourCategoryListTableDataColumnType) => `${row.name}`,
+      cell: (row: TourCategoryListTableDataColumnType) => (
+        <TourCategoryListTableTagName name={row.name} />
+      ),
+      sortable: true,
+      grow: 1,
+    },
+
+    {
+      name: t("MasterCategoryName"),
+      selector: (row: TourCategoryListTableDataColumnType) =>
+        `${row.parent.name}`,
+      cell: (row: TourCategoryListTableDataColumnType) => (
+        <TourCategoryListTableTagName
+          name={row.parent ? row.parent.name : ""}
+        />
+      ),
+      sortable: true,
+      grow: 1,
+    },
+  ];
+};

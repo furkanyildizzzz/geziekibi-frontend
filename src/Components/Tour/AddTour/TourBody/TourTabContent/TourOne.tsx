@@ -16,6 +16,7 @@ import { TourTypeDisplayNames, TourTypeEnum } from "@/app/lib/enums";
 import ReactDatePicker from "react-datepicker";
 import { useCallback, useEffect, useState } from "react";
 import { tr } from "date-fns/locale/tr";
+import { useTranslation } from "react-i18next";
 
 export const DropDownData = [
   {
@@ -39,6 +40,8 @@ const TourOne = () => {
 
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+
+  const { t } = useTranslation("common");
 
   const handleStartDateChange = (date: Date) => {
     setStartDate(date);
@@ -76,7 +79,7 @@ const TourOne = () => {
           <Col xs="3">
             <FormGroup>
               <Label for="validationServer01" check>
-                {TourType}
+                {t("TourType")}
                 <span className="txt-danger"> *</span>
               </Label>
 
@@ -111,7 +114,7 @@ const TourOne = () => {
           <Col xs="3">
             <FormGroup>
               <Label for="validationServer01" check>
-                {StartDate} <span className="txt-danger"> *</span>
+                {t("TourStartDate")} <span className="txt-danger"> *</span>
               </Label>
               <div className="input-group flatpicker-calender product-date">
                 <ReactDatePicker
@@ -129,7 +132,7 @@ const TourOne = () => {
           <Col xs="3">
             <FormGroup>
               <Label for="validationServer01" check>
-                {FinishDate} <span className="txt-danger"> *</span>
+                {t("TourEndDate")} <span className="txt-danger"> *</span>
               </Label>
               <div className="input-group flatpicker-calender product-date">
                 <ReactDatePicker
@@ -147,7 +150,7 @@ const TourOne = () => {
           <FormGroup>
             <Col xs="12">
               <Label className="m-0" check>
-                {TourTitle} <span className="txt-danger"> *</span>
+                {t("TourTitle")} <span className="txt-danger"> *</span>
               </Label>
             </Col>
             <Col xs="12">
@@ -171,7 +174,7 @@ const TourOne = () => {
           <FormGroup>
             <Col xs="12">
               <Label className="m-0" check>
-                {TourSpot} <span className="txt-danger"> *</span>
+                {t("TourSpot")} <span className="txt-danger"> *</span>
               </Label>
             </Col>
             <Col xs="12">

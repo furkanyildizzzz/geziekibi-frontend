@@ -9,6 +9,7 @@ import {
 } from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
+import { useTranslation } from "react-i18next";
 import { Col, Input, Label, Row } from "reactstrap";
 
 export const DropDownData = [
@@ -30,6 +31,7 @@ export const DropDownData = [
 const SelectFour = () => {
   const dispatch = useAppDispatch();
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
+  const { t } = useTranslation("common");
 
   const handleStatus = (select: string) => {
     dispatch(setFormValue({ name: "publishStatus", value: select }));
@@ -44,7 +46,7 @@ const SelectFour = () => {
       <Row>
         <Col xs="12">
           <Label for="validationServer01" check>
-            {PublishStatus}
+            {t("PublishStatus")}
             <span className="txt-danger"> *</span>
           </Label>
 
@@ -59,7 +61,7 @@ const SelectFour = () => {
             isDisabled={isLoading}
             options={DropDownData.map((item) => {
               return {
-                name: item.name,
+                name: t(item.name),
                 id: item.id.toString(),
               };
             })}

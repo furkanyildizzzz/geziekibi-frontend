@@ -380,51 +380,57 @@ export const LightColorData = [
 ];
 
 export const DarkColorData = [
-  {  primary: "#4466f2", secondary: "#1ea6ec" },
-  {  primary: "#33BFBF", secondary: "#FF6150" },
-  {  primary: "#006666", secondary: "#FE6A49" },
-  {  primary: "#7A70BA", secondary: "#48A3D7" },
-  {  primary: "#6271EB", secondary: "#FF8575" },
-  {  primary: "#3949ab", secondary: "#4fc3f7" },
+  { primary: "#4466f2", secondary: "#1ea6ec" },
+  { primary: "#33BFBF", secondary: "#FF6150" },
+  { primary: "#006666", secondary: "#FE6A49" },
+  { primary: "#7A70BA", secondary: "#48A3D7" },
+  { primary: "#6271EB", secondary: "#FF8575" },
+  { primary: "#3949ab", secondary: "#4fc3f7" },
 ];
 
 export let LanguageData = [
   {
-      languageParameter: "en",
-      languageName: "English",
-      languageIconClassName: "us",
-      subTitle:"US"
+    languageParameter: "en",
+    languageName: "English",
+    languageIconClassName: "us",
+    subTitle: "US",
   },
+  // {
+  //   languageParameter: "du",
+  //   languageName: "Deutsch",
+  //   languageIconClassName: "de",
+  // },
+  // {
+  //   languageParameter: "es",
+  //   languageName: "Español",
+  //   languageIconClassName: "es",
+  // },
+  // {
+  //   languageParameter: "fr",
+  //   languageName: "Français",
+  //   languageIconClassName: "fr",
+  // },
+  // {
+  //   languageParameter: "pt",
+  //   languageName: "Português",
+  //   languageIconClassName: "pt",
+  //   subTitle: "BR",
+  // },
+  // {
+  //   languageParameter: "cn",
+  //   languageName: "简体中文",
+  //   languageIconClassName: "cn",
+  // },
+  // {
+  //   languageParameter: "ae",
+  //   languageName: "لعربي",
+  //   languageIconClassName: "ae",
+  //   subTitle: "ae",
+  // },
   {
-      languageParameter: "du",
-      languageName: "Deutsch",
-      languageIconClassName: "de",
-  },
-  {
-      languageParameter: "es",
-      languageName: "Español",
-      languageIconClassName: "es",
-  },
-  {
-      languageParameter: "fr",
-      languageName: "Français",
-      languageIconClassName: "fr",
-  },
-  {
-      languageParameter: "pt",
-      languageName: "Português",
-      languageIconClassName: "pt",
-      subTitle:"BR"
-  },
-  {
-      languageParameter: "cn",
-      languageName: "简体中文",
-      languageIconClassName: "cn",
-  },
-  {
-      languageParameter: "ae",
-      languageName: "لعربي",
-      languageIconClassName: "ae",
-      subTitle:"ae"
+    languageParameter: "tr",
+    languageName: "Türkçe",
+    languageIconClassName: "tr",
+    subTitle: "TR",
   },
 ];
