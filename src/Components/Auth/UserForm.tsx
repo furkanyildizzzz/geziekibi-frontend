@@ -47,7 +47,7 @@ export const UserForm = () => {
         setErrorsValidation(response.errorsValidation);
         setErrorMessage(response.errorMessage);
       } else {
-        Cookies.set("token", response.data);
+        Cookies.set("token", response.data.accessToken);
         SweetAlert.fire({
           icon: "success",
           title: "Good job!",

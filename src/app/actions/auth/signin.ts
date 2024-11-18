@@ -47,7 +47,7 @@ export const signin = async (
 
     // If validation is successful, proceed with the API request
     const response = await apiRequest<LoginSuccessResponse>(
-      "auth/login",
+      "auth/signin",
       "POST",
       data
     );

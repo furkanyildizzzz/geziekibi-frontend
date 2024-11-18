@@ -23,9 +23,19 @@ export interface ApiSuccessResponse<T> extends Response {
   data: T;
 }
 
-export type LoginSuccessResponse = string;
+export type UserSuccessResponse = {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: "ADMINISTRATOR" | "STANDART"; // Adjust roles as necessary
+  language: string; // e.g., "en-US", "tr-TR"
+};
+export type LoginSuccessResponse = {
+  accessToken: string;
+  user: UserSuccessResponse;
+};
 export type SignupSuccessResponse = string;
-
 export type TagSuccessResponse = { id: number; name: string };
 export type TourCategorySuccessResponse = {
   id: number;
