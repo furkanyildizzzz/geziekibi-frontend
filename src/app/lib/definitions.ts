@@ -52,7 +52,7 @@ export const CreateTourCategoryFormSchema = z.object({
     .min(3, { message: "Be at least 3 charactes long" })
     .trim(),
   description: z.string().optional(),
-  parentid: z.number().optional(),
+  parentId: z.number().optional(),
 });
 export type CreateTourCategorySchema = z.infer<
   typeof CreateTourCategoryFormSchema

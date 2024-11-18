@@ -52,7 +52,7 @@ const AddTourCategoryModal = () => {
     defaultValues: {
       name: "New Category",
       description: "",
-      parentid: -1,
+      parentId: -1,
     },
   });
 
@@ -69,16 +69,18 @@ const AddTourCategoryModal = () => {
   }, []);
 
   const handleParentIdChanged = (id: string) => {
-    setValue("parentid", Number(id));
+    setValue("parentId", Number(id));
   };
 
   const onsubmit = async (data: CreateTourCategorySchema) => {
+    setErrorsValidation([]);
+    setErrorMessage("");
+
     const response = await createNewTourCategory(data);
 
     if ("errorType" in response) {
-      if (response.errorType == "Validation")
-        setErrorsValidation(response.errorsValidation!);
-      else setErrorMessage(response.errorMessage);
+      setErrorsValidation(response.errorsValidation!);
+      setErrorMessage(response.errorMessage);
     } else {
       ShowSuccess(response.message);
       router.back(); // Close modal by navigating back
@@ -137,7 +139,7 @@ const AddTourCategoryModal = () => {
             <Row>
               <FormGroup>
                 <DropDownComponent
-                  id="parentid"
+                  id="parentId"
                   title={t("SelectParentCategory")}
                   isRequired={false}
                   labelKey="name"
@@ -155,7 +157,7 @@ const AddTourCategoryModal = () => {
                 <DisplayError
                   errors={errors}
                   errorsValidation={errorsValidation}
-                  keyProp="description"
+                  keyProp="parentId"
                 />
               </FormGroup>
             </Row>

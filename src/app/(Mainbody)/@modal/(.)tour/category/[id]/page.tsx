@@ -8,6 +8,7 @@ import {
 } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
 import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
+import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import {
   Cancel,
@@ -86,7 +87,7 @@ const EditTourCategoryModal = ({
   }, []);
 
   const handleParentIdChanged = (id: string) => {
-    setValue("parentid", Number(id));
+    setValue("parentId", Number(id));
   };
 
   const onsubmit = async (data: CreateTourCategorySchema) => {
@@ -95,10 +96,10 @@ const EditTourCategoryModal = ({
     console.log({ response });
 
     if ("errorType" in response) {
-      if (response.errorType == "Validation")
-        setErrorsValidation(response.errorsValidation!);
-      else setErrorMessage(response.errorMessage);
+      setErrorsValidation(response.errorsValidation!);
+      setErrorMessage(response.errorMessage);
     } else {
+      ShowSuccess(response.message);
       router.back(); // Close modal by navigating back
     }
     return;
@@ -167,7 +168,7 @@ const EditTourCategoryModal = ({
 
           <FormGroup>
             <DropDownComponent
-              id="parentid"
+              id="parentId"
               title={t("SelectParentCategory")}
               isRequired={false}
               labelKey="name"
@@ -193,14 +194,11 @@ const EditTourCategoryModal = ({
             />
             <DisplayError
               errorsValidation={errorsValidation}
-              keyProp="parentid"
+              keyProp="parentId"
             />{" "}
           </FormGroup>
         </Col>
-        <Col
-          xs="12"
-          style={{ display: "flex", justifyContent: "flex-end", gap: "3%" }}
-        >
+        <Col xs="12">
           <ModalButtons isLoading={isLoading} />
         </Col>
       </Form>

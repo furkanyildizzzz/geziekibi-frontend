@@ -10,12 +10,19 @@ export interface ApiErrorResponse extends Response {
   errorsValidation: ErrorValidation[] | null;
   stack?: string;
 }
-type ErrorType =
+export type ErrorType =
   | "General"
   | "Raw"
   | "Validation"
-  | "Unauthanticated"
-  | "Unauthorized";
+  | "Unauthorized"
+  | "BAD REQUEST"
+  | "UNAUTHORIZED"
+  | "FORBIDDEN"
+  | "CONFLICT"
+  | "INTERNAL SERVER ERROR"
+  | "METHOD NOT ALLOWED"
+  | "NOT FOUND"
+  | "REQUEST TIMEOUT";
 export type ErrorValidation = { [key: string]: string };
 
 export interface ApiSuccessResponse<T> extends Response {
