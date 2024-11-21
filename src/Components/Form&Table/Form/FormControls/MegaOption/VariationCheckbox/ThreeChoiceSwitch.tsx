@@ -76,6 +76,24 @@ const ThreeChoiceSwitch: React.FC<{
   return (
     <SwitchContainer>
       <SwitchInput
+        id={`switch-n-${id}`}
+        name="triple"
+        type="radio"
+        value="excluded"
+        checked={selected === TourServiceTypeEnum.EXCLUDED}
+        onChange={handleChange}
+        data-service-id={id}
+        data-service-name={name}
+        disabled={isLoading}
+      />
+      <SwitchLabel
+        htmlFor={`switch-n-${id}`}
+        isActive={selected === TourServiceTypeEnum.EXCLUDED}
+      >
+        {t("Excluded")}
+      </SwitchLabel>
+
+      <SwitchInput
         id={`switch-i-${id}`}
         name="triple"
         type="radio"

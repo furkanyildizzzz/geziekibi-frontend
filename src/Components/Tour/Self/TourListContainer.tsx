@@ -29,6 +29,7 @@ import {
 import { deleteService } from "@/app/actions/tour/service/deleteService";
 import { getTourList } from "@/app/actions/tour/self/getTourList";
 import { deleteTour } from "@/app/actions/tour/self/deleteTour";
+import { useTranslation } from "react-i18next";
 
 const TourListContainer = () => {
   const [tourList, setTourList] = useState<TourListTableDataColumnType[]>([]);
@@ -36,6 +37,7 @@ const TourListContainer = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [filterText, setFilterText] = useState("");
 
+  const { t } = useTranslation("common");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -51,7 +53,7 @@ const TourListContainer = () => {
             id: s.id,
             title: s.title,
             spot: s.spot,
-            type: s.type,
+            type: s.tourType,
             publishStatus: s.publishStatus,
             publishDate: s.publishDate,
             category: s.category?.name, //TourCategorySuccessResponse,
@@ -121,7 +123,11 @@ const TourListContainer = () => {
 
   return (
     <>
-      <Breadcrumbs pageTitle={TourList} parent={Tour} title={TourList} />
+      <Breadcrumbs
+        pageTitle={t("TourList")}
+        parent={t("Tour")}
+        title={t("TourList")}
+      />
       <Container fluid>
         <Row>
           <Col sm="12">
@@ -136,7 +142,7 @@ const TourListContainer = () => {
                       onClick={handleAdd}
                     >
                       <i className="me-2 fa fa-plus"> </i>
-                      {CreateNewTourHeading}
+                      {t("CreateNewTourHeading")}
                     </Button>
                   </div>
                 </div>

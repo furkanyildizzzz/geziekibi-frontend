@@ -101,7 +101,10 @@ const TourFour = () => {
   }, [formValue]);
 
   useEffect(() => {
-    if (formValue.id > 0 && priceList.length === 0) {
+    if (
+      (formValue.id > 0 || formValue.copyTourId > 0) &&
+      priceList.length === 0
+    ) {
       setExistingPriceList();
     }
   }, [setExistingPriceList]);

@@ -69,7 +69,9 @@ const SelectFour = () => {
               formValue.publishStatus
                 ? DropDownData.filter(
                     (data) => data.id === formValue.publishStatus
-                  )
+                  ).map((s) => {
+                    return { ...s, name: t(s.name) };
+                  })
                 : undefined
             }
           />

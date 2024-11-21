@@ -1,11 +1,6 @@
 import TourGallery from "./TourGallery";
 import { useCallback, useEffect, useState } from "react";
-import {
-  Dropzone,
-  ExtFile,
-  FileMosaic,
-  ImagePreview,
-} from "@dropzone-ui/react";
+import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import Link from "next/link";
 import { DragYourImageHere, Href, TourImage } from "@/Constant/constant";
@@ -14,8 +9,8 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import SVG from "@/CommonComponent/SVG/Svg";
 import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { CloudinaryImage } from "@/Types/ApiResponseType";
-import TourImagesDropzone from "./TourPrimaryImages";
 import { useTranslation } from "react-i18next";
+import { usePathname } from "next/navigation";
 
 const TourPrimaryImages = () => {
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
@@ -23,7 +18,6 @@ const TourPrimaryImages = () => {
   const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
   const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
-
   const updateFiles = (files: ExtFile[]) => {
     setFiles(files);
     dispatch(setFormValue({ name: "primaryImages", value: files }));
@@ -35,7 +29,7 @@ const TourPrimaryImages = () => {
   };
 
   const setExistingImages = useCallback(async () => {
-    setExistingFiles(formValue.primaryImages);
+    setExistingFiles(formValue.uploadedPrimaryImages);
   }, [formValue]);
 
   useEffect(() => {
@@ -53,7 +47,12 @@ const TourPrimaryImages = () => {
           images={existingFiles}
           onRemove={(publicId: string) => {
             console.log({ publicId });
-            dispatch(setFormValue({ name: "primaryImages", value: [] }));
+            dispatch(
+              setFormValue({
+                name: "uploadedPrimaryImages",
+                value: existingFiles.filter((s) => s.publicId !== publicId),
+              })
+            );
             setExistingFiles([]);
           }}
         />

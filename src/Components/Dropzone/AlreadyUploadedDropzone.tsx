@@ -79,7 +79,7 @@ const AlreadyUploadedDropzone: React.FC<DropzoneProps> = ({
               </div>
             </div>
             <div className="files-ui-file-mosaic-file-name">
-              <span>{"fileName"}</span>
+              <span>{s.originalName}</span>
             </div>
           </div>
         ))}

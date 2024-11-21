@@ -173,6 +173,8 @@ export const TourValidationFormSchema = z.object({
   ),
   primaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
   galleryImages: z.array(z.any()).optional(), // Allow an array of any file objects for gallery images
+  uploadedPrimaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
+  uploadedGalleryImages: z.array(z.any()).optional(), // Allow an array of any file objects for gallery images
   tags: z.array(z.object({ id: z.number() })).optional(), // Assuming `tags` are referenced by `id`
   prices: z.array(
     z.object({

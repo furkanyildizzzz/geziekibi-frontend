@@ -6,8 +6,14 @@ export const metadata: Metadata = {
   title: "Add Tour",
 };
 
-const AddTour = () => {
-  return <AddTourContainer />;
+const AddTour = ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string };
+}) => {
+  const copyTourId = searchParams.copy ? parseInt(searchParams.copy, 10) : 0; // Convert 'copy' param to number, fallback to 0
+  console.log(copyTourId);
+  return <AddTourContainer id={0} copyTourId={copyTourId} />;
 };
 
 export default AddTour;

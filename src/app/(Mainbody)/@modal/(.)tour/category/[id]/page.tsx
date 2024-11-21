@@ -1,4 +1,5 @@
 "use client";
+import { deleteTourCategory } from "@/app/actions/tour/category/deleteTourCategory";
 import { editTourCategory } from "@/app/actions/tour/category/editTourCategory";
 import { getTourCategoryById } from "@/app/actions/tour/category/getTourCategoryById";
 import { getTourCategoryList } from "@/app/actions/tour/category/getTourCategoryList";
@@ -105,6 +106,21 @@ const EditTourCategoryModal = ({
     return;
   };
 
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete:\r ${tourCategory?.name} ?`
+      )
+    ) {
+      try {
+        await deleteTourCategory(tourCategory!.id);
+        router.back(); // Close modal by navigating back
+      } catch (error) {
+        setErrorMessage("Failed to delete category. Please try again.");
+      }
+    }
+  };
+
   return (
     <ModalComponent
       title={t("EditTourCategoryHeading") + ` "${getValues("name")}"`}
@@ -199,7 +215,7 @@ const EditTourCategoryModal = ({
           </FormGroup>
         </Col>
         <Col xs="12">
-          <ModalButtons isLoading={isLoading} />
+          <ModalButtons isLoading={isLoading} deleteFunction={handleDelete} />
         </Col>
       </Form>
     </ModalComponent>

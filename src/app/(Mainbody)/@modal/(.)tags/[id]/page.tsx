@@ -1,9 +1,11 @@
 "use client";
+import { deleteTag } from "@/app/actions/tag/deleteTag";
 import { editTag } from "@/app/actions/tag/editTag";
 import { getTagById } from "@/app/actions/tag/getTagById";
 import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
 import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
+import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
 import { Cancel, EditTagHeading, TagName, Edit } from "@/Constant/constant";
 import useFormState from "@/hooks/useFormState";
 import { ErrorValidation, TagSuccessResponse } from "@/Types/ApiResponseType";
@@ -16,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 
 const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
+  const [tagData, setTagData] = useState<TagSuccessResponse>();
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
@@ -38,6 +41,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
     const response = await getTagById(Number(id));
     if ("data" in response) {
       console.log({ data: response.data });
+      setTagData({ ...response.data });
       reset({ ...response.data });
     }
   };
@@ -52,13 +56,26 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
     console.log({ response });
 
     if ("errorType" in response) {
-      if (response.errorType == "Validation")
-        setErrorsValidation(response.errorsValidation!);
-      else setErrorMessage(response.errorMessage);
+      setErrorsValidation(response.errorsValidation!);
+      setErrorMessage(response.errorMessage);
     } else {
+      ShowSuccess(response.message);
       router.back(); // Close modal by navigating back
     }
     return;
+  };
+
+  const handleDelete = async () => {
+    if (
+      window.confirm(`Are you sure you want to delete:\r ${tagData!.name} ?`)
+    ) {
+      try {
+        await deleteTag(tagData!.id);
+        router.back(); // Close modal by navigating back
+      } catch (error) {
+        setErrorMessage("Failed to delete tag. Please try again.");
+      }
+    }
   };
 
   return (
@@ -100,7 +117,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
               keyProp="name"
             />
           </FormGroup>
-          <ModalButtons isLoading={isLoading} />
+          <ModalButtons isLoading={isLoading} deleteFunction={handleDelete} />
         </Form>
       </Col>
     </ModalComponent>

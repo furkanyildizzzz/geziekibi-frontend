@@ -30,7 +30,6 @@ export const createNewTour = async (
       ) {
         for (let index = 0; index < value.length; index++) {
           const file = value[index].file;
-          console.log({ key, file });
           formData.append(key, file);
         }
       } else if (typeof value === "object" && value !== null) {

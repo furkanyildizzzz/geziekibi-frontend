@@ -98,7 +98,7 @@ const TourCategoryListContainer = () => {
         await fetchData();
       }
     } catch (error) {
-      setErrorMessage("Failed to delete tags. Please try again.");
+      setErrorMessage("Failed to delete category. Please try again.");
     } finally {
       setIsLoading(false); // Reset loading state
     }

@@ -41,9 +41,8 @@ const CreateNewTagModal = () => {
     console.log({ response });
 
     if ("errorType" in response) {
-      if (response.errorType == "Validation")
-        setErrorsValidation(response.errorsValidation!);
-      else setErrorMessage(response.errorMessage);
+      setErrorsValidation(response.errorsValidation!);
+      setErrorMessage(response.errorMessage);
     } else {
       ShowSuccess(response.message);
       router.back(); // Close modal by navigating back

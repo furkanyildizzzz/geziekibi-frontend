@@ -24,6 +24,7 @@ import { ErrorValidation } from "@/Types/ApiResponseType";
 import { createNewService } from "@/app/actions/tour/service/createNewService";
 import { useTranslation } from "react-i18next";
 import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
+import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
 
 const CreateNewServiceModal = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -52,10 +53,10 @@ const CreateNewServiceModal = () => {
     console.log({ response });
 
     if ("errorType" in response) {
-      if (response.errorType == "Validation")
-        setErrorsValidation(response.errorsValidation!);
-      else setErrorMessage(response.errorMessage);
+      setErrorsValidation(response.errorsValidation!);
+      setErrorMessage(response.errorMessage);
     } else {
+      ShowSuccess(response.message);
       router.back(); // Close modal by navigating back
     }
     return;

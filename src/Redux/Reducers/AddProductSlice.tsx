@@ -6,12 +6,15 @@ const initialState: AddProductSliceType = {
   tabId: 1,
   isLoading: false,
   formValue: {
+    copyTourId: 0,
     id: 0,
     title: "",
     spot: "",
     body: "",
     primaryImages: [],
     galleryImages: [],
+    uploadedPrimaryImages: [],
+    uploadedGalleryImages: [],
     category: "",
     tourType: "",
     publishStatus: "",
@@ -20,7 +23,7 @@ const initialState: AddProductSliceType = {
     endDate: "",
     prices: [],
     currency: "",
-    tags: "",
+    tags: [],
     tourServices: [],
   },
 };
@@ -41,9 +44,32 @@ const AddProductSlice = createSlice({
     setFormValue: (state, action) => {
       state.formValue[action.payload.name] = action.payload.value;
     },
+    resetTourForm: (state, action) => {
+      state.formValue = {
+        copyTourId: 0,
+        id: 0,
+        title: "",
+        spot: "",
+        body: "",
+        primaryImages: [],
+        galleryImages: [],
+        uploadedPrimaryImages: [],
+        uploadedGalleryImages: [],
+        category: "",
+        tourType: "yurtici",
+        publishStatus: "publish",
+        publishDate: new Date(),
+        startDate: new Date(),
+        endDate: new Date(),
+        prices: [],
+        currency: "",
+        tags: [],
+        tourServices: [],
+      };
+    },
   },
 });
-export const { setNavId, setFormValue, setTabId, setIsLoading } =
+export const { setNavId, setFormValue, setTabId, setIsLoading, resetTourForm } =
   AddProductSlice.actions;
 
 export default AddProductSlice.reducer;

@@ -64,6 +64,7 @@ export type ServiceSuccessResponse = {
   description: string;
 };
 export type CloudinaryImage = {
+  originalName: string;
   publicId: string;
   url: string;
   secureUrl: string;
@@ -80,7 +81,7 @@ export type TourSuccessResponse = {
   title: string;
   spot: string;
   body: Text;
-  type: string;
+  tourType: string;
   primaryImages: CloudinaryImage[];
   galleryImages: CloudinaryImage[];
   publishStatus: string;
@@ -89,6 +90,18 @@ export type TourSuccessResponse = {
   prices: { name: string; description: string; price: number }[];
   tags: TagSuccessResponse[];
   tourServices: TourService[];
+};
+
+export type TourListSuccessResponse = {
+  id: number;
+  title: string;
+  spot: string;
+  tourType: string;
+  primaryImages: CloudinaryImage[];
+  publishStatus: string;
+  publishDate: Date;
+  category: TourCategorySuccessResponse;
+  prices: { name: string; description: string; price: number }[];
 };
 
 export type TourPriceSuccessResponse = {

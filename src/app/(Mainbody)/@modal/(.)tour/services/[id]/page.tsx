@@ -30,8 +30,11 @@ import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { t } from "i18next";
 import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 import { useTranslation } from "react-i18next";
+import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import { deleteService } from "@/app/actions/tour/service/deleteService";
 
 const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
+  const [serviceData, setServiceData] = useState<ServiceSuccessResponse>();
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
@@ -55,6 +58,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
     const response = await getServiceById(Number(id));
     if ("data" in response) {
       console.log({ data: response.data });
+      setServiceData({ ...response.data });
       reset({ ...response.data });
     }
   };
@@ -69,13 +73,28 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
     console.log({ response });
 
     if ("errorType" in response) {
-      if (response.errorType == "Validation")
-        setErrorsValidation(response.errorsValidation!);
-      else setErrorMessage(response.errorMessage);
+      setErrorsValidation(response.errorsValidation!);
+      setErrorMessage(response.errorMessage);
     } else {
+      ShowSuccess(response.message);
       router.back(); // Close modal by navigating back
     }
     return;
+  };
+
+  const handleDelete = async () => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete:\r ${serviceData!.name} ?`
+      )
+    ) {
+      try {
+        await deleteService(serviceData!.id);
+        router.back(); // Close modal by navigating back
+      } catch (error) {
+        setErrorMessage("Failed to delete tag. Please try again.");
+      }
+    }
   };
 
   return (
@@ -133,7 +152,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
               keyProp="description"
             />
           </FormGroup>
-          <ModalButtons isLoading={isLoading} />
+          <ModalButtons isLoading={isLoading} deleteFunction={handleDelete} />
         </Form>
       </Col>
     </ModalComponent>

@@ -63,7 +63,7 @@ export const TourListTableDataColumn = (
 
   return [
     {
-      name: "Action",
+      name: t("Actions"),
       cell: (row: TourListTableDataColumnType) => (
         <TourListTableAction
           name={row.title}
@@ -88,36 +88,38 @@ export const TourListTableDataColumn = (
     },
 
     {
-      name: "Spot",
+      name: t("Spot"),
       selector: (row: TourListTableDataColumnType) => `${row.spot}`,
     },
     {
-      name: "Category",
+      name: t("Category"),
       selector: (row: TourListTableDataColumnType) => `${row.category}`,
       sortable: true,
     },
     {
-      name: "Type",
+      name: t("Type"),
       selector: (row: TourListTableDataColumnType) =>
         `${TourTypeDisplayNames[row.type as TourTypeEnum]}`,
       sortable: true,
     },
 
     {
-      name: "Price",
+      name: t("Price"),
       selector: (row: TourListTableDataColumnType) => `${row.prices[0]?.price}`,
       sortable: true,
     },
 
     {
-      name: "Publish Status",
+      name: t("PublishStatus"),
       selector: (row: TourListTableDataColumnType) =>
-        `${PublishStatusDisplayNames[row.type as PublishStatusEnum]}`,
+        t(
+          `${PublishStatusDisplayNames[row.publishStatus as PublishStatusEnum]}`
+        ),
       sortable: true,
     },
 
     {
-      name: "Publish Date",
+      name: t("PublishDate"),
       selector: (row: TourListTableDataColumnType) => `${row.publishDate}`,
       sortable: true,
     },

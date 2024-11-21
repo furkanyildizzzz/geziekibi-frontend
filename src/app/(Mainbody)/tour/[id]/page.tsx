@@ -1,8 +1,6 @@
-import { getTourById } from "@/app/actions/tour/self/getTourById";
 import AddTourContainer from "@/Components/Tour/AddTour/AddTourContainer";
-import { ErrorValidation } from "@/Types/ApiResponseType";
 import { Metadata } from "next";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Edit Tour",

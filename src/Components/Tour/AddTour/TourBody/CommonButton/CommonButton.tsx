@@ -14,6 +14,10 @@ import { editTour } from "@/app/actions/tour/self/editTour";
 import { useEffect } from "react";
 import { LoadingButton } from "@/Components/Button/Loading";
 import { useTranslation } from "react-i18next";
+import ShowError from "@/CommonComponent/Toast/Error/ShowError";
+import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import { deleteTour } from "@/app/actions/tour/self/deleteTour";
+import { useRouter } from "next/navigation";
 
 const CommonButton = () => {
   const { navId, formValue, tabId, isLoading } = useAppSelector(
@@ -22,10 +26,16 @@ const CommonButton = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
 
+  const router = useRouter();
+
   const handleNext = () => {
     console.log({ tabId, navId, formValue });
     if (!formValue.title || !formValue.spot) dispatch(setNavId(1));
-    else if (!formValue.primaryImages.length) dispatch(setNavId(2));
+    else if (
+      !formValue.uploadedPrimaryImages.length &&
+      formValue.primaryImages.length === 0
+    )
+      dispatch(setNavId(2));
     else if (
       !formValue.tourType ||
       !formValue.category ||
@@ -33,7 +43,7 @@ const CommonButton = () => {
     )
       dispatch(setNavId(3));
     else if (!formValue.prices.length) dispatch(setNavId(4));
-    dispatch(setNavId(5));
+    else dispatch(setNavId(5));
   };
   const handlePrevious = () => {
     if (navId > 1) {
@@ -47,65 +57,108 @@ const CommonButton = () => {
 
   const handleSubmit = async () => {
     dispatch(setIsLoading(true));
+    let tourId = formValue.id;
     try {
-      // Create a 5-second delay
-      // await new Promise((resolve) => setTimeout(resolve, 5000));
-      // Place any actual submission logic here
       const response =
-        formValue.id > 0
+        tourId > 0
           ? await editTour(formValue.id, formValue)
           : await createNewTour(formValue);
       console.log({ response });
       if ("errorType" in response) {
-        if (response.errorType == "Validation") {
-          ShowValidationError(response.errorsValidation!);
-        }
+        ShowValidationError(response.errorsValidation!);
+        ShowError(response.errorMessage);
+      } else {
+        ShowSuccess(response.message);
+        tourId = response.data.id;
+        dispatch(setNavId(1));
+        handleReload(`/tour/${tourId}`);
       }
     } finally {
       dispatch(setIsLoading(false));
     }
   };
 
+  const handleDelete = async () => {
+    if (
+      window.confirm(`Are you sure you want to delete:\r ${formValue.title} ?`)
+    ) {
+      try {
+        dispatch(setIsLoading(true));
+
+        await deleteTour(formValue.id);
+      } catch (error) {
+        ShowError("Failed to delete tour. Please try again.");
+      } finally {
+        dispatch(setIsLoading(false));
+        handleReload("/tours");
+      }
+    }
+  };
+
+  const handleReload = (path: string) => {
+    router.replace(path); // Reloads the current page
+  };
+
   return (
-    <div className="product-buttons border-0">
-      {navId > 1 && (
-        <Button
-          color="transparent"
-          disabled={isLoading}
-          onClick={handlePrevious}
-        >
-          <div className="d-flex align-items-center gap-sm-2 gap-1">
-            <SVG iconId="back-arrow" />
-            {t("Previous")}
-          </div>
-        </Button>
-      )}
-      {navId === 5 ? (
-        <Button
-          color="transparent"
-          className="ms-2"
-          onClick={handleSubmit}
-          type={"submit"}
-          disabled={isLoading}
-        >
-          <div className="d-flex align-items-center gap-sm-2 gap-1">
-            {isLoading ? <LoadingButton /> : t("Submit")}
-          </div>
-        </Button>
-      ) : (
-        <Button
-          color="transparent"
-          className="ms-2"
-          onClick={handleNext}
-          type={"button"}
-          disabled={isLoading}
-        >
-          <div className="d-flex align-items-center gap-sm-2 gap-1">
-            {t("Next")}
-            <SVG iconId="front-arrow" />
-          </div>
-        </Button>
-      )}
+    <div
+      className="product-buttons border-0"
+      style={{ display: "flex", justifyContent: "space-between" }}
+    >
+      <div>
+        {navId === 5 && formValue.id > 0 && (
+          <Button
+            color="danger"
+            className="ms-2"
+            onClick={handleDelete}
+            type={"button"}
+            disabled={isLoading}
+          >
+            <div className="d-flex align-items-center gap-sm-2 gap-1">
+              {t("Delete")}
+            </div>
+          </Button>
+        )}
+      </div>
+      <div>
+        {navId > 1 && (
+          <Button
+            color="transparent"
+            disabled={isLoading}
+            onClick={handlePrevious}
+          >
+            <div className="d-flex align-items-center gap-sm-2 gap-1">
+              <SVG iconId="back-arrow" />
+              {t("Previous")}
+            </div>
+          </Button>
+        )}
+        {navId === 5 ? (
+          <Button
+            color="transparent"
+            className="ms-2"
+            onClick={handleSubmit}
+            type={"submit"}
+            disabled={isLoading}
+          >
+            <div className="d-flex align-items-center gap-sm-2 gap-1">
+              {isLoading ? <LoadingButton /> : t("Submit")}
+            </div>
+          </Button>
+        ) : (
+          <Button
+            color="transparent"
+            className="ms-2"
+            onClick={handleNext}
+            type={"button"}
+            disabled={isLoading}
+          >
+            <div className="d-flex align-items-center gap-sm-2 gap-1">
+              {t("Next")}
+              <SVG iconId="front-arrow" />
+            </div>
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

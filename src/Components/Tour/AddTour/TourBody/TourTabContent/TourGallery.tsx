@@ -28,7 +28,7 @@ const TourGalleryImages = () => {
   };
 
   const setExistingImages = useCallback(async () => {
-    setExistingFiles(formValue.galleryImages);
+    setExistingFiles(formValue.uploadedGalleryImages);
   }, [formValue]);
 
   useEffect(() => {
@@ -47,7 +47,12 @@ const TourGalleryImages = () => {
           onRemove={(publicId: string) => {
             console.log({ publicId });
             console.log({ existingFiles });
-            dispatch(setFormValue({ name: "galleryImages", value: [] }));
+            dispatch(
+              setFormValue({
+                name: "uploadedGalleryImages",
+                value: existingFiles.filter((s) => s.publicId !== publicId),
+              })
+            );
             setExistingFiles([]);
           }}
         />
