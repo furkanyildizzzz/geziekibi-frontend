@@ -40,7 +40,6 @@ export const MenuList: MenuItem[] | undefined = [
             type: "link",
           },
           { path: "/tour/services", title: "Services", type: "link" },
-          { path: "/tour/prices", title: "Prices", type: "link" },
         ],
       },
     ],
