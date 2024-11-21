@@ -10,14 +10,9 @@ import {
 import ModalComponent from "@/CommonComponent/Modal";
 import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
 import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import { DropzoneComponent } from "@/Components/Dropzone/DropzoneComponent";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
-import {
-  Cancel,
-  Edit,
-  EditTourCategoryHeading,
-  CategoryName,
-  Description,
-} from "@/Constant/constant";
+
 import {
   ErrorValidation,
   TourCategorySuccessResponse,
@@ -212,6 +207,19 @@ const EditTourCategoryModal = ({
               errorsValidation={errorsValidation}
               keyProp="parentId"
             />{" "}
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="image" check>
+              {t("Upload Image")}
+            </Label>
+            <div className="product-upload">
+              <DropzoneComponent
+                existingFiles={[]}
+                updateFiles={() => {}}
+                removeFile={() => {}}
+              />
+            </div>
           </FormGroup>
         </Col>
         <Col xs="12">
