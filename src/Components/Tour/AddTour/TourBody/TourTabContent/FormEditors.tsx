@@ -6,6 +6,7 @@ import SimpleMdeReact from "react-simplemde-editor";
 import { Col } from "reactstrap";
 import RichTextEditor from "@/Components/Editor/RichTextEditor";
 import { useCallback } from "react";
+import RichTextEditor2 from "@/Components/Editor/RichTextEditor2";
 
 type ImageUploadType = {
   (
@@ -40,7 +41,11 @@ const FormEditors = () => {
   return (
     <Col xs="12">
       <div id="editor2">
-        <RichTextEditor onChange={handleChange} />
+        {/* <RichTextEditor onChange={handleChange} /> */}
+        <RichTextEditor2
+          initialValue={formValue.body}
+          onChange={handleChange}
+        />
 
         {/* <SimpleMdeReact
           id="body"

@@ -57,7 +57,7 @@ export default async function RootLayout({
             href="https://fonts.gstatic.com"
             crossOrigin=""
           />
-          <script
+          {/* <script
             async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjeJEPREBQFvAIqDSZliF0WjQrCld-Mh0"
           ></script>
@@ -66,6 +66,22 @@ export default async function RootLayout({
             async
             type="text/javascript"
             src="/assets/js/plugins/all_plugins.js"
+          ></script> */}
+
+          <link
+            rel="stylesheet"
+            href="/assets/richtexteditor/rte_theme_default.css"
+          />
+
+          <script
+            async
+            type="text/javascript"
+            src="/assets/richtexteditor/rte.js"
+          ></script>
+          <script
+            async
+            type="text/javascript"
+            src="/assets/richtexteditor/plugins/all_plugins.js"
           ></script>
         </head>
         <body

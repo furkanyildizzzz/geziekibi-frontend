@@ -11,7 +11,12 @@ export const uploadSingleFile = async (
 ): Promise<ApiResponse<CloudinaryImage>> => {
   try {
     const data = SINGLE_IMAGE_SCHEMA.parse(file);
-    return await apiRequestFile<CloudinaryImage>("upload/", "POST", data);
+    console.log({ file, data });
+    return await apiRequestFile<CloudinaryImage>(
+      "tour/uploadBodyImage/",
+      "POST",
+      data
+    );
   } catch (error) {
     console.log({ error });
     // Handle any other errors (if necessary)

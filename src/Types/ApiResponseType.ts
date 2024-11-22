@@ -82,7 +82,7 @@ export type TourSuccessResponse = {
   id: number;
   title: string;
   spot: string;
-  body: Text;
+  body: string;
   tourType: string;
   primaryImages: CloudinaryImage[];
   galleryImages: CloudinaryImage[];
