@@ -5,9 +5,9 @@ import {
   CreateTourCategoryFormSchema,
   CreateTourCategorySchema,
 } from "@/app/lib/definitions";
-import ModalComponent from "@/CommonComponent/Modal";
-import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
-import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import ModalComponent from "@/Components/Modal";
+import { ModalButtons } from "@/Components/Modal/ModalButtons";
+import ShowSuccess from "@/Components/Toast/Success/ShowSuccess";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import {
   Cancel,

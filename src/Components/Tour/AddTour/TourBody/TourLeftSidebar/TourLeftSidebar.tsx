@@ -1,4 +1,4 @@
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { AddTourNav } from "@/Data/Tour/TourData";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { useState } from "react";

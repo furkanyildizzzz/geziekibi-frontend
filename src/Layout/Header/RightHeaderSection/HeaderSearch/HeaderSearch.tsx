@@ -1,6 +1,6 @@
 "use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { SearchDunzo } from "@/Constant/constant";
 import { MenuItem, SearchSuggestionItem } from "@/Types/LayoutTypes";
 import { useAppDispatch } from "@/Redux/Hooks";
@@ -11,7 +11,9 @@ import SearchSuggestionList from "./SearchSuggestionList";
 export const HeaderSearch = () => {
   const [arr, setArr] = useState<SearchSuggestionItem[]>([]);
   const [searchedWord, setSearchedWord] = useState<string>("");
-  const [searchedArray, setSearchedArray] = useState<SearchSuggestionItem[]>([]);
+  const [searchedArray, setSearchedArray] = useState<SearchSuggestionItem[]>(
+    []
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,7 +26,13 @@ export const HeaderSearch = () => {
         });
       } else {
         num = num + 1;
-        suggestionArray.push({ icon: icon, title: item.title, path: item.path ? item.path : '' , bookmarked: false, id: num });
+        suggestionArray.push({
+          icon: icon,
+          title: item.title,
+          path: item.path ? item.path : "",
+          bookmarked: false,
+          id: num,
+        });
       }
     };
     MenuList?.forEach((item) => {
@@ -39,7 +47,9 @@ export const HeaderSearch = () => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     if (!searchedWord) setSearchedWord("");
     setSearchedWord(e.target.value);
-    const result = arr.filter((item) =>item.title?.toLowerCase().includes(e.target.value.toLowerCase()));
+    const result = arr.filter((item) =>
+      item.title?.toLowerCase().includes(e.target.value.toLowerCase())
+    );
     setSearchedArray(result);
   };
 
@@ -49,12 +59,26 @@ export const HeaderSearch = () => {
         <div className="Typeahead Typeahead--twitterUsers">
           <div className="u-posRelative d-flex">
             <SVG iconId="fill-search" className="me-2" />
-            <input onChange={(e) => handleSearch(e)} value={searchedWord} className="demo-input py-0 Typeahead-input form-control-plaintext w-100 border-0 shadow-none" type="text" placeholder={SearchDunzo} name="q" />
+            <input
+              onChange={(e) => handleSearch(e)}
+              value={searchedWord}
+              className="demo-input py-0 Typeahead-input form-control-plaintext w-100 border-0 shadow-none"
+              type="text"
+              placeholder={SearchDunzo}
+              name="q"
+            />
           </div>
         </div>
       </div>
-      <div className={`Typeahead-menu header-menu custom-scrollbar ${searchedWord.length ? "is-open" : ""}`}>
-        <SearchSuggestionList searchedArray={searchedArray} setSearchedWord={setSearchedWord} />
+      <div
+        className={`Typeahead-menu header-menu custom-scrollbar ${
+          searchedWord.length ? "is-open" : ""
+        }`}
+      >
+        <SearchSuggestionList
+          searchedArray={searchedArray}
+          setSearchedWord={setSearchedWord}
+        />
       </div>
     </li>
   );

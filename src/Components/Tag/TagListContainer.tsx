@@ -19,7 +19,6 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
 import CreateNewTag from "./CreateNewTag";
 import { TagSuccessResponse } from "@/Types/ApiResponseType";
 import { getTagList } from "@/app/api/tag/getTagList";
@@ -30,6 +29,7 @@ import { editTag } from "@/app/actions/tag/editTag";
 import { getTagById } from "@/app/actions/tag/getTagById";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import Breadcrumbs from "../Breadcrumb";
 
 const TagListContainer = () => {
   const [tagList, setTagList] = useState<TagSuccessResponse[]>([]);

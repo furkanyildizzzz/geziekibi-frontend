@@ -10,7 +10,6 @@ import {
   Row,
 } from "reactstrap";
 import TourBody from "./TourBody/TourBody";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
 import {
   ErrorValidation,
   TourPriceSuccessResponse,
@@ -20,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setFormValue, resetTourForm } from "@/Redux/Reducers/AddProductSlice";
 import { useTranslation } from "react-i18next";
 import { usePathname, useRouter } from "next/navigation";
+import Breadcrumbs from "@/Components/Breadcrumb";
 const AddTourContainer = ({
   id,
   copyTourId,

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setDarkMode } from "@/Redux/Reducers/LayoutSlice";
 

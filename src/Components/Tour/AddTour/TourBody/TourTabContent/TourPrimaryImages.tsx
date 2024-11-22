@@ -6,7 +6,7 @@ import Link from "next/link";
 import { DragYourImageHere, Href, TourImage } from "@/Constant/constant";
 import { Form } from "reactstrap";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { CloudinaryImage } from "@/Types/ApiResponseType";
 import { useTranslation } from "react-i18next";

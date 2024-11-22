@@ -2,7 +2,6 @@
 import { getServiceList } from "@/app/actions/tour/service/getServiceList";
 import { deleteTourCategory } from "@/app/actions/tour/category/deleteTourCategory";
 import { getTourCategoryList } from "@/app/actions/tour/category/getTourCategoryList";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
 import {
   General,
   CategoryList,
@@ -38,6 +37,7 @@ import {
   deleteServices,
 } from "@/app/actions/tour/service/deleteService";
 import { useTranslation } from "react-i18next";
+import Breadcrumbs from "@/Components/Breadcrumb";
 
 const ServiceListContainer = () => {
   const [serviceList, setServiceList] = useState<ServiceSuccessResponse[]>([]);

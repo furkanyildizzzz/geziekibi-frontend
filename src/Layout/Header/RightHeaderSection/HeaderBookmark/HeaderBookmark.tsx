@@ -1,5 +1,5 @@
 "use client";
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setBookmark } from "@/Redux/Reducers/HeaderBookmarkSlice";
 import { BookmarkBack } from "./BookmarkBack";
@@ -10,9 +10,16 @@ export const HeaderBookmark = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <li className="onhover-dropdown" onClick={() => dispatch(setBookmark(!bookmark))}>
+    <li
+      className="onhover-dropdown"
+      onClick={() => dispatch(setBookmark(!bookmark))}
+    >
       <SVG iconId="fill-star" />
-      <div className={`onhover-show-div bookmark-flip ${bookmark || flip ? "active" : ""}`}>
+      <div
+        className={`onhover-show-div bookmark-flip ${
+          bookmark || flip ? "active" : ""
+        }`}
+      >
         <div className="flip-card">
           <div className={`flip-card-inner ${flip ? "flipped" : ""}`}>
             <BookmarkListData />

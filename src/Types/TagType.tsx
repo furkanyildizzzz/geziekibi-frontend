@@ -1,6 +1,6 @@
 import { InputType } from "reactstrap/types/lib/Input";
 import Link from "next/link";
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { deleteTag } from "@/app/actions/tag/deleteTag";
 import { TagSuccessResponse } from "./ApiResponseType";
 import { useTranslation } from "react-i18next";

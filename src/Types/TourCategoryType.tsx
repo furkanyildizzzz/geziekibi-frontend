@@ -1,4 +1,4 @@
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import {
   CloudinaryImage,
   TourCategorySuccessResponse,

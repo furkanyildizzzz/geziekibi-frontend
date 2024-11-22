@@ -1,5 +1,5 @@
 "use client";
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { SearchHere } from "@/Constant/constant";
 import { MenuList } from "@/Data/Layout/Menu";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
@@ -11,7 +11,9 @@ import ResponsiveSearchList from "./ResponsiveSearchList";
 export const ResponsiveHeaderSearch = () => {
   const [arr, setArr] = useState<SearchSuggestionItem[]>([]);
   const [searchedWord, setSearchedWord] = useState<string>("");
-  const [searchedArray, setSearchedArray] = useState<SearchSuggestionItem[]>([]);
+  const [searchedArray, setSearchedArray] = useState<SearchSuggestionItem[]>(
+    []
+  );
   const { responsiveSearch } = useAppSelector((state) => state.layout);
   const dispatch = useAppDispatch();
   const toggleShow = () => dispatch(setResponsiveSearch());
@@ -24,7 +26,11 @@ export const ResponsiveHeaderSearch = () => {
           getAllLink(ele, icon);
         });
       } else {
-        suggestionArray.push({ icon: icon, title: item.title, path: item.path || "" });
+        suggestionArray.push({
+          icon: icon,
+          title: item.title,
+          path: item.path || "",
+        });
       }
     };
     MenuList?.forEach((item) => {
@@ -39,7 +45,9 @@ export const ResponsiveHeaderSearch = () => {
     if (!searchedWord) setSearchedWord("");
     setSearchedWord(e.target.value);
     let data = [...arr];
-    let result = data.filter((item) => item.title?.toLowerCase().includes(e.target.value.toLowerCase()));
+    let result = data.filter((item) =>
+      item.title?.toLowerCase().includes(e.target.value.toLowerCase())
+    );
     setSearchedArray(result);
   };
 
@@ -48,11 +56,26 @@ export const ResponsiveHeaderSearch = () => {
       <div className="serchbox" onClick={toggleShow}>
         <SVG iconId="fill-search" />
       </div>
-      <div className={`form-group search-form ${responsiveSearch ? "open" : ""}`}>
-        <input value={searchedWord} onChange={(e) => handleSearch(e)} type="text" className="shadow-none" placeholder={SearchHere} />
+      <div
+        className={`form-group search-form ${responsiveSearch ? "open" : ""}`}
+      >
+        <input
+          value={searchedWord}
+          onChange={(e) => handleSearch(e)}
+          type="text"
+          className="shadow-none"
+          placeholder={SearchHere}
+        />
       </div>
-      <div className={`Typeahead-menu header-menu custom-scrollbar ${searchedWord.length && responsiveSearch ? "is-open" : ""}`}>
-        <ResponsiveSearchList searchedArray={searchedArray} setSearchedWord={setSearchedWord} />
+      <div
+        className={`Typeahead-menu header-menu custom-scrollbar ${
+          searchedWord.length && responsiveSearch ? "is-open" : ""
+        }`}
+      >
+        <ResponsiveSearchList
+          searchedArray={searchedArray}
+          setSearchedWord={setSearchedWord}
+        />
       </div>
     </li>
   );

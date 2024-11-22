@@ -1,5 +1,4 @@
 "use client";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
 import {
   DashboardTitle,
   DefaultDashboardTitle,
@@ -9,6 +8,7 @@ import React from "react";
 import { Container, Row } from "reactstrap";
 import { LeftBackground } from "./LeftSection/LeftSection";
 import { CloudLightning } from "react-feather";
+import Breadcrumbs from "@/Components/Breadcrumb";
 //import { RightBackground } from "./RightSection/RightSection";
 
 const DefaultDashboardContainer = () => {

@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
 import { Cart, ECommerce } from "@/Constant/constant";
 import React from "react";
 import { Card, CardBody, Col, Container } from "reactstrap";
 import { CartData } from "./CartData";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
 import { CommonCardHeader } from "@/Components/General/Widgets/Common/CommonCardHeader";
+import Breadcrumbs from "@/Components/Breadcrumb";
 
 const CartContainer = () => {
   return (

@@ -7,7 +7,7 @@ import {
   CreateServiceFormSchema,
   CreateTagSchema,
 } from "@/app/lib/definitions";
-import ModalComponent from "@/CommonComponent/Modal";
+import ModalComponent from "@/Components/Modal";
 import {
   Cancel,
   EditTagHeading,
@@ -28,9 +28,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { t } from "i18next";
-import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
+import { ModalButtons } from "@/Components/Modal/ModalButtons";
 import { useTranslation } from "react-i18next";
-import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import ShowSuccess from "@/Components/Toast/Success/ShowSuccess";
 import { deleteService } from "@/app/actions/tour/service/deleteService";
 
 const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {

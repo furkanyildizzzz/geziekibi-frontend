@@ -1,7 +1,7 @@
 "use client";
 import { deleteTourCategory } from "@/app/actions/tour/category/deleteTourCategory";
 import { getTourCategoryList } from "@/app/actions/tour/category/getTourCategoryList";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
+import Breadcrumbs from "@/Components/Breadcrumb";
 import {
   General,
   CategoryList,

@@ -1,6 +1,5 @@
 "use client";
 import { getServiceList } from "@/app/actions/tour/service/getServiceList";
-import Breadcrumbs from "@/CommonComponent/Breadcrumb";
 import {
   SearchTableButton,
   TourList,
@@ -30,6 +29,7 @@ import { deleteService } from "@/app/actions/tour/service/deleteService";
 import { getTourList } from "@/app/actions/tour/self/getTourList";
 import { deleteTour } from "@/app/actions/tour/self/deleteTour";
 import { useTranslation } from "react-i18next";
+import Breadcrumbs from "@/Components/Breadcrumb";
 
 const TourListContainer = () => {
   const [tourList, setTourList] = useState<TourListTableDataColumnType[]>([]);

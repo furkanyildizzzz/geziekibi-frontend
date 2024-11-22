@@ -7,10 +7,10 @@ import {
   CreateTourCategoryFormSchema,
   CreateTourCategorySchema,
 } from "@/app/lib/definitions";
-import ModalComponent from "@/CommonComponent/Modal";
-import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
-import SVG from "@/CommonComponent/SVG/Svg";
-import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import ModalComponent from "@/Components/Modal";
+import { ModalButtons } from "@/Components/Modal/ModalButtons";
+import SVG from "@/Components/SVG/Svg";
+import ShowSuccess from "@/Components/Toast/Success/ShowSuccess";
 import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { DropzoneComponent } from "@/Components/Dropzone/DropzoneComponent";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";

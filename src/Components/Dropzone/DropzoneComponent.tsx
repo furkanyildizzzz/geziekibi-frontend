@@ -1,4 +1,4 @@
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { Href } from "@/Constant/constant";
 import { CloudinaryImage } from "@/Types/ApiResponseType";
 import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";

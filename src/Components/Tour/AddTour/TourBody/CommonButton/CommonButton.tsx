@@ -1,6 +1,6 @@
 import { createNewTour } from "@/app/actions/tour/self/createNewTour";
-import ShowValidationError from "@/CommonComponent/Toast/Error/ShowValidationError";
-import SVG from "@/CommonComponent/SVG/Svg";
+import ShowValidationError from "@/Components/Toast/Error/ShowValidationError";
+import SVG from "@/Components/SVG/Svg";
 import { Loading, Next, Previous, Submit } from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import {
@@ -14,8 +14,8 @@ import { editTour } from "@/app/actions/tour/self/editTour";
 import { useEffect } from "react";
 import { LoadingButton } from "@/Components/Button/Loading";
 import { useTranslation } from "react-i18next";
-import ShowError from "@/CommonComponent/Toast/Error/ShowError";
-import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import ShowError from "@/Components/Toast/Error/ShowError";
+import ShowSuccess from "@/Components/Toast/Success/ShowSuccess";
 import { deleteTour } from "@/app/actions/tour/self/deleteTour";
 import { useRouter } from "next/navigation";
 

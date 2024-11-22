@@ -1,4 +1,4 @@
-import SVG from "@/CommonComponent/SVG/Svg";
+import SVG from "@/Components/SVG/Svg";
 import { AddNewBookmark, Bookmark } from "@/Constant/constant";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { setBookmark, setFlip } from "@/Redux/Reducers/HeaderBookmarkSlice";
@@ -21,7 +21,10 @@ export const BookmarkListData = () => {
           <Row>
             {bookmarkedData.map((item, index) => (
               <Col xs="4" className="text-center" key={index}>
-                <div className="bookmark-content" onClick={() => router.push(`${item.path}`)}>
+                <div
+                  className="bookmark-content"
+                  onClick={() => router.push(`${item.path}`)}
+                >
                   <div className="bookmark-icon">
                     <SVG iconId={`stroke-${item.icon}`} />
                   </div>
@@ -32,7 +35,12 @@ export const BookmarkListData = () => {
           </Row>
         </li>
         <li className="text-center m-0" onClick={handleFlip}>
-          <Button tag="a" color="transparent" className="txt-primary flip-btn f-w-700" id="flip-btn">
+          <Button
+            tag="a"
+            color="transparent"
+            className="txt-primary flip-btn f-w-700"
+            id="flip-btn"
+          >
             {AddNewBookmark}
           </Button>
         </li>
