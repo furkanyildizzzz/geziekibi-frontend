@@ -36,7 +36,7 @@ export const createNewTourCategoryEski = async (
   const formattedObject: CreateTourCategorySchema = {
     name: formObject.name as string,
     description: formObject.description as string | undefined,
-    parentid: formObject.parentid
+    parentId: formObject.parentid
       ? parseInt(formObject.parentid as string, 10)
       : undefined,
   };
