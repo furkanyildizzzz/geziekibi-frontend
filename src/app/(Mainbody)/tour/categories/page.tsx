@@ -2,7 +2,7 @@ import TourCategoryListContainer from "@/Components/Tour/Category/TourCategoryLi
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tours",
+  title: "Categories",
 };
 
 const TourCategoryList = () => {

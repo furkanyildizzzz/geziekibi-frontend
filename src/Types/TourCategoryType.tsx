@@ -1,9 +1,17 @@
 import SVG from "@/CommonComponent/SVG/Svg";
-import { TourCategorySuccessResponse } from "./ApiResponseType";
+import {
+  CloudinaryImage,
+  TourCategorySuccessResponse,
+} from "./ApiResponseType";
 import { useTranslation } from "react-i18next";
 
-export interface TourCategoryListTableTag {
+export interface TourCategoryListTableName {
   name?: string;
+}
+
+export interface TourCategoryListTableImageAndName {
+  name?: string;
+  imageUrl?: string;
 }
 
 export interface TourCategoryListTableDataColumnType {
@@ -11,13 +19,27 @@ export interface TourCategoryListTableDataColumnType {
   name: string;
   parent: TourCategorySuccessResponse;
   subCategories: TourCategorySuccessResponse[];
+  uploadedPrimaryImages: CloudinaryImage[];
 }
 
-const TourCategoryListTableTagName: React.FC<TourCategoryListTableTag> = ({
+const TourCategoryListTableTourName: React.FC<TourCategoryListTableName> = ({
   name,
 }) => {
   return (
     <div className="product-names my-2">
+      <p>{name}</p>
+    </div>
+  );
+};
+
+const TourCategoryListTableTourImageAndName: React.FC<
+  TourCategoryListTableImageAndName
+> = ({ name, imageUrl }) => {
+  return (
+    <div className="product-names my-2">
+      <div className="light-product-box bg-img-cover">
+        <img className="img-fluid" src={`${imageUrl}`} />
+      </div>
       <p>{name}</p>
     </div>
   );
@@ -61,7 +83,14 @@ export const TourCategoryListTableDataColumn = (
       name: t("CategoryName"),
       selector: (row: TourCategoryListTableDataColumnType) => `${row.name}`,
       cell: (row: TourCategoryListTableDataColumnType) => (
-        <TourCategoryListTableTagName name={row.name} />
+        <TourCategoryListTableTourImageAndName
+          name={row.name}
+          imageUrl={
+            row.uploadedPrimaryImages?.length
+              ? row.uploadedPrimaryImages[0].url
+              : ""
+          }
+        />
       ),
       sortable: true,
       grow: 1,
@@ -72,7 +101,7 @@ export const TourCategoryListTableDataColumn = (
       selector: (row: TourCategoryListTableDataColumnType) =>
         `${row.parent.name}`,
       cell: (row: TourCategoryListTableDataColumnType) => (
-        <TourCategoryListTableTagName
+        <TourCategoryListTableTourName
           name={row.parent ? row.parent.name : ""}
         />
       ),

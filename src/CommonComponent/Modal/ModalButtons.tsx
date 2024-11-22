@@ -1,3 +1,4 @@
+import { LoadingButton } from "@/Components/Button/Loading";
 import { Cancel, Edit } from "@/Constant/constant";
 import { t } from "i18next";
 import { useRouter } from "next/navigation";
@@ -53,9 +54,16 @@ export const ModalButtons: React.FC<ModalButtonsProps> = ({
             </Button>
           </Col>
           <Col xs="6">
-            <Button color="primary" type="submit" disabled={isLoading}>
+            <Button
+              className="ms-2"
+              color="primary"
+              type="submit"
+              disabled={isLoading}
+            >
               {" "}
-              {t("Submit")}
+              <div className="d-flex align-items-center gap-sm-2 gap-1">
+                {isLoading ? <LoadingButton /> : t("Submit")}
+              </div>
             </Button>
           </Col>
         </Row>

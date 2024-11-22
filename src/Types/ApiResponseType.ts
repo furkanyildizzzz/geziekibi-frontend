@@ -50,6 +50,7 @@ export type TourCategorySuccessResponse = {
   description: Text;
   parent: TourCategorySuccessResponse;
   subCategories: TourCategorySuccessResponse[];
+  uploadedPrimaryImages: CloudinaryImage[];
 };
 export type TourServiceSuccessResponse = {
   id: number;
@@ -70,6 +71,7 @@ export type CloudinaryImage = {
   secureUrl: string;
   format: string;
   createdAt: Date;
+  order: number;
 };
 export type TourService = {
   id: number;

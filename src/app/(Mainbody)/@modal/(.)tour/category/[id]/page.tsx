@@ -9,16 +9,22 @@ import {
 } from "@/app/lib/definitions";
 import ModalComponent from "@/CommonComponent/Modal";
 import { ModalButtons } from "@/CommonComponent/Modal/ModalButtons";
+import SVG from "@/CommonComponent/SVG/Svg";
 import ShowSuccess from "@/CommonComponent/Toast/Success/ShowSuccess";
+import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { DropzoneComponent } from "@/Components/Dropzone/DropzoneComponent";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
+import { Href } from "@/Constant/constant";
 
 import {
+  CloudinaryImage,
   ErrorValidation,
   TourCategorySuccessResponse,
 } from "@/Types/ApiResponseType";
 import DisplayError from "@/utils/DisplayError";
+import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,6 +40,8 @@ const EditTourCategoryModal = ({
     []
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [files, setFiles] = useState<ExtFile[]>([]);
+  const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
 
   const [tourCategories, setTourCategories] = useState<
     TourCategorySuccessResponse[]
@@ -51,7 +59,7 @@ const EditTourCategoryModal = ({
     setValue,
     reset,
     getValues,
-    formState: { isLoading, errors },
+    formState: { isSubmitting, errors },
   } = useForm({
     resolver: zodResolver(CreateTourCategoryFormSchema),
   });
@@ -65,7 +73,9 @@ const EditTourCategoryModal = ({
         name: response.data.name,
         description: response.data.description,
         parentId: response.data.parent?.id,
+        uploadedPrimaryImages: response.data.uploadedPrimaryImages || [],
       });
+      setExistingFiles(response.data.uploadedPrimaryImages);
     }
   };
 
@@ -87,9 +97,11 @@ const EditTourCategoryModal = ({
   };
 
   const onsubmit = async (data: CreateTourCategorySchema) => {
-    console.log({ data });
+    console.log({ isSubmitting });
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+
+    data.primaryImages = files;
     const response = await editTourCategory(Number(id), data);
-    console.log({ response });
 
     if ("errorType" in response) {
       setErrorsValidation(response.errorsValidation!);
@@ -116,6 +128,10 @@ const EditTourCategoryModal = ({
     }
   };
 
+  const handleRemove = (id: string | number | undefined) => {
+    setFiles(files.filter((x: ExtFile) => x.id !== id));
+  };
+
   return (
     <ModalComponent
       title={t("EditTourCategoryHeading") + ` "${getValues("name")}"`}
@@ -130,6 +146,7 @@ const EditTourCategoryModal = ({
           <DisplayError errorMessage={errorMessage} />
           <FormGroup>
             <input
+              disabled={isSubmitting}
               className="m-0 form-control"
               id="id"
               hidden
@@ -147,6 +164,7 @@ const EditTourCategoryModal = ({
               {t("CategoryName")} <span className="txt-danger"> *</span>
             </Label>
             <input
+              disabled={isSubmitting}
               type="text"
               className="m-0 form-control"
               id="name"
@@ -165,6 +183,7 @@ const EditTourCategoryModal = ({
               {t("Description")}
             </Label>
             <input
+              disabled={isSubmitting}
               type="text"
               className="m-0 form-control"
               id="description"
@@ -214,16 +233,70 @@ const EditTourCategoryModal = ({
               {t("Upload Image")}
             </Label>
             <div className="product-upload">
-              <DropzoneComponent
-                existingFiles={[]}
-                updateFiles={() => {}}
-                removeFile={() => {}}
-              />
+              {existingFiles.length > 0 && (
+                <AlreadyUploadedDropzone
+                  key={existingFiles[0].publicId}
+                  images={existingFiles}
+                  onRemove={(publicId: string) => {
+                    console.log({ publicId });
+                    console.log({ existingFiles });
+                    const fileteredFiles = existingFiles.filter(
+                      (s) => s.publicId !== publicId
+                    );
+                    setValue("uploadedPrimaryImages", [...fileteredFiles]);
+                    setExistingFiles((prev) => [...fileteredFiles]);
+                  }}
+                  onReorder={(orderedFiles) => {
+                    console.log({ orderedFiles });
+                    setExistingFiles(orderedFiles);
+                  }}
+                />
+              )}
+              <Dropzone
+                onChange={(files) => setFiles(files)}
+                value={files}
+                maxFiles={1}
+                multiple={true}
+                header={false}
+                footer={false}
+                minHeight="80px"
+                name="primaryImages"
+                disabled={isSubmitting}
+              >
+                {files.map((file: ExtFile) => (
+                  <FileMosaic
+                    key={file.id}
+                    {...file}
+                    imageUrl={URL.createObjectURL(file.file!)}
+                    onDelete={handleRemove}
+                    info={true}
+                  />
+                ))}
+                {files.length === 0 && (
+                  <Form className="dropzone dropzone-light dz-clickable py-5">
+                    <div className="dz-message needsclick">
+                      <SVG iconId="file-upload" />
+                      <h6>
+                        {t("DragYourImageHere")}
+                        <Link className="txt-primary" href={Href}>
+                          &nbsp;{t("browser")}
+                        </Link>
+                      </h6>
+                      <span className="note needsclick">
+                        SVG,PNG,JPG {t("or")} GIF
+                      </span>
+                    </div>
+                  </Form>
+                )}
+              </Dropzone>
             </div>
           </FormGroup>
         </Col>
         <Col xs="12">
-          <ModalButtons isLoading={isLoading} deleteFunction={handleDelete} />
+          <ModalButtons
+            isLoading={isSubmitting}
+            deleteFunction={handleDelete}
+          />
         </Col>
       </Form>
     </ModalComponent>

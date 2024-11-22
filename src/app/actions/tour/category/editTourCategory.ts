@@ -14,51 +14,41 @@ import { ZodError, z } from "zod";
 
 export const editTourCategory = async (
   id: number,
-  formData: FieldValues
+  fieldValues: FieldValues
 ): Promise<ApiResponse<TourCategorySuccessResponse>> => {
   try {
-    const data = CreateTourCategoryFormSchema.parse(formData);
+    console.log({ fieldValues });
+    // Create a new FormData instance
+    const formData = new FormData();
+
+    // Append each entry of formValues to formData, with special handling for arrays and objects
+    Object.entries(fieldValues).forEach(([key, value]: [string, any]) => {
+      if (key === "primaryImages" && value.length > 0) {
+        for (let index = 0; index < value.length; index++) {
+          const file = value[index].file;
+          formData.append(key, file);
+        }
+      } else if (typeof value === "object" && value !== null) {
+        // Convert arrays or objects to JSON strings
+        formData.append(key, JSON.stringify(value));
+      } else {
+        // Append simple key-value pairs as-is
+        if (value) {
+          formData.append(key, value);
+        }
+      }
+    });
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}, ${pair[1]}`);
+    }
+
     return await apiRequest<TourCategorySuccessResponse>(
       "tour/category/" + id,
       "POST",
-      data
+      formData
     );
   } catch (error) {
     console.log({ error });
-    // Handle any other errors (if necessary)
-    throw error;
-  }
-};
-
-export const editTourCategoryEski = async (
-  id: number,
-  formData: FormData
-): Promise<ApiResponse<TourCategorySuccessResponse>> => {
-  const formObject = Object.fromEntries(formData.entries());
-  const formattedObject: CreateTourCategorySchema = {
-    name: formObject.name as string,
-    description: formObject.description as string | undefined,
-    parentid: formObject.parentid
-      ? parseInt(formObject.parentid as string, 10)
-      : undefined,
-  };
-  console.log({ formData });
-  console.log({ formObject });
-  try {
-    const data = CreateTourCategoryFormSchema.parse(formattedObject);
-    return await apiRequest<TourCategorySuccessResponse>(
-      "tour/category/" + id,
-      "POST",
-      data
-    );
-  } catch (error) {
-    // If Zod validation fails, map the error to ApiErrorResponse
-    if (error instanceof ZodError) {
-      const apiErrorResponse = mapZodErrorsToApiError(error);
-      console.log({ apiErrorResponse });
-      return apiErrorResponse as ApiErrorResponse; // Return the mapped error response
-    }
-
     // Handle any other errors (if necessary)
     throw error;
   }

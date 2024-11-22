@@ -66,6 +66,7 @@
     "react-accessible-treeview": "^2.9.0",
     "react-ace": "^11.0.1",
     "react-apexcharts": "^1.4.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap-typeahead": "^6.3.2",
     "react-calendar": "^4.8.0",
     "react-chartjs-2": "^5.2.0",
@@ -110,6 +111,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.8"
+    "@types/leaflet": "^1.9.8",
+    "@types/react-beautiful-dnd": "^13.1.8"
   }
 }

@@ -53,6 +53,8 @@ export const CreateTourCategoryFormSchema = z.object({
     .trim(),
   description: z.string().optional(),
   parentId: z.number().optional(),
+  primaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
+  uploadedPrimaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
 });
 export type CreateTourCategorySchema = z.infer<
   typeof CreateTourCategoryFormSchema

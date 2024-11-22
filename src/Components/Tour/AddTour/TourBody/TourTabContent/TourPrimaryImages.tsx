@@ -45,6 +45,7 @@ const TourPrimaryImages = () => {
       {existingFiles.length > 0 && (
         <AlreadyUploadedDropzone
           images={existingFiles}
+          onReorder={(orderdFiles) => console.log(orderdFiles)}
           onRemove={(publicId: string) => {
             console.log({ publicId });
             dispatch(

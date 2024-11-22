@@ -27,7 +27,6 @@ export async function apiRequest<T>(
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(!isFormData ? { "Content-Type": "application/json" } : {}),
     };
-
     // Prepare body
     const requestBody = isFormData ? body : JSON.stringify(body);
     const response = await fetch(`http://localhost:4000/v1/${url}`, {
@@ -67,7 +66,7 @@ export async function apiRequestFile<T>(
       formData.append("file", body as File);
     }
     bodyContent = formData;
-
+    console.log({ body });
     const response = await fetch(`http://localhost:4000/v1/${url}`, {
       method,
       headers,
