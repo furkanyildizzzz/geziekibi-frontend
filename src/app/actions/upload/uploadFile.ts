@@ -7,16 +7,12 @@ import { apiRequest, apiRequestFile } from "@/utils/ApiRequest";
 import { FieldValues } from "react-hook-form";
 
 export const uploadSingleFile = async (
+  url: string,
   file: File
 ): Promise<ApiResponse<CloudinaryImage>> => {
   try {
     const data = SINGLE_IMAGE_SCHEMA.parse(file);
-    console.log({ file, data });
-    return await apiRequestFile<CloudinaryImage>(
-      "tour/uploadBodyImage/",
-      "POST",
-      data
-    );
+    return await apiRequestFile<CloudinaryImage>(url, "POST", data);
   } catch (error) {
     console.log({ error });
     // Handle any other errors (if necessary)
@@ -41,11 +37,12 @@ export const uploadSingleBase64Image = async (
 };
 
 export const uploadMultipleFile = async (
+  url: string,
   files: File[]
 ): Promise<ApiResponse<CloudinaryImage[]>> => {
   try {
     const data = MULTIPLE_IMAGE_SCHEMA.parse(files);
-    return await apiRequestFile<CloudinaryImage[]>("upload/", "POST", data);
+    return await apiRequestFile<CloudinaryImage[]>(url, "POST", data);
   } catch (error) {
     console.log({ error });
     // Handle any other errors (if necessary)

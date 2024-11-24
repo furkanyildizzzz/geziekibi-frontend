@@ -232,6 +232,7 @@ export const City: string = "City";
 export const Country = "Country";
 export const Email: string = "Email";
 export const EmailAddress: string = "Email Address";
+export const SecondEmailAddress: string = "Second Email Address";
 export const FirstName: string = "First Name";
 export const LastName: string = "Last Name";
 export const Username: string = "Username";

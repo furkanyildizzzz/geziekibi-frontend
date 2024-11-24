@@ -44,6 +44,24 @@ export const MenuList: MenuItem[] | undefined = [
       },
     ],
   },
+
+  {
+    title: "Settings",
+    lanClass: "lan-1",
+    Items: [
+      {
+        title: "User",
+        icon: "user",
+        type: "sub",
+        active: false,
+        children: [
+          { path: "/users/edit_profile", type: "link", title: "User Edit" },
+          // { path: "/users/user_cards", type: "link", title: "User Cards" },
+        ],
+      },
+    ],
+  },
+
   {
     title: "Pages",
     lanClass: "lan-1",

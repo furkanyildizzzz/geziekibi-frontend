@@ -97,9 +97,6 @@ const EditTourCategoryModal = ({
   };
 
   const onsubmit = async (data: CreateTourCategorySchema) => {
-    console.log({ isSubmitting });
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
     data.primaryImages = files;
     const response = await editTourCategory(Number(id), data);
 

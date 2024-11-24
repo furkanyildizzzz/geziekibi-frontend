@@ -5,6 +5,7 @@ import {
   TourServiceTypeEnum,
   TourTypeEnum,
 } from "./enums";
+import { LastName, ZipCode } from "@/Constant/constant";
 
 export const SignupFormSchema = z
   .object({
@@ -235,3 +236,46 @@ export const CreateTourPriceFormSchema = z.object({
   description: z.string().optional(),
 });
 export type CreateTourPriceSchema = z.infer<typeof CreateTourPriceFormSchema>;
+
+export const EditUserFormSchema = z.object({
+  firstName: z
+    .string({ message: "Please enter valid first name" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+  lastName: z
+    .string({ message: "Please enter valid first name" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+  bio: z.string().trim().nullable().optional(),
+  secondEmail: z
+    .string()
+    .email({ message: "Please enter a valid email" })
+    .trim()
+    .nullable()
+    .optional(),
+  website: z.string().trim().nullable().optional(),
+  address: z.string().trim().nullable().optional(),
+  city: z.string().trim().nullable().optional(),
+  zipCode: z.string().trim().nullable().optional(),
+  country: z.string().trim().optional(),
+});
+export type EditUserSchema = z.infer<typeof EditUserFormSchema>;
+
+export const ChangePasswordFormSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, { message: "Be at least 8 characters long." })
+      .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+      .regex(/[0-9]/, { message: "Contain at least one number." })
+      .regex(/[^a-zA-Z0-9]/, {
+        message: "Contain at least one special character.",
+      })
+      .trim(),
+    confirmNewPassword: z.string().trim(),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords don't match",
+    path: ["confirmNewPassword"],
+  });
+export type ChangePasswordSchema = z.infer<typeof ChangePasswordFormSchema>;

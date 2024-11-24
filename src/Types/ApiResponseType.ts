@@ -35,8 +35,20 @@ export type UserSuccessResponse = {
   email: string;
   firstName: string;
   lastName: string;
+  bio: string;
+  fullName: string;
   role: "ADMINISTRATOR" | "STANDART"; // Adjust roles as necessary
   language: string; // e.g., "en-US", "tr-TR"
+  profileImage: CloudinaryImage;
+  address: UserAddress;
+};
+export type UserAddress = {
+  secondEmail: string;
+  website: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  country: string;
 };
 export type LoginSuccessResponse = {
   accessToken: string;
