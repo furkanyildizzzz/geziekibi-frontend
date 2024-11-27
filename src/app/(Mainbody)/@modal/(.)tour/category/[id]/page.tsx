@@ -82,7 +82,6 @@ const EditTourCategoryModal = ({
   const fetchTourCategoryList = async () => {
     const response = await getTourCategoryList();
     if ("data" in response) {
-      console.log({ response });
       setTourCategories([...response.data]);
     }
   };
@@ -235,8 +234,6 @@ const EditTourCategoryModal = ({
                   key={existingFiles[0].publicId}
                   images={existingFiles}
                   onRemove={(publicId: string) => {
-                    console.log({ publicId });
-                    console.log({ existingFiles });
                     const fileteredFiles = existingFiles.filter(
                       (s) => s.publicId !== publicId
                     );
@@ -244,7 +241,6 @@ const EditTourCategoryModal = ({
                     setExistingFiles((prev) => [...fileteredFiles]);
                   }}
                   onReorder={(orderedFiles) => {
-                    console.log({ orderedFiles });
                     setExistingFiles(orderedFiles);
                   }}
                 />

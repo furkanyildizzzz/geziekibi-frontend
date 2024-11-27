@@ -57,7 +57,6 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   const fetchTagData = async () => {
     const response = await getServiceById(Number(id));
     if ("data" in response) {
-      console.log({ data: response.data });
       setServiceData({ ...response.data });
       reset({ ...response.data });
     }
@@ -68,9 +67,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   }, []);
 
   const onsubmit = async (data: CreateTagSchema) => {
-    console.log({ data });
     const response = await editService(Number(id), data);
-    console.log({ response });
 
     if ("errorType" in response) {
       setErrorsValidation(response.errorsValidation!);

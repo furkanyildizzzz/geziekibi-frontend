@@ -13,18 +13,24 @@ export const AddTourNav = [
   },
   {
     id: 3,
+    icon: "stroke-calendar",
+    title: "TourDaysTitle",
+    detail: "TourDaysDetail",
+  },
+  {
+    id: 4,
     icon: "product-category",
     title: "TourCategoriesTitle",
     detail: "TourCategoriesDetail",
   },
   {
-    id: 4,
+    id: 5,
     icon: "pricing",
     title: "SellingPricesTitle",
     detail: "SellingPricesDetail",
   },
   {
-    id: 5,
+    id: 6,
     icon: "advance",
     title: "ServicesTitle",
     detail: "ServicesDetail",

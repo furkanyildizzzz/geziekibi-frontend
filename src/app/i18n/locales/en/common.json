@@ -266,6 +266,8 @@
   "AddTourDetailDescription": "Add tour name and details",
   "TourGalleryTitle": "Tour Gallery",
   "TourGalleryDetail": "Add Thumbnail and Tour Gallery",
+  "TourDaysTitle": "Tour Days",
+  "TourDaysDetail": "Add Tour Program",
   "TourCategoriesTitle": "Tour Categories",
   "TourCategoriesDetail": "Add Tour Category, Status, and Tags",
   "SellingPricesTitle": "Selling Prices",

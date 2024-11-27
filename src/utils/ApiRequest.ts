@@ -8,7 +8,6 @@ import { isTokenExpired } from "./IsTokenExpired";
 import { useRouter } from "next/router";
 
 const IsErrorResponse = (obj: Response): obj is ApiErrorResponse => {
-  console.log({ obj });
   return "errorType" in obj;
 };
 

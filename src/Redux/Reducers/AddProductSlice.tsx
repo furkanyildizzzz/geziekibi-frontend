@@ -25,6 +25,7 @@ const initialState: AddProductSliceType = {
     currency: "",
     tags: [],
     tourServices: [],
+    dailyForms: [{}],
   },
 };
 
@@ -65,11 +66,32 @@ const AddProductSlice = createSlice({
         currency: "",
         tags: [],
         tourServices: [],
+        dailyForms: [
+          {
+            id: 0,
+            breakfeast: "",
+            lunch: "",
+            dinner: "",
+            description: "",
+            dailyPaths: [],
+            dailyVisitingPlaces: [],
+          },
+        ],
       };
+    },
+    updateDailyForm: (state, action) => {
+      const { index, fieldName, value } = action.payload;
+      state.formValue.dailyForms[index][fieldName] = value;
     },
   },
 });
-export const { setNavId, setFormValue, setTabId, setIsLoading, resetTourForm } =
-  AddProductSlice.actions;
+export const {
+  setNavId,
+  setFormValue,
+  setTabId,
+  setIsLoading,
+  resetTourForm,
+  updateDailyForm,
+} = AddProductSlice.actions;
 
 export default AddProductSlice.reducer;

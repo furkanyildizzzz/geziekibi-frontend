@@ -14,8 +14,9 @@ declare global {
 
 const RichTextEditor2: React.FC<{
   initialValue: string;
+  uploadFolderPath: string;
   onChange: Function;
-}> = ({ initialValue, onChange }) => {
+}> = ({ initialValue, uploadFolderPath, onChange }) => {
   const refDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const RichTextEditor2: React.FC<{
       optionalIndex?: number,
       optionalFiles?: File[]
     ): Promise<void> {
-      const uploadHandlerPath = "http://localhost:4000/v1/tour/uploadBodyImage";
+      const uploadHandlerPath = `http://localhost:4000/v1${uploadFolderPath}`;
 
       console.log("upload", file, "to", uploadHandlerPath);
 
@@ -144,7 +145,7 @@ const RichTextEditor2: React.FC<{
 
     // Simulate editor initialization
     const editor = new window.RichTextEditor(refDiv.current, config);
-    console.log("Editor initialized with config:", config);
+    // console.log("Editor initialized with config:", config);
 
     editor.setHTMLCode(initialValue);
     editor.attachEvent("change", function () {

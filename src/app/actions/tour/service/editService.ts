@@ -1,4 +1,4 @@
-import { CreateTourCategoryFormSchema } from "@/app/lib/definitions";
+import { CreateServiceFormSchema } from "@/app/lib/definitions";
 import { ApiResponse, ServiceSuccessResponse } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
 import { FieldValues } from "react-hook-form";
@@ -8,7 +8,7 @@ export const editService = async (
   formData: FieldValues
 ): Promise<ApiResponse<ServiceSuccessResponse>> => {
   try {
-    const data = CreateTourCategoryFormSchema.parse(formData);
+    const data = CreateServiceFormSchema.parse(formData);
     return await apiRequest<ServiceSuccessResponse>(
       "tour/service/" + id,
       "POST",

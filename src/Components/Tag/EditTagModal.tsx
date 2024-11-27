@@ -41,15 +41,11 @@ const EditTagModal: React.FC<EditTagModalProps> = ({
   } = useFormState();
 
   useEffect(() => {
-    console.log({ tag });
     setFormValues(tag || {});
   }, [isOpen, tag]);
 
   const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
     await handleEditSubmit(event, onSave);
-    console.log({ isSuccess });
-    console.log({ errorsValidation });
-    console.log({ errorMessage });
 
     if (isSuccess) {
       resetFormState();

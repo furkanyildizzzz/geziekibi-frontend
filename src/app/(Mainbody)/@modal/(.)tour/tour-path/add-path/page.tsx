@@ -1,21 +1,23 @@
 "use client";
-import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
-import { useEffect, useState } from "react";
-import { Add, Cancel, TagName, CreateNewTagHeading } from "@/Constant/constant";
-import DisplayError from "@/utils/DisplayError";
-import { createNewTag } from "@/app/actions/tag/createNewTag";
-import useFormState from "@/hooks/useFormState";
-import { useRouter } from "next/navigation";
+import {
+  CreateTourPathFormSchema,
+  CreateTourPathSchema,
+} from "@/app/lib/definitions";
 import ModalComponent from "@/Components/Modal";
-import { FieldValues, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateTagFormSchema, CreateTagSchema } from "@/app/lib/definitions";
-import { ErrorValidation } from "@/Types/ApiResponseType";
-import ShowSuccess from "@/Components/Toast/Success/ShowSuccess";
-import { useTranslation } from "react-i18next";
 import { ModalButtons } from "@/Components/Modal/ModalButtons";
+import ShowSuccess from "@/Components/Toast/Success/ShowSuccess";
 
-const CreateNewTagModal = () => {
+import { ErrorValidation } from "@/Types/ApiResponseType";
+import DisplayError from "@/utils/DisplayError";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { Col, Form, FormGroup, Label, Row } from "reactstrap";
+import { createNewTourPath } from "@/app/actions/tour/tourPath/createNewTourPath";
+
+const AddTourPathModal = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
@@ -27,16 +29,20 @@ const CreateNewTagModal = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isLoading },
+    setValue,
+    formState: { isLoading, errors },
   } = useForm({
-    resolver: zodResolver(CreateTagFormSchema),
+    resolver: zodResolver(CreateTourPathFormSchema),
     defaultValues: {
-      name: "New Tag",
+      name: "New Path",
     },
   });
 
-  const onsubmit = async (data: CreateTagSchema) => {
-    const response = await createNewTag(data);
+  const onsubmit = async (data: CreateTourPathSchema) => {
+    setErrorsValidation([]);
+    setErrorMessage("");
+
+    const response = await createNewTourPath(data);
 
     if ("errorType" in response) {
       setErrorsValidation(response.errorsValidation!);
@@ -49,18 +55,20 @@ const CreateNewTagModal = () => {
   };
 
   return (
-    <ModalComponent title={t("CreateNewTagHeading")}>
+    <ModalComponent title={t("CreateNewTourPathHeading")}>
       <div className="page-body">
         <Col xs="12">
           <DisplayError errorMessage={errorMessage} />
           <Form
             className="theme-form"
-            onSubmit={handleSubmit((data) => onsubmit(data as CreateTagSchema))}
+            onSubmit={handleSubmit((data) =>
+              onsubmit(data as CreateTourPathSchema)
+            )}
           >
             <Row>
               <FormGroup>
                 <Label for="name" check>
-                  {t("TagName")} <span className="txt-danger"> *</span>
+                  {t("PathName")} <span className="txt-danger"> *</span>
                 </Label>
                 <input
                   type="text"
@@ -84,4 +92,4 @@ const CreateNewTagModal = () => {
   );
 };
 
-export default CreateNewTagModal;
+export default AddTourPathModal;

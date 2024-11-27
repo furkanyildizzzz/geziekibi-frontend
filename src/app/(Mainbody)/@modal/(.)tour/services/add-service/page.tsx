@@ -48,9 +48,7 @@ const CreateNewServiceModal = () => {
   });
 
   const onsubmit = async (data: CreateServiceSchema) => {
-    console.log({ data });
     const response = await createNewService(data);
-    console.log({ response });
 
     if ("errorType" in response) {
       setErrorsValidation(response.errorsValidation!);

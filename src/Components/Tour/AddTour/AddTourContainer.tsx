@@ -58,7 +58,6 @@ const AddTourContainer = ({
   const copyTour = async (id: number) => {
     const response = await getTourById(id);
     if ("data" in response) {
-      console.log({ getTourById: response.data });
       Object.entries(response.data).forEach(([key, value]: [string, any]) => {
         if (key === "prices") {
           value = value.map((val: TourPriceSuccessResponse, index: number) => {

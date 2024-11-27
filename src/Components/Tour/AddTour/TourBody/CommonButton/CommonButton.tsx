@@ -37,13 +37,19 @@ const CommonButton = () => {
     )
       dispatch(setNavId(2));
     else if (
+      formValue.dailyForms.length === 0 ||
+      !formValue.dailyForms.dailyPaths ||
+      formValue.dailyForms.dailyPaths.length === 0
+    )
+      dispatch(setTabId(3));
+    else if (
       !formValue.tourType ||
       !formValue.category ||
       !formValue.publishStatus
     )
-      dispatch(setNavId(3));
-    else if (!formValue.prices.length) dispatch(setNavId(4));
-    else dispatch(setNavId(5));
+      dispatch(setNavId(4));
+    else if (!formValue.prices.length) dispatch(setNavId(5));
+    else dispatch(setNavId(6));
   };
   const handlePrevious = () => {
     if (navId > 1) {
@@ -58,6 +64,7 @@ const CommonButton = () => {
   const handleSubmit = async () => {
     dispatch(setIsLoading(true));
     let tourId = formValue.id;
+    console.log({ formValue });
     try {
       const response =
         tourId > 0
@@ -105,7 +112,7 @@ const CommonButton = () => {
       style={{ display: "flex", justifyContent: "space-between" }}
     >
       <div>
-        {navId === 5 && formValue.id > 0 && (
+        {navId === 6 && formValue.id > 0 && (
           <Button
             color="danger"
             className="ms-2"
@@ -132,7 +139,7 @@ const CommonButton = () => {
             </div>
           </Button>
         )}
-        {navId === 5 ? (
+        {navId === 6 ? (
           <Button
             color="transparent"
             className="ms-2"

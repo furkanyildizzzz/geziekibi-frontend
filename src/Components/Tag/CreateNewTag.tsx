@@ -53,8 +53,6 @@ const CreateNewTag: React.FC<ICreateNewTagProps> = (
 
   const formSubmitHandle = async (event: React.FormEvent<HTMLFormElement>) => {
     await handleSubmit(event, createNewTag);
-    console.log({ isSuccess });
-    console.log({ errorsValidation });
 
     if (isSuccess) {
       toggle();

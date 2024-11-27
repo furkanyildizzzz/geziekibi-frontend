@@ -40,7 +40,6 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   const fetchTagData = async () => {
     const response = await getTagById(Number(id));
     if ("data" in response) {
-      console.log({ data: response.data });
       setTagData({ ...response.data });
       reset({ ...response.data });
     }
@@ -51,9 +50,7 @@ const EditTagModal = ({ params: { id } }: { params: { id: string } }) => {
   }, []);
 
   const onsubmit = async (data: CreateTagSchema) => {
-    console.log({ data });
     const response = await editTag(Number(id), data);
-    console.log({ response });
 
     if ("errorType" in response) {
       setErrorsValidation(response.errorsValidation!);

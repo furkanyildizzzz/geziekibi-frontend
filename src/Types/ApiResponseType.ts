@@ -56,6 +56,7 @@ export type LoginSuccessResponse = {
 };
 export type SignupSuccessResponse = string;
 export type TagSuccessResponse = { id: number; name: string };
+export type TourPathSuccessResponse = { id: number; name: string };
 export type TourCategorySuccessResponse = {
   id: number;
   name: string;
@@ -90,6 +91,21 @@ export type TourService = {
   type: TourServiceTypeEnum;
   service: ServiceSuccessResponse;
 };
+export type TourPath = {
+  id: number;
+  name: string;
+};
+export type DailyPath = {
+  name: string;
+};
+export type TourDailyForm = {
+  breakfast: string;
+  lunch: string;
+  dinner: string;
+  description: string;
+  tourPaths: TourPath[];
+  dailyPaths: DailyPath[];
+};
 export type TourSuccessResponse = {
   id: number;
   title: string;
@@ -104,6 +120,7 @@ export type TourSuccessResponse = {
   prices: { name: string; description: string; price: number }[];
   tags: TagSuccessResponse[];
   tourServices: TourService[];
+  dailyForms: TourDailyForm[];
 };
 
 export type TourListSuccessResponse = {
