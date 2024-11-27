@@ -31,15 +31,15 @@ const DailyVisitingPlaces: React.FC<DailyVisitingPlacesProps> = ({
   const [editorKey, setEditorKey] = useState(0); // Key to force re-render
 
   const handleChange = (value: PillInputType) => {
-    console.log({ value });
-    console.log({ dailyVisitingPlaces: getValues("dailyVisitingPlaces") });
     setDailyVisitingPlaces((prev) => [...prev, value]);
   };
 
-  const handleRemove = (valueToRemove: string) => {
-    console.log({ dailyVisitingPlaces: getValues("dailyVisitingPlaces") });
+  const handleRemove = (valueToRemove: PillInputType) => {
     setDailyVisitingPlaces((prev) =>
-      prev.filter((value: { name: string }) => value.name !== valueToRemove)
+      prev.filter(
+        (value: { id: number; name: string }) =>
+          value.id !== valueToRemove.id && value.name !== valueToRemove.name
+      )
     );
   };
 

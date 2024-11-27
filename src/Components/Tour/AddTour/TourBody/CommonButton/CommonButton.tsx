@@ -29,7 +29,6 @@ const CommonButton = () => {
   const router = useRouter();
 
   const handleNext = () => {
-    console.log({ tabId, navId, formValue });
     if (!formValue.title || !formValue.spot) dispatch(setNavId(1));
     else if (
       !formValue.uploadedPrimaryImages.length &&
@@ -57,20 +56,16 @@ const CommonButton = () => {
     }
   };
 
-  useEffect(() => {
-    console.log({ formValue, isLoading });
-  }, [isLoading]);
+  useEffect(() => {}, [isLoading]);
 
   const handleSubmit = async () => {
     dispatch(setIsLoading(true));
     let tourId = formValue.id;
-    console.log({ formValue });
     try {
       const response =
         tourId > 0
           ? await editTour(formValue.id, formValue)
           : await createNewTour(formValue);
-      console.log({ response });
       if ("errorType" in response) {
         ShowValidationError(response.errorsValidation!);
         ShowError(response.errorMessage);
@@ -103,7 +98,7 @@ const CommonButton = () => {
   };
 
   const handleReload = (path: string) => {
-    router.replace(path); // Reloads the current page
+    window.location.reload(); // Reloads the current page
   };
 
   return (

@@ -4,7 +4,6 @@ import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 // import { useCallback } from "react";
 import SimpleMdeReact from "react-simplemde-editor";
 import { Col } from "reactstrap";
-import RichTextEditor from "@/Components/Editor/RichTextEditor";
 import { useCallback } from "react";
 import RichTextEditor2 from "@/Components/Editor/RichTextEditor2";
 

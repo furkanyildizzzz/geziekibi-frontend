@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Input, Label } from "reactstrap";
 
-export type PillInputType = { name: string };
+export type PillInputType = { id: number; name: string };
 
 interface PillInputComponentProps {
   title: string;
@@ -18,7 +18,10 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
   onChange,
   onRemove,
 }) => {
-  const [inputValue, setInputValue] = useState<PillInputType>({ name: "" }); // Tracks the current input value
+  const [inputValue, setInputValue] = useState<PillInputType>({
+    id: 0,
+    name: "",
+  }); // Tracks the current input value
   const [pills, setPills] = useState<PillInputType[]>(existingPills); // Stores the list of pills
 
   const { t } = useTranslation("common");
@@ -27,20 +30,21 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
     const trimmedValue = inputValue.name;
     if (
       trimmedValue &&
-      !pills.includes((s: PillInputType) => s.name === trimmedValue)
+      !pills.filter((s: PillInputType) => s.name === trimmedValue).length
     ) {
       setPills((prevPills) => {
-        console.log({ prevPills });
-        return [...prevPills, { name: trimmedValue }];
+        return [...prevPills, { id: 0, name: trimmedValue }];
       });
-      setInputValue({ name: "" }); // Clear input field
+      setInputValue({ id: 0, name: "" }); // Clear input field
+      onChange({ name: trimmedValue });
     }
-    onChange({ name: trimmedValue });
   };
 
-  const handleRemovePill = (pillToRemove: string): void => {
+  const handleRemovePill = (pillToRemove: PillInputType): void => {
     setPills((prevPills) =>
-      prevPills.filter((pill) => pill.name !== pillToRemove)
+      prevPills.filter(
+        (pill) => pill.id !== pillToRemove.id && pill.name !== pillToRemove.name
+      )
     );
     onRemove(pillToRemove);
   };
@@ -62,7 +66,7 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
       <Input
         type="text"
         value={inputValue.name}
-        onChange={(e) => setInputValue({ name: e.target.value })}
+        onChange={(e) => setInputValue({ id: 0, name: e.target.value })}
         onKeyPress={handleKeyPress}
         placeholder={t("Type and press enter")}
         style={{
@@ -101,7 +105,7 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
           >
             {pill.name}
             <span
-              onClick={() => handleRemovePill(pill.name)}
+              onClick={() => handleRemovePill(pill)}
               style={{
                 marginLeft: "10px",
                 cursor: "pointer",

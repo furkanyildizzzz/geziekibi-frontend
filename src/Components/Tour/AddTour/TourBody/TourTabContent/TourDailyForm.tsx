@@ -31,7 +31,6 @@ export const TourDailyForm: React.FC<TourDailyFormProps> = ({
   });
 
   useEffect(() => {
-    console.log({ formData });
     methods.reset({ ...formData });
   }, [formData]);
 

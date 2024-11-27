@@ -91,11 +91,12 @@ export type TourService = {
   type: TourServiceTypeEnum;
   service: ServiceSuccessResponse;
 };
-export type TourPath = {
+export type TourDailyPath = {
   id: number;
   name: string;
 };
-export type DailyPath = {
+export type DailyVisitingPlace = {
+  id: number;
   name: string;
 };
 export type TourDailyForm = {
@@ -103,8 +104,8 @@ export type TourDailyForm = {
   lunch: string;
   dinner: string;
   description: string;
-  tourPaths: TourPath[];
-  dailyPaths: DailyPath[];
+  dailyPaths: TourDailyPath[];
+  dailyVisitingPlaces: DailyVisitingPlace[];
 };
 export type TourSuccessResponse = {
   id: number;

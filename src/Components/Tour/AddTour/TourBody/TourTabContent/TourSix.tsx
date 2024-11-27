@@ -16,7 +16,7 @@ export interface FormData {
   dinner: string;
   description: string;
   dailyPaths: { id: number; name: string }[];
-  dailyVisitingPlaces: { name: string }[];
+  dailyVisitingPlaces: { id: number; name: string }[];
 }
 
 const TourSix = () => {
@@ -32,7 +32,7 @@ const TourSix = () => {
       dinner: "",
       description: "",
       dailyPaths: [{ id: 0, name: "" }],
-      dailyVisitingPlaces: [{ name: "" }],
+      dailyVisitingPlaces: [{ id: 0, name: "" }],
     },
   ]);
 
@@ -53,7 +53,6 @@ const TourSix = () => {
 
     setDailyForms((prev) => {
       const updatedForms = [...prev, { ...newForm }]; // Yeni form eklenirken derin kopya
-      console.log({ updatedForms });
       dispatch(
         setFormValue({
           name: "dailyForms",
@@ -82,7 +81,6 @@ const TourSix = () => {
   };
 
   const setExistingDailyForms = useCallback(async () => {
-    console.log({ asdadasassa: formValue.dailyForms });
     setDailyForms([...formValue.dailyForms]);
   }, []);
 
@@ -91,7 +89,6 @@ const TourSix = () => {
   // }, [dailyForms]);
 
   useEffect(() => {
-    console.log("I am here", formValue, dailyForms);
     if (formValue.id > 0) setExistingDailyForms();
   }, [setExistingDailyForms]);
 
@@ -166,7 +163,6 @@ const TourSix = () => {
       <div className="meta-body">
         <TabContent activeTab={dailyTabId}>
           {dailyForms.map((form, i) => {
-            // console.log({ i, form });
             return (
               <TabPane key={i} tabId={i}>
                 <TourDailyForm

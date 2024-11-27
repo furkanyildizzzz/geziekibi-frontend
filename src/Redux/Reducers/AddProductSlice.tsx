@@ -81,6 +81,17 @@ const AddProductSlice = createSlice({
     },
     updateDailyForm: (state, action) => {
       const { index, fieldName, value } = action.payload;
+      // Ensure dailyForms array exists
+      if (!state.formValue.dailyForms) {
+        state.formValue.dailyForms = [];
+      }
+
+      // Ensure the object at the given index exists
+      if (!state.formValue.dailyForms[index]) {
+        state.formValue.dailyForms[index] = {}; // Initialize as an empty object
+      }
+
+      // Update the specific field
       state.formValue.dailyForms[index][fieldName] = value;
     },
   },
