@@ -20,13 +20,14 @@ const TourDailyDescription: React.FC<TourDailyDescriptionProps> = ({
   const [editorKey, setEditorKey] = useState(0); // Key to force re-render
 
   const { getValues, setValue } = useFormContext<any>();
-
+  const [incomingValue, setIncomingValue] = useState("");
   const handleChange = useCallback((value: string) => {
     setValue("description", value);
     onFieldChange(formId, "description", value);
   }, []);
 
   useEffect(() => {
+    setIncomingValue(initialValue);
     if (editorKey < 2) setEditorKey((prev) => prev + 1); // Increment the key to force re-render
   }, [initialValue]);
 
@@ -35,7 +36,7 @@ const TourDailyDescription: React.FC<TourDailyDescriptionProps> = ({
       <div id="editor2">
         <RichTextEditor2
           key={editorKey} // Change the key to reset the editor
-          initialValue={initialValue}
+          initialValue={incomingValue}
           uploadFolderPath="/tour/daily/description"
           onChange={handleChange}
         />
