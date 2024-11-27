@@ -3,8 +3,6 @@ import PillInputComponent, {
 } from "@/Components/Form&Table/Form/FormControls/Input/PillInputComponent";
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { Button, Input, Label } from "reactstrap";
 import { FormData } from "./TourSix";
 
 interface DailyVisitingPlacesProps {
@@ -18,8 +16,9 @@ const DailyVisitingPlaces: React.FC<DailyVisitingPlacesProps> = ({
   onFieldChange,
   existingValues,
 }) => {
-  const [dailyVisitingPlaces, setDailyVisitingPlaces] =
-    useState<PillInputType[]>(existingValues);
+  const [dailyVisitingPlaces, setDailyVisitingPlaces] = useState<
+    PillInputType[]
+  >([]);
 
   const {
     getValues,
@@ -31,24 +30,34 @@ const DailyVisitingPlaces: React.FC<DailyVisitingPlacesProps> = ({
   const [editorKey, setEditorKey] = useState(0); // Key to force re-render
 
   const handleChange = (value: PillInputType) => {
-    setDailyVisitingPlaces((prev) => [...prev, value]);
+    setDailyVisitingPlaces((prev) => {
+      const updatedValues = [...prev, value];
+      console.log({ prev, value, updatedValues });
+      onFieldChange(formId, "dailyVisitingPlaces", [...updatedValues]);
+      return updatedValues;
+    });
   };
 
-  const handleRemove = (valueToRemove: PillInputType) => {
-    setDailyVisitingPlaces((prev) =>
-      prev.filter(
-        (value: { id: number; name: string }) =>
-          value.id !== valueToRemove.id && value.name !== valueToRemove.name
-      )
-    );
+  const handleRemove = (pillToRemove: PillInputType) => {
+    setDailyVisitingPlaces((prev) => {
+      const updatedValues = prev.filter((value: { id: number; name: string }) =>
+        pillToRemove.id > 0 // Remove edilecek kayıt yeniyse isimine bakarak kaldır.
+          ? value.id !== pillToRemove.id
+          : value.name !== pillToRemove.name
+      );
+      console.log({ prev, pillToRemove, updatedValues });
+      onFieldChange(formId, "dailyVisitingPlaces", [...updatedValues]);
+      return updatedValues;
+    });
   };
 
-  useEffect(() => {
-    setValue("dailyVisitingPlaces", dailyVisitingPlaces);
-    onFieldChange(formId, "dailyVisitingPlaces", dailyVisitingPlaces);
-  }, [dailyVisitingPlaces]);
+  // useEffect(() => {
+  //   setValue("dailyVisitingPlaces", dailyVisitingPlaces);
+  //   onFieldChange(formId, "dailyVisitingPlaces", dailyVisitingPlaces);
+  // }, [dailyVisitingPlaces]);
 
   useEffect(() => {
+    setDailyVisitingPlaces(existingValues);
     if (editorKey < 2) setEditorKey((prev) => prev + 1); // Increment the key to force re-render
   }, [existingValues]);
 

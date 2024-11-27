@@ -31,8 +31,8 @@ const TourSix = () => {
       lunch: "",
       dinner: "",
       description: "",
-      dailyPaths: [{ id: 0, name: "" }],
-      dailyVisitingPlaces: [{ id: 0, name: "" }],
+      dailyPaths: [],
+      dailyVisitingPlaces: [],
     },
   ]);
 

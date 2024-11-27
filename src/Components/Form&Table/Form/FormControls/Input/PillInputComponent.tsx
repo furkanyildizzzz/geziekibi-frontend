@@ -36,14 +36,16 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
         return [...prevPills, { id: 0, name: trimmedValue }];
       });
       setInputValue({ id: 0, name: "" }); // Clear input field
-      onChange({ name: trimmedValue });
+      onChange({ id: inputValue.id, name: trimmedValue });
     }
   };
 
   const handleRemovePill = (pillToRemove: PillInputType): void => {
     setPills((prevPills) =>
-      prevPills.filter(
-        (pill) => pill.id !== pillToRemove.id && pill.name !== pillToRemove.name
+      prevPills.filter((pill) =>
+        pillToRemove.id > 0
+          ? pill.id !== pillToRemove.id
+          : pill.name !== pillToRemove.name
       )
     );
     onRemove(pillToRemove);

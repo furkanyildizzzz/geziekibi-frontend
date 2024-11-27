@@ -158,7 +158,9 @@ export const DailyFormFormSchema = z.object({
   dailyPaths: z
     .array(z.object({ id: z.number(), name: z.string() }))
     .optional(),
-  dailyVisitingPlaces: z.array(z.object({ name: z.string() })).optional(),
+  dailyVisitingPlaces: z
+    .array(z.object({ id: z.number(), name: z.string() }))
+    .optional(),
   breakfeast: z.string().optional(),
   lunch: z.string().optional(),
   dinner: z.string().optional(),
