@@ -44,3 +44,14 @@ export const TourServiceTypeEnumDisplayNames: {
   [TourServiceTypeEnum.INHERIT]: "Inherit",
   [TourServiceTypeEnum.EXCLUDED]: "Excluded",
 };
+
+export enum LanguageEnum {
+  TR = "turkish",
+  EN = "english",
+}
+export const LanguageEnumDisplayNames: {
+  [key in LanguageEnum]: string;
+} = {
+  [LanguageEnum.TR]: "Türkçe",
+  [LanguageEnum.EN]: "English",
+};

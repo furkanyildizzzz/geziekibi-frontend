@@ -1,4 +1,4 @@
-import { TourServiceTypeEnum } from "@/app/lib/enums";
+import { LanguageEnum, TourServiceTypeEnum } from "@/app/lib/enums";
 
 export type ApiResponse<T = any> = ApiErrorResponse | ApiSuccessResponse<T>;
 
@@ -29,7 +29,7 @@ export interface ApiSuccessResponse<T> extends Response {
   message: string;
   data: T;
 }
-
+export type DeleteSuccessResponse = {};
 export type UserSuccessResponse = {
   id: number;
   email: string;
@@ -143,4 +143,36 @@ export type TourPriceSuccessResponse = {
   price: number;
   currency: string;
   rowId: number;
+};
+export type BlogCategorySuccessResponse = {
+  id: number;
+  name: string;
+  description: Text;
+  parent: TourCategorySuccessResponse;
+  subCategories: TourCategorySuccessResponse[];
+  uploadedPrimaryImages: CloudinaryImage[];
+};
+export type BlogSuccessResponse = {
+  id: number;
+  title: string;
+  spot: string;
+  body: string;
+  language: LanguageEnum;
+  publishStatus: string;
+  publishDate: Date;
+  category: BlogCategorySuccessResponse;
+  tags: TagSuccessResponse[];
+  uploadedPrimaryImages: CloudinaryImage[];
+};
+
+export type BlogListSuccessResponse = {
+  id: number;
+  title: string;
+  spot: string;
+  language: string;
+  primaryImages: CloudinaryImage[];
+  publishStatus: string;
+  publishDate: Date;
+  category: TourCategorySuccessResponse;
+  tags: TagSuccessResponse[];
 };

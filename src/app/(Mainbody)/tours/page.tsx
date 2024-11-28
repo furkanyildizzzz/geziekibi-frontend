@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   title: "Tours",
 };
 
-const TagList = () => {
+const TourList = () => {
   return <TourListContainer />;
 };
 
-export default TagList;
+export default TourList;

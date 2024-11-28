@@ -43,6 +43,26 @@ export const MenuList: MenuItem[] | undefined = [
           { path: "/tour/paths", title: "Paths", type: "link" },
         ],
       },
+      {
+        title: "Blog",
+        id: 6,
+        icon: "to-do",
+        type: "sub",
+        active: false,
+        children: [
+          {
+            path: "/blog/add-blog",
+            title: "Add Blog",
+            type: "link",
+          },
+          { path: "/blogs", title: "Blog List", type: "link" },
+          {
+            path: "/blog/categories",
+            title: "Categories",
+            type: "link",
+          },
+        ],
+      },
     ],
   },
 

@@ -37,7 +37,7 @@ const TourDailyDescription: React.FC<TourDailyDescriptionProps> = ({
         <RichTextEditor2
           key={editorKey} // Change the key to reset the editor
           initialValue={incomingValue}
-          uploadFolderPath="/tour/daily/description"
+          uploadFolderPath="/tour/uploadBodyImage"
           onChange={handleChange}
         />
       </div>

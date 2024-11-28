@@ -15,7 +15,7 @@ declare global {
 const RichTextEditor2: React.FC<{
   initialValue: string;
   uploadFolderPath: string;
-  onChange: Function;
+  onChange: (text: string) => void;
 }> = ({ initialValue, uploadFolderPath, onChange }) => {
   const refDiv = useRef<HTMLDivElement | null>(null);
 
@@ -128,7 +128,7 @@ const RichTextEditor2: React.FC<{
 
         // Create FormData instance
         const formData = new FormData();
-        formData.append("tourBodyImage", file);
+        formData.append("uploadBodyImage", file);
 
         xhr.send(formData);
       });
