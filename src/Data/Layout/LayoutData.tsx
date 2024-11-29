@@ -272,24 +272,24 @@ export const MessageData = [
 export const UserListData = [
   {
     icon: <User />,
-    path: "/users/user_profile",
+    path: "/users/edit_profile",
     title: "Account",
   },
-  {
-    icon: <Mail />,
-    path: "/email/email_app",
-    title: "Inbox",
-  },
-  {
-    icon: <FileText />,
-    path: "/app/task",
-    title: "Taskboard",
-  },
-  {
-    icon: <Settings />,
-    path: "/users/edit_profile",
-    title: "Settings",
-  },
+  // {
+  //   icon: <Mail />,
+  //   path: "/email/email_app",
+  //   title: "Inbox",
+  // },
+  // {
+  //   icon: <FileText />,
+  //   path: "/app/task",
+  //   title: "Taskboard",
+  // },
+  // {
+  //   icon: <Settings />,
+  //   path: "/users/edit_profile",
+  //   title: "Settings",
+  // },
 ];
 
 export const LanguagesData = [

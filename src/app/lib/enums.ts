@@ -55,3 +55,27 @@ export const LanguageEnumDisplayNames: {
   [LanguageEnum.TR]: "Türkçe",
   [LanguageEnum.EN]: "English",
 };
+
+export enum PageTypeEnum {
+  PageAboutUs = "page-about-us",
+  PageSecretPolicy = "page-secret-policy",
+  PageUsagePolicy = "page-usage-policy",
+  PageInformationSecurityPolicy = "page-information-security-policy",
+  PageKVKKPolicy = "page-kvkk-policy",
+  PageCookiePolicy = "page-cookie-policy",
+  PageMembershipAgreementPolicy = "page-membership-agreement-policy",
+  PageHumanResources = "page-human-resources",
+}
+
+export const PageTypeEnumDisplayNames: {
+  [key in PageTypeEnum]: string;
+} = {
+  [PageTypeEnum.PageAboutUs]: "About Us",
+  [PageTypeEnum.PageSecretPolicy]: "Secret Policy",
+  [PageTypeEnum.PageUsagePolicy]: "Usage Policy",
+  [PageTypeEnum.PageInformationSecurityPolicy]: "Information Security Policy",
+  [PageTypeEnum.PageKVKKPolicy]: "KVKK Policy",
+  [PageTypeEnum.PageCookiePolicy]: "Cookie Policy",
+  [PageTypeEnum.PageMembershipAgreementPolicy]: "Membership Agreement Policy",
+  [PageTypeEnum.PageHumanResources]: "Human Resources",
+};

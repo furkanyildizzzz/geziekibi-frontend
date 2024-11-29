@@ -1,4 +1,8 @@
-import { LanguageEnum, TourServiceTypeEnum } from "@/app/lib/enums";
+import {
+  LanguageEnum,
+  PageTypeEnum,
+  TourServiceTypeEnum,
+} from "@/app/lib/enums";
 
 export type ApiResponse<T = any> = ApiErrorResponse | ApiSuccessResponse<T>;
 
@@ -175,4 +179,17 @@ export type BlogListSuccessResponse = {
   publishDate: Date;
   category: TourCategorySuccessResponse;
   tags: TagSuccessResponse[];
+};
+
+export type StaticPageSuccessResponse = {
+  id: number;
+  title: string;
+  body: string;
+  pageType: PageTypeEnum;
+};
+
+export type StaticPageListSuccessResponse = {
+  id: number;
+  title: string;
+  pageType: PageTypeEnum;
 };

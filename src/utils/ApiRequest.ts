@@ -32,6 +32,7 @@ export async function apiRequest<T>(
       method,
       headers,
       body: requestBody,
+      cache: "no-store",
     });
 
     const result = await processApiResponse<T>(response);
