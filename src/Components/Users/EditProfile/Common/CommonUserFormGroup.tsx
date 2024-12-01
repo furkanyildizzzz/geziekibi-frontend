@@ -3,6 +3,7 @@ import { UserSuccessResponse } from "@/Types/ApiResponseType";
 import { CommonUserFormGroupType } from "@/Types/UserType";
 import DisplayError from "@/utils/DisplayError";
 import { Controller, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FormGroup, Input, Label } from "reactstrap";
 
 const CommonUserFormGroup: React.FC<CommonUserFormGroupType> = ({
@@ -13,6 +14,7 @@ const CommonUserFormGroup: React.FC<CommonUserFormGroupType> = ({
   defaultValue,
   row,
 }) => {
+  const { t } = useTranslation("common");
   const {
     getValues,
     setValue,
@@ -21,7 +23,7 @@ const CommonUserFormGroup: React.FC<CommonUserFormGroupType> = ({
   } = useFormContext<any>();
   return (
     <FormGroup>
-      <Label className="form-label">{title}</Label>
+      <Label className="form-label">{t(title)}</Label>
       <Controller
         name={name}
         control={control}

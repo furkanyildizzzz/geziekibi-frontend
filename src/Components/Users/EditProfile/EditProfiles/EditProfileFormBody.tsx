@@ -18,8 +18,10 @@ import CommonUserFormGroup from "../Common/CommonUserFormGroup";
 import { useFormContext, UseFormRegister } from "react-hook-form";
 import { UserSuccessResponse } from "@/Types/ApiResponseType";
 import { EditUserSchema } from "@/app/lib/definitions";
+import { useTranslation } from "react-i18next";
 
 export const EditProfileFormBody = () => {
+  const { t } = useTranslation("common");
   const {
     getValues,
     setValue,
@@ -31,7 +33,7 @@ export const EditProfileFormBody = () => {
         <Col sm="6" md="6">
           <CommonUserFormGroup
             type="text"
-            title={FirstName}
+            title={"FirstName"}
             placeholder={FirstName}
             name="firstName"
           />
@@ -39,7 +41,7 @@ export const EditProfileFormBody = () => {
         <Col sm="6" md="6">
           <CommonUserFormGroup
             type="text"
-            title={LastName}
+            title={"LastName"}
             placeholder={LastName}
             name="lastName"
           />
@@ -47,7 +49,7 @@ export const EditProfileFormBody = () => {
         <Col sm="6" md="6">
           <CommonUserFormGroup
             type="email"
-            title={SecondEmailAddress}
+            title={"SecondEmailAddress"}
             placeholder={Email}
             name={`secondEmail`}
           />
@@ -63,7 +65,7 @@ export const EditProfileFormBody = () => {
         <Col md="12">
           <CommonUserFormGroup
             type="text"
-            title={Address}
+            title={"Address"}
             placeholder={Address}
             name="address"
           />
@@ -71,7 +73,7 @@ export const EditProfileFormBody = () => {
         <Col sm="6" md="4">
           <CommonUserFormGroup
             type="text"
-            title={City}
+            title={"City"}
             placeholder={City}
             name="city"
           />
@@ -79,14 +81,14 @@ export const EditProfileFormBody = () => {
         <Col sm="6" md="3">
           <CommonUserFormGroup
             type="text"
-            title={PostalCode}
+            title={"PostalCode"}
             placeholder={ZipCode}
             name="zipCode"
           />
         </Col>
         <Col md="5">
           <FormGroup>
-            <Label check>{Country}</Label>
+            <Label check>{t("Country")}</Label>
             <Input
               type="select"
               className="rounded-2 btn-square"
@@ -100,7 +102,7 @@ export const EditProfileFormBody = () => {
         <Col md="12">
           <CommonUserFormGroup
             type="textarea"
-            title={AboutMe}
+            title={"AboutMe"}
             placeholder="Enter About your description"
             row={4}
             name="bio"

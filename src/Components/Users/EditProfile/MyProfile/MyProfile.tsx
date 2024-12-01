@@ -73,7 +73,7 @@ const MyProfile = ({ user }: { user: UserSuccessResponse }) => {
             <Form onSubmit={methods.handleSubmit(handleSubmit)}>
               <UserFormHead user={user} />
               <FormGroup>
-                <Label className="form-label">{"Email Address"}</Label>
+                <Label className="form-label">{t("Email Address")}</Label>
                 <Input
                   id={"email"}
                   type={"email"}
@@ -85,7 +85,7 @@ const MyProfile = ({ user }: { user: UserSuccessResponse }) => {
               <div className="position-relative">
                 <CommonUserFormGroup
                   type={show ? "text" : "password"}
-                  title="New Password"
+                  title={t("New Password")}
                   placeholder="********"
                   name="newPassword"
                 />
@@ -99,7 +99,7 @@ const MyProfile = ({ user }: { user: UserSuccessResponse }) => {
               />
               <CommonUserFormGroup
                 type={show ? "text" : "password"}
-                title="Confirm New Password"
+                title={t("Confirm New Password")}
                 placeholder="********"
                 name="confirmNewPassword"
               />
