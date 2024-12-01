@@ -1,6 +1,7 @@
 import {
   LanguageEnum,
   PageTypeEnum,
+  PublishStatusEnum,
   TourServiceTypeEnum,
 } from "@/app/lib/enums";
 
@@ -89,6 +90,18 @@ export type CloudinaryImage = {
   format: string;
   createdAt: Date;
   order: number;
+};
+export type Catalog = {
+  id: number;
+  originalName: string;
+  publicId: string;
+  url: string;
+  secureUrl: string;
+  format: string;
+  createdAt: Date;
+  order: number;
+  publishDate: Date;
+  publishStatus: PublishStatusEnum;
 };
 export type TourService = {
   id: number;

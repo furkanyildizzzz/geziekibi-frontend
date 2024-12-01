@@ -36,7 +36,6 @@ const EditProfilePrimaryImages = ({
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
-  const [errorMessage, setErrorMessage] = useState("");
 
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [profileImage, setProfileImage] = useState<CloudinaryImage | undefined>(

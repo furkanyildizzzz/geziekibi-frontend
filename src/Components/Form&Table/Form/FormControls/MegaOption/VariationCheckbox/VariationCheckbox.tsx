@@ -530,7 +530,7 @@ const VariationCheckbox = () => {
   }, [tourService]);
 
   const handleAdd = () => {
-    router.push("/services/add-service");
+    router.push("/tour/services/add-service");
   };
   return (
     <Col sm="12">
