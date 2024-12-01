@@ -4,14 +4,16 @@ import React from "react";
 import { Col, Container, Row } from "reactstrap";
 import Breadcrumbs from "@/Components/Breadcrumb";
 import FileContent from "./FileContent";
+import { useTranslation } from "react-i18next";
 
 const CatalogListContainer = () => {
+  const { t } = useTranslation("common");
   return (
     <>
       <Breadcrumbs
-        pageTitle={FileManagerTitle}
-        parent={AppsTitle}
-        title={FileManagerTitle}
+        pageTitle={t("Catalogs")}
+        parent={t("General")}
+        title={t("Catalogs")}
       />
       <Container fluid>
         <Row>

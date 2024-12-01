@@ -3,8 +3,10 @@ import { Button, Form, Input } from "reactstrap";
 import { PlusSquare, Upload } from "react-feather";
 import { AddUploadMediaProps } from "@/Types/FileManagerType";
 import AddCatalogDropzone from "./AddCatalogDropzoneModal";
+import { useTranslation } from "react-i18next";
 
 const AddUploadMedia: React.FC<AddUploadMediaProps> = ({ onFileUpload }) => {
+  const { t } = useTranslation("common");
   const [openUploadModal, setOpenUploadModal] = useState<boolean>(false);
 
   return (
@@ -15,7 +17,7 @@ const AddUploadMedia: React.FC<AddUploadMediaProps> = ({ onFileUpload }) => {
           className="plus-square"
           onClick={() => setOpenUploadModal(true)}
         >
-          <PlusSquare /> {"Add New"}
+          <PlusSquare /> {t("Add New")}
         </Button>
       </Form>
 

@@ -63,6 +63,20 @@ export const MenuList: MenuItem[] | undefined = [
           },
         ],
       },
+      {
+        title: "Catalog",
+        id: 6,
+        icon: "to-do",
+        type: "sub",
+        active: false,
+        children: [
+          {
+            path: "/catalogs",
+            title: "Catalogs",
+            type: "link",
+          },
+        ],
+      },
     ],
   },
 
