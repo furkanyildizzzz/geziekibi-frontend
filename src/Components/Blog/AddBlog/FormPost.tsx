@@ -47,6 +47,8 @@ import { editBlog } from "@/app/actions/blog/self/editBlog";
 import { createNewBlog } from "@/app/actions/blog/self/createNewBlog";
 import ShowValidationError from "@/Components/Toast/Error/ShowValidationError";
 import ShowError from "@/Components/Toast/Error/ShowError";
+import { deleteBlog } from "@/app/actions/blog/self/deleteBlog";
+import { useRouter } from "next/navigation";
 
 interface FormPostProps {
   blogId: number;
@@ -58,9 +60,8 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
-  const [errorMessage, setErrorMessage] = useState("");
   const { t } = useTranslation("common");
-
+  const router = useRouter();
   const {
     handleSubmit,
     control,
@@ -83,7 +84,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
       } else {
         ShowSuccess(response.message);
         blogId = response.data.id;
-        handleReload(`/blog/${blogId}`);
+        router.replace(`/blog/${blogId}`);
       }
     } finally {
       setIsLoading(false);
@@ -91,8 +92,21 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
     return;
   };
 
-  const handleReload = (path: string) => {
-    window.location.reload(); // Reloads the current page
+  const handleDelete = async () => {
+    if (
+      window.confirm(`Are you sure you want to delete:\r ${blogData!.title} ?`)
+    ) {
+      try {
+        setIsLoading(true);
+
+        await deleteBlog(blogData!.id);
+      } catch (error) {
+        ShowError("Failed to delete tour. Please try again.");
+      } finally {
+        setIsLoading(false);
+        router.replace("/blogs");
+      }
+    }
   };
 
   return (
@@ -293,11 +307,20 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
           </div>
         </Col>
       </Row>
-      <div className="btn-showcase text-end mt-4">
-        <Button type="submit" color="primary">
-          {isLoading ? <LoadingButton /> : t("Submit")}
-        </Button>
-      </div>
+      <Row style={{ display: "flex", justifyContent: "flex-end", gap: "2%" }}>
+        <div className="col-1 btn-showcase text-end mt-4">
+          <Button type="submit" color="primary">
+            {isLoading ? <LoadingButton /> : t("Submit")}
+          </Button>
+        </div>
+        {blogData && blogData.id > 0 && (
+          <div className="col-1 btn-showcase text-end mt-4">
+            <Button type="button" color="danger" onClick={handleDelete}>
+              {isLoading ? <LoadingButton /> : t("Delete")}
+            </Button>
+          </div>
+        )}
+      </Row>
     </Form>
   );
 };
