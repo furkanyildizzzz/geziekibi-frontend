@@ -75,17 +75,6 @@ const SelectFour = () => {
                 : undefined
             }
           />
-          {/* 
-          <Input
-            type="select"
-            name="publishStatus"
-            onChange={(e) => handleStatus(e.target.value)}
-          >
-            <option>{Publish}</option>
-            <option>{Drafts}</option>
-            <option>{Unpublish}</option>
-          </Input> */}
-          <p className="f-light">{ChooseTheStatus}</p>
         </Col>
       </Row>
     </Col>

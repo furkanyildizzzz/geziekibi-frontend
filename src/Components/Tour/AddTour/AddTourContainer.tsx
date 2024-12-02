@@ -43,11 +43,11 @@ const AddTourContainer = ({
     if ("data" in response) {
       console.log({ getTourById: response.data });
       Object.entries(response.data).forEach(([key, value]: [string, any]) => {
-        if (key === "prices") {
-          value = value.map((val: TourPriceSuccessResponse, index: number) => {
-            return { ...val, rowId: index + 1 };
-          });
-        }
+        // if (key === "prices") {
+        //   value = value.map((val: TourPriceSuccessResponse, index: number) => {
+        //     return { ...val, rowId: index + 1 };
+        //   });
+        // }
         dispatch(setFormValue({ name: key, value: value }));
       });
     } else {

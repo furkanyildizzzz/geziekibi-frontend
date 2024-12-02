@@ -152,7 +152,6 @@ export type TourListSuccessResponse = {
   category: TourCategorySuccessResponse;
   prices: { name: string; description: string; price: number }[];
 };
-
 export type TourPriceSuccessResponse = {
   id: number;
   name: string;
@@ -160,6 +159,13 @@ export type TourPriceSuccessResponse = {
   price: number;
   currency: string;
   rowId: number;
+};
+export type TourDateSuccessResponse = {
+  id: number;
+  tourDate: Date;
+  description: string;
+  isActive: boolean;
+  prices: TourPriceSuccessResponse[];
 };
 export type BlogCategorySuccessResponse = {
   id: number;

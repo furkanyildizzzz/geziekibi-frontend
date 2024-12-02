@@ -1,5 +1,6 @@
 import { AddProductSliceType } from "@/Types/EcommerceType";
 import { createSlice } from "@reduxjs/toolkit";
+import { isSameDay, startOfDay } from "date-fns";
 
 const initialState: AddProductSliceType = {
   navId: 1,
@@ -21,7 +22,7 @@ const initialState: AddProductSliceType = {
     publishDate: "",
     startDate: "",
     endDate: "",
-    prices: [],
+    dates: [{}],
     currency: "",
     tags: [],
     tourServices: [],
@@ -77,6 +78,15 @@ const AddProductSlice = createSlice({
             dailyVisitingPlaces: [],
           },
         ],
+        dates: [
+          {
+            id: 0,
+            isActive: true,
+            description: "",
+            tourDate: new Date(),
+            prices: [],
+          },
+        ],
       };
     },
     updateDailyForm: (state, action) => {
@@ -94,6 +104,25 @@ const AddProductSlice = createSlice({
       // Update the specific field
       state.formValue.dailyForms[index][fieldName] = value;
     },
+    updateDatePriceList: (state, action) => {
+      const { targetDate, priceList } = action.payload;
+
+      console.log({ targetDate, priceList });
+      // Find the target date
+      const dateIndex = state.formValue.dates.findIndex((d: any) =>
+        isSameDay(d.tourDate, targetDate)
+      );
+
+      if (dateIndex !== -1) {
+        // Update the priceList for the matched date
+        state.formValue.dates[dateIndex] = {
+          ...state.formValue.dates[dateIndex],
+          prices: priceList,
+        };
+      } else {
+        console.error("Date not found for updating price list");
+      }
+    },
   },
 });
 export const {
@@ -103,6 +132,7 @@ export const {
   setIsLoading,
   resetTourForm,
   updateDailyForm,
+  updateDatePriceList,
 } = AddProductSlice.actions;
 
 export default AddProductSlice.reducer;

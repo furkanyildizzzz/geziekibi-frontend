@@ -14,21 +14,21 @@ export const AddTourNav = [
   {
     id: 3,
     icon: "stroke-calendar",
-    title: "TourDaysTitle",
+    title: "TourProgramTitle",
     detail: "TourDaysDetail",
   },
   {
     id: 4,
     icon: "product-category",
-    title: "TourCategoriesTitle",
-    detail: "TourCategoriesDetail",
+    title: "TourDatesAndPricesTitle",
+    detail: "TourDatesAndPricesDetail",
   },
-  {
-    id: 5,
-    icon: "pricing",
-    title: "SellingPricesTitle",
-    detail: "SellingPricesDetail",
-  },
+  // {
+  //   id: 5,
+  //   icon: "pricing",
+  //   title: "SellingPricesTitle",
+  //   detail: "SellingPricesDetail",
+  // },
   {
     id: 6,
     icon: "advance",

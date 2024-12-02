@@ -23,7 +23,6 @@ export interface TourListTableDataColumnType {
   publishStatus: string;
   publishDate: Date;
   category: string; //TourCategorySuccessResponse;
-  prices: { name: string; description: string; price: number }[];
 }
 
 const TourListTableTourImageAndName: React.FC<TourListTableName> = ({
@@ -100,12 +99,6 @@ export const TourListTableDataColumn = (
       name: t("Type"),
       selector: (row: TourListTableDataColumnType) =>
         `${TourTypeDisplayNames[row.type as TourTypeEnum]}`,
-      sortable: true,
-    },
-
-    {
-      name: t("Price"),
-      selector: (row: TourListTableDataColumnType) => `${row.prices[0]?.price}`,
       sortable: true,
     },
 

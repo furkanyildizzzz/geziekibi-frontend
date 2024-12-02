@@ -2,7 +2,7 @@ import { Col, TabContent, TabPane } from "reactstrap";
 import TourOne from "./TourOne";
 import TourTwo from "./TourTwo";
 import TourThree from "./TourThree";
-import TourFour from "./TourFour";
+import TourFour from "./TourFour2";
 import TourFive from "./TourFive";
 import CommonButton from "../CommonButton/CommonButton";
 import { useAppSelector } from "@/Redux/Hooks";
@@ -16,6 +16,8 @@ const TourTabContent = () => {
       <Col xxl="9" xl="8" className="box-col-8 position-relative">
         <TabContent activeTab={navId}>
           <TabPane tabId={1}>
+            <TourThree />
+            <hr />
             <TourOne />
           </TabPane>
           <TabPane tabId={2}>
@@ -25,11 +27,11 @@ const TourTabContent = () => {
             <TourSix />
           </TabPane>
           <TabPane tabId={4}>
-            <TourThree />
-          </TabPane>
-          <TabPane tabId={5}>
             <TourFour />
           </TabPane>
+          {/* <TabPane tabId={5}>
+            <TourFour />
+          </TabPane> */}
           <TabPane tabId={6}>
             <TourFive />
           </TabPane>

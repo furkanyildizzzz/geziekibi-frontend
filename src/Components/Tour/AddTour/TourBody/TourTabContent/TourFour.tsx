@@ -43,6 +43,7 @@ import AddTourPriceForm from "./AddTourPriceForm";
 import { number } from "zod";
 import TourPriceList from "./TourPriceList";
 import { useTranslation } from "react-i18next";
+import { SimpleAccordion } from "@/Components/Accordion/SimpleAccordion/SimpleAccordion";
 
 export const DropDownData = [
   {
@@ -168,150 +169,144 @@ const TourFour = () => {
   const handleCurrencyChanged = (id: string) => {
     setValue("currency", id as CurrencyEnum);
   };
-  return (
-    <Card className="sidebar-body">
-      <CardHeader className="b-bottom">
-        <div className="todo-list-header">
-          <DisplayError errorMessage={errorMessage} />
-          <Form
-            className="theme-form"
-            onSubmit={handleSubmit((data) => {
-              onSubmit(data as TourPriceSuccessResponse);
-            })}
-          >
-            <Row>
-              <Col xs="3">
-                <FormGroup>
-                  <Label for="name" check>
-                    {t("SellingPriceName")}{" "}
-                    <span className="txt-danger"> *</span>
-                  </Label>
-                  <input
-                    type="text"
-                    className="m-0 form-control"
-                    id="name"
-                    required
-                    disabled={isLoadingTour}
-                    {...register("name")}
-                  />
-                  <DisplayError
-                    errors={errors}
-                    errorsValidation={errorsValidation}
-                    keyProp="name"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="2">
-                <FormGroup>
-                  <Label for="price" check>
-                    {t("SellingPrice")} <span className="txt-danger"> *</span>
-                  </Label>
-                  <input
-                    type="number"
-                    className="m-0 form-control"
-                    id="price"
-                    disabled={isLoadingTour}
-                    {...register("price")}
-                  />
-                  <DisplayError
-                    errors={errors}
-                    // errorsValidation={errorsValidation}
-                    keyProp="price"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="2">
-                <FormGroup>
-                  <Label for="currency" check>
-                    {t("SellingCurrency")}{" "}
-                    <span className="txt-danger"> *</span>
-                  </Label>
-                  <DropDownComponent
-                    id="id"
-                    title={""}
-                    isRequired={false}
-                    labelKey="name"
-                    multiple={false}
-                    placeHolder=""
-                    onChange={handleCurrencyChanged}
-                    isDisabled={isLoadingTour}
-                    options={DropDownData.map((item) => {
-                      return {
-                        name: item.name,
-                        id: item.id.toString(),
-                      };
-                    })}
-                    selectedOption={[
-                      {
-                        id: CurrencyEnum.TRY,
-                        name: CurrencyDisplayNames[CurrencyEnum.TRY],
-                      },
-                    ]}
-                  />
-                  <DisplayError
-                    errors={errors}
-                    errorsValidation={errorsValidation}
-                    keyProp="currency"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="3">
-                <FormGroup>
-                  <Label for="description" check>
-                    {t("Description")}
-                  </Label>
-                  <input
-                    type="text"
-                    className="m-0 form-control"
-                    id="description"
-                    disabled={isLoadingTour}
-                    {...register("description")}
-                  />
-                  <DisplayError
-                    errors={errors}
-                    errorsValidation={errorsValidation}
-                    keyProp="description"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="1" style={{ alignSelf: "center", cursor: "pointer" }}>
-                <Button
-                  color="primary"
-                  type="submit"
-                  disabled={isLoading || isLoadingTour}
-                >
-                  {" "}
-                  {t("Add")}
-                </Button>
-              </Col>
-            </Row>
-            {/* {!isSubmitted && (
-        <Row style={{ justifyContent: "flex-end" }}>
-          <Col xs="3">
-            <Button color="primary" type="submit" disabled={isLoading}>
-              {" "}
-              {Add}
-            </Button>
-          </Col>
-        </Row>
-      )} */}
-          </Form>
-        </div>
-      </CardHeader>
 
-      <CardBody>
-        <div className="todo">
-          <div className="todo-list-wrapper custom-scrollbar">
-            <div className="todo-list-container">
-              <TourPriceList
-                priceList={priceList}
-                handleRemovePrice={handleRemovePrice}
-              />
+  return (
+    <>
+      <SimpleAccordion />
+      <Card className="sidebar-body">
+        <CardHeader className="b-bottom">
+          <div className="todo-list-header">
+            <DisplayError errorMessage={errorMessage} />
+            <Form
+              className="theme-form"
+              onSubmit={handleSubmit((data) => {
+                onSubmit(data as TourPriceSuccessResponse);
+              })}
+            >
+              <Row>
+                <Col xs="3">
+                  <FormGroup>
+                    <Label for="name" check>
+                      {t("SellingPriceName")}{" "}
+                      <span className="txt-danger"> *</span>
+                    </Label>
+                    <input
+                      type="text"
+                      className="m-0 form-control"
+                      id="name"
+                      required
+                      disabled={isLoadingTour}
+                      {...register("name")}
+                    />
+                    <DisplayError
+                      errors={errors}
+                      errorsValidation={errorsValidation}
+                      keyProp="name"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="2">
+                  <FormGroup>
+                    <Label for="price" check>
+                      {t("SellingPrice")} <span className="txt-danger"> *</span>
+                    </Label>
+                    <input
+                      type="number"
+                      className="m-0 form-control"
+                      id="price"
+                      disabled={isLoadingTour}
+                      {...register("price")}
+                    />
+                    <DisplayError
+                      errors={errors}
+                      // errorsValidation={errorsValidation}
+                      keyProp="price"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="2">
+                  <FormGroup>
+                    <Label for="currency" check>
+                      {t("SellingCurrency")}{" "}
+                      <span className="txt-danger"> *</span>
+                    </Label>
+                    <DropDownComponent
+                      id="id"
+                      title={""}
+                      isRequired={false}
+                      labelKey="name"
+                      multiple={false}
+                      placeHolder=""
+                      onChange={handleCurrencyChanged}
+                      isDisabled={isLoadingTour}
+                      options={DropDownData.map((item) => {
+                        return {
+                          name: item.name,
+                          id: item.id.toString(),
+                        };
+                      })}
+                      selectedOption={[
+                        {
+                          id: CurrencyEnum.TRY,
+                          name: CurrencyDisplayNames[CurrencyEnum.TRY],
+                        },
+                      ]}
+                    />
+                    <DisplayError
+                      errors={errors}
+                      errorsValidation={errorsValidation}
+                      keyProp="currency"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="3">
+                  <FormGroup>
+                    <Label for="description" check>
+                      {t("Description")}
+                    </Label>
+                    <input
+                      type="text"
+                      className="m-0 form-control"
+                      id="description"
+                      disabled={isLoadingTour}
+                      {...register("description")}
+                    />
+                    <DisplayError
+                      errors={errors}
+                      errorsValidation={errorsValidation}
+                      keyProp="description"
+                    />
+                  </FormGroup>
+                </Col>
+                <Col xs="1" style={{ alignSelf: "center", cursor: "pointer" }}>
+                  <Button
+                    color="primary"
+                    type="submit"
+                    disabled={isLoading || isLoadingTour}
+                  >
+                    {" "}
+                    {t("Add")}
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        </CardHeader>
+
+        <CardBody>
+          <div className="todo">
+            <div className="todo-list-wrapper custom-scrollbar">
+              <div className="todo-list-container">
+                <TourPriceList
+                  priceList={priceList}
+                  handleRemovePrice={handleRemovePrice}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </>
   );
 };
 
