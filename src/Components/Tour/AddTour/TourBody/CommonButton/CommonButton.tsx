@@ -98,7 +98,8 @@ const CommonButton = () => {
   };
 
   const handleReload = (path: string) => {
-    window.location.reload(); // Reloads the current page
+    // window.location.reload(); // Reloads the current page
+    router.push(path);
   };
 
   return (
@@ -134,7 +135,7 @@ const CommonButton = () => {
             </div>
           </Button>
         )}
-        {navId === 6 ? (
+        {/* {navId === 6 ? (
           <Button
             color="transparent"
             className="ms-2"
@@ -159,7 +160,19 @@ const CommonButton = () => {
               <SVG iconId="front-arrow" />
             </div>
           </Button>
-        )}
+        )} */}
+
+        <Button
+          color="transparent"
+          className="ms-2"
+          onClick={handleSubmit}
+          type={"submit"}
+          disabled={isLoading}
+        >
+          <div className="d-flex align-items-center gap-sm-2 gap-1">
+            {isLoading ? <LoadingButton /> : t("Submit")}
+          </div>
+        </Button>
       </div>
     </div>
   );

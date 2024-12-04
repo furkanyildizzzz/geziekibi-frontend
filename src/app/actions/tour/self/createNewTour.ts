@@ -53,6 +53,7 @@ export const createNewTour = async (
       return await apiRequest<TourSuccessResponse>("tour/", "POST", formData);
     }
   } catch (error) {
+    console.log({ error });
     if (error instanceof ZodError) {
       const errorsValidation: ErrorValidation[] = error.errors.map((issue) => ({
         [issue.path.join(".")]: issue.message,

@@ -13,6 +13,7 @@ import TourBody from "./TourBody/TourBody";
 import {
   ErrorValidation,
   TourPriceSuccessResponse,
+  TourSuccessResponse,
 } from "@/Types/ApiResponseType";
 import { getTourById } from "@/app/actions/tour/self/getTourById";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
@@ -23,9 +24,11 @@ import Breadcrumbs from "@/Components/Breadcrumb";
 const AddTourContainer = ({
   id,
   copyTourId,
+  tourData,
 }: {
   id?: number;
   copyTourId?: number;
+  tourData: TourSuccessResponse;
 }) => {
   const pathname = usePathname();
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -39,41 +42,54 @@ const AddTourContainer = ({
   const router = useRouter();
 
   const fetchTour = async (id: number) => {
-    const response = await getTourById(id);
-    if ("data" in response) {
-      console.log({ getTourById: response.data });
-      Object.entries(response.data).forEach(([key, value]: [string, any]) => {
-        // if (key === "prices") {
-        //   value = value.map((val: TourPriceSuccessResponse, index: number) => {
-        //     return { ...val, rowId: index + 1 };
-        //   });
-        // }
-        dispatch(setFormValue({ name: key, value: value }));
-      });
-    } else {
-      // redirec to add_tour page
-    }
+    // const response = await getTourById(id);
+    // if ("data" in response) {
+    //   console.log({ getTourById: response.data });
+    //   Object.entries(response.data).forEach(([key, value]: [string, any]) => {
+    //     // if (key === "prices") {
+    //     //   value = value.map((val: TourPriceSuccessResponse, index: number) => {
+    //     //     return { ...val, rowId: index + 1 };
+    //     //   });
+    //     // }
+    //     dispatch(setFormValue({ name: key, value: value }));
+    //   });
+    // } else {
+    //   // redirec to add_tour page
+    // }
+
+    Object.entries(tourData).forEach(([key, value]: [string, any]) => {
+      dispatch(setFormValue({ name: key, value: value }));
+    });
   };
 
   const copyTour = async (id: number) => {
-    const response = await getTourById(id);
-    if ("data" in response) {
-      Object.entries(response.data).forEach(([key, value]: [string, any]) => {
-        if (key === "prices") {
-          value = value.map((val: TourPriceSuccessResponse, index: number) => {
-            return { ...val, rowId: index + 1 };
-          });
-        }
-        if (
-          key !== "id" &&
-          key !== "uploadedPrimaryImages" &&
-          key !== "uploadedGalleryImages"
-        )
-          dispatch(setFormValue({ name: key, value: value }));
-      });
-    } else {
-      router.replace(`/tour/add_tour`); // Reloads the current page
-    }
+    // const response = await getTourById(id);
+    // if ("data" in response) {
+    //   Object.entries(response.data).forEach(([key, value]: [string, any]) => {
+    //     if (key === "prices") {
+    //       value = value.map((val: TourPriceSuccessResponse, index: number) => {
+    //         return { ...val, rowId: index + 1 };
+    //       });
+    //     }
+    //     if (
+    //       key !== "id" &&
+    //       key !== "uploadedPrimaryImages" &&
+    //       key !== "uploadedGalleryImages"
+    //     )
+    //       dispatch(setFormValue({ name: key, value: value }));
+    //   });
+    // } else {
+    //   router.replace(`/tour/add_tour`); // Reloads the current page
+    // }
+
+    Object.entries(tourData).forEach(([key, value]: [string, any]) => {
+      if (
+        key !== "id" &&
+        key !== "uploadedPrimaryImages" &&
+        key !== "uploadedGalleryImages"
+      )
+        dispatch(setFormValue({ name: key, value: value }));
+    });
   };
 
   useEffect(() => {
@@ -87,7 +103,7 @@ const AddTourContainer = ({
   }, []);
 
   const handleCopyTour = () => {
-    router.replace(`/tour/add_tour?copy=${formValue.id}`); // Reloads the current page
+    router.push(`/tour/add_tour?copy=${formValue.id}`); // Reloads the current page
   };
 
   return (

@@ -62,7 +62,7 @@ export const CreateTourCategoryFormSchema = z.object({
     .string({ message: "Please enter valid category name" })
     .min(3, { message: "Be at least 3 charactes long" })
     .trim(),
-  description: z.string().optional(),
+  description: z.string().nullable().optional(),
   parentId: z.number().optional(),
   primaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
   uploadedPrimaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
@@ -192,7 +192,7 @@ export const TourDateFormSchema = z.object({
         z.number().positive({ message: "Price amount must be positive" })
       ),
       currency: z.string().min(1, { message: "Currency is required" }),
-      description: z.string().optional(),
+      description: z.string().nullable().optional(),
     })
   ),
 });

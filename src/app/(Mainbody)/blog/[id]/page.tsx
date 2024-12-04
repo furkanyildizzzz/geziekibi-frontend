@@ -10,9 +10,14 @@ export const metadata: Metadata = {
 
 const AddBlog = async ({ params: { id } }: { params: { id: string } }) => {
   const response = await getBlogById(Number(id));
-  const data = "data" in response ? response.data : ({} as BlogSuccessResponse);
 
-  return <AddBlogContainer blogId={Number(id)} blogData={data} />;
+  let blogData = {} as BlogSuccessResponse;
+
+  if ("data" in response) {
+    blogData = response.data;
+    metadata.title = response.data.title;
+  }
+  return <AddBlogContainer blogId={Number(id)} blogData={blogData} />;
 };
 
 export default AddBlog;
