@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Col, Form, Label, Row } from "reactstrap";
 import { tr } from "date-fns/locale/tr";
 import { useState } from "react";
+import { useAppSelector } from "@/Redux/Hooks";
 
 interface AddNewDateProps {
   handleAddNewDate: (date: Date) => void;
@@ -14,6 +15,10 @@ interface AddNewDateProps {
 export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
   const { t } = useTranslation("common");
   const [newDate, setNewDate] = useState(new Date());
+
+  const { isLoading: isLoadingReduxForm } = useAppSelector(
+    (state) => state.addProduct
+  );
 
   const {
     handleSubmit,
@@ -57,12 +62,16 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
                     onChange={handleNewDateChange}
                     locale={tr}
                     dateFormat="yyyy/MM/dd"
-                    disabled={isLoading}
+                    disabled={isLoading || isLoadingReduxForm}
                   />
                 </div>
               </Col>
               <Col lg="3">
-                <Button type="submit" className="btn btn-primary">
+                <Button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isLoading || isLoadingReduxForm}
+                >
                   {t("Add")}
                 </Button>
               </Col>

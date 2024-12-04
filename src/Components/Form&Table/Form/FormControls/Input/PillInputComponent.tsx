@@ -10,6 +10,7 @@ interface PillInputComponentProps {
   existingPills: PillInputType[];
   onChange: Function;
   onRemove: Function;
+  isLoading?: boolean | undefined;
 }
 
 const PillInputComponent: React.FC<PillInputComponentProps> = ({
@@ -17,6 +18,7 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
   existingPills,
   onChange,
   onRemove,
+  isLoading,
 }) => {
   const [inputValue, setInputValue] = useState<PillInputType>({
     id: 0,
@@ -71,6 +73,7 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
         onChange={(e) => setInputValue({ id: 0, name: e.target.value })}
         onKeyPress={handleKeyPress}
         placeholder={t("Type and press enter")}
+        disabled={isLoading}
         style={{
           padding: "10px",
           fontSize: "16px",
@@ -80,7 +83,12 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
           width: "100%",
         }}
       />
-      <Button type="button" className="btn btn-primary" onClick={handleAddPill}>
+      <Button
+        disabled={isLoading}
+        type="button"
+        className="btn btn-primary"
+        onClick={handleAddPill}
+      >
         Add
       </Button>
       <div
@@ -108,6 +116,7 @@ const PillInputComponent: React.FC<PillInputComponentProps> = ({
             {pill.name}
             <span
               onClick={() => handleRemovePill(pill)}
+              aria-disabled={isLoading}
               style={{
                 marginLeft: "10px",
                 cursor: "pointer",

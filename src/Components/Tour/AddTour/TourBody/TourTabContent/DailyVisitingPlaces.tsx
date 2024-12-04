@@ -4,6 +4,7 @@ import PillInputComponent, {
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "./TourSix";
+import { useAppSelector } from "@/Redux/Hooks";
 
 interface DailyVisitingPlacesProps {
   formId: number;
@@ -19,6 +20,8 @@ const DailyVisitingPlaces: React.FC<DailyVisitingPlacesProps> = ({
   const [dailyVisitingPlaces, setDailyVisitingPlaces] = useState<
     PillInputType[]
   >([]);
+
+  const { isLoading } = useAppSelector((state) => state.addProduct);
 
   const {
     getValues,
@@ -68,6 +71,7 @@ const DailyVisitingPlaces: React.FC<DailyVisitingPlacesProps> = ({
       existingPills={existingValues}
       onChange={handleChange}
       onRemove={handleRemove}
+      isLoading={isLoading}
     />
   );
 };

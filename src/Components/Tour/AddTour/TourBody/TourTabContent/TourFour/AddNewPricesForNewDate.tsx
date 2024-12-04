@@ -169,6 +169,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                 <span
                   className="task-action-btn"
                   onClick={() => handleRemoveTourDate(Number(accordionId))}
+                  aria-disabled={isLoading || isLoadingTour}
                 >
                   <span
                     className="action-box large delete-btn"

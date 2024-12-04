@@ -11,6 +11,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { FormData } from "./TourSix";
+import { useAppSelector } from "@/Redux/Hooks";
 
 interface TourDailyFormProps {
   formId: number;
@@ -24,6 +25,7 @@ export const TourDailyForm: React.FC<TourDailyFormProps> = ({
   onFieldChange,
 }) => {
   const { t } = useTranslation("common");
+  const { isLoading } = useAppSelector((state) => state.addProduct);
 
   const methods = useForm({
     resolver: zodResolver(DailyFormFormSchema),
@@ -77,6 +79,7 @@ export const TourDailyForm: React.FC<TourDailyFormProps> = ({
                       onFieldChange(formId, "breakfeast", e.target.value); // Redux state'ini günceller
                     }}
                     type={"text"}
+                    disabled={isLoading}
                     invalid={!!methods.formState.errors["breakfeast"]}
                   />
                 )}
@@ -103,6 +106,7 @@ export const TourDailyForm: React.FC<TourDailyFormProps> = ({
                       onFieldChange(formId, "lunch", e.target.value); // Redux state'ini günceller
                     }}
                     type={"text"}
+                    disabled={isLoading}
                     invalid={!!methods.formState.errors["lunch"]}
                   />
                 )}
@@ -129,6 +133,7 @@ export const TourDailyForm: React.FC<TourDailyFormProps> = ({
                       onFieldChange(formId, "dinner", e.target.value); // Redux state'ini günceller
                     }}
                     type={"text"}
+                    disabled={isLoading}
                     invalid={!!methods.formState.errors["dinner"]}
                   />
                 )}
