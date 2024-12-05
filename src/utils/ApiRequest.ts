@@ -28,7 +28,7 @@ export async function apiRequest<T>(
     };
     // Prepare body
     const requestBody = isFormData ? body : JSON.stringify(body);
-    const response = await fetch(`http://localhost:4000/v1/${url}`, {
+    const response = await fetch(`http://localhost:4000/v1/panel/${url}`, {
       method,
       headers,
       body: requestBody,
@@ -67,7 +67,7 @@ export async function apiRequestFile<T>(
     }
     bodyContent = formData;
     console.log({ body });
-    const response = await fetch(`http://localhost:4000/v1/${url}`, {
+    const response = await fetch(`http://localhost:4000/v1/panel/${url}`, {
       method,
       headers,
       body: bodyContent,
