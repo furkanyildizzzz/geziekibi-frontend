@@ -83,7 +83,8 @@ const AddProductSlice = createSlice({
             id: 0,
             isActive: true,
             description: "",
-            tourDate: new Date(),
+            startDate: new Date(),
+            endDate: new Date(),
             prices: [],
           },
         ],
@@ -110,7 +111,7 @@ const AddProductSlice = createSlice({
       console.log({ targetDate, priceList });
       // Find the target date
       const dateIndex = state.formValue.dates.findIndex((d: any) =>
-        isSameDay(d.tourDate, targetDate)
+        isSameDay(d.startDate, targetDate)
       );
 
       if (dateIndex !== -1) {

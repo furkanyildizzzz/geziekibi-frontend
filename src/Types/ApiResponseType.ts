@@ -162,7 +162,8 @@ export type TourPriceSuccessResponse = {
 };
 export type TourDateSuccessResponse = {
   id: number;
-  tourDate: Date;
+  startDate: Date;
+  endDate: Date;
   description: string;
   isActive: boolean;
   prices: TourPriceSuccessResponse[];

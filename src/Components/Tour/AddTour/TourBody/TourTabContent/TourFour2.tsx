@@ -90,20 +90,21 @@ const TourFour = () => {
     setDateList([...formValue?.dates]);
   }, [formValue]);
 
-  const handleAddNewDate = (newDate: Date) => {
+  const handleAddNewDate = (startDate: Date, endDate: Date) => {
     const newTourDate = {
       id: 0,
-      tourDate: startOfDay(newDate),
+      startDate: startOfDay(startDate),
+      endDate: startOfDay(endDate),
       prices: [],
       isActive: true,
       description: "",
     } as TourDateSuccessResponse;
 
     // Check if the date is already in the list
-    const isDuplicate = dateList.some((s) => isSameDay(s.tourDate, newDate));
+    const isDuplicate = dateList.some((s) => isSameDay(s.startDate, startDate));
 
     if (isDuplicate) {
-      ShowError(`${newDate.toLocaleDateString("tr")} is already added`);
+      ShowError(`${startDate.toLocaleDateString("tr")} is already added`);
       return;
     }
 
@@ -111,7 +112,7 @@ const TourFour = () => {
     setDateList((prev) =>
       [newTourDate, ...prev].sort(
         (a, b) =>
-          new Date(b.tourDate).getTime() - new Date(a.tourDate).getTime()
+          new Date(b.startDate).getTime() - new Date(a.startDate).getTime()
       )
     );
 
@@ -159,7 +160,7 @@ const TourFour = () => {
       {dateList.length > 0 &&
         dateList.map((d, index) => (
           <AddNewPricesForNewDate
-            key={d.tourDate.toString()}
+            key={d.startDate.toString()}
             tourDate={d}
             accordionId={index.toString()}
             handleRemoveTourDate={handleRemoveTourDate}

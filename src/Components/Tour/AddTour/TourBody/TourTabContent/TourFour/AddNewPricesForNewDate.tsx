@@ -120,12 +120,15 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
       ? [...priceList, newPrice]
       : [newPrice];
 
-    console.log({ targetDate: tourDate.tourDate, priceList: updatedPriceList });
+    console.log({
+      targetDate: tourDate.startDate,
+      priceList: updatedPriceList,
+    });
     setPriceList(updatedPriceList);
 
     dispatch(
       updateDatePriceList({
-        targetDate: tourDate.tourDate,
+        targetDate: tourDate.startDate,
         priceList: updatedPriceList,
       })
     );
@@ -140,7 +143,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
       setPriceList(updatedPriceList);
       dispatch(
         updateDatePriceList({
-          targetDate: tourDate.tourDate,
+          targetDate: tourDate.startDate,
           priceList: updatedPriceList,
         })
       );
@@ -163,9 +166,12 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                 className="bg-light-primary txt-primary"
               >
                 <span className="txt-primary">
-                  {new Date(tourDate.tourDate).toLocaleDateString("tr")}
+                  {new Date(tourDate.startDate).toLocaleDateString("tr")}
                 </span>
-
+                <span>-</span>
+                <span className="txt-primary">
+                  {new Date(tourDate.endDate).toLocaleDateString("tr")}
+                </span>
                 <span
                   className="task-action-btn"
                   onClick={() => handleRemoveTourDate(Number(accordionId))}

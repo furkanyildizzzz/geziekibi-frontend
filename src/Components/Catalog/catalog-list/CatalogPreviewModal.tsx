@@ -10,20 +10,6 @@ import { Catalog } from "@/Types/ApiResponseType";
 import { getCatalogById } from "@/app/actions/catalog/getCatalaogById";
 import ShowError from "@/Components/Toast/Error/ShowError";
 
-interface PagesProps {
-  children: ReactNode;
-}
-
-const Pages = forwardRef<HTMLDivElement, PagesProps>(
-  ({ children }, ref: ForwardedRef<HTMLDivElement>) => {
-    return (
-      <div className="bg-white" ref={ref}>
-        {children}
-      </div>
-    );
-  }
-);
-
 export interface CatalogModalInterfaceType {
   value: boolean;
   setOpenModal: (value: boolean) => void;
@@ -153,4 +139,5 @@ const CatalogPreviewModal: React.FC<CatalogModalInterfaceType> = ({
     </Modal>
   );
 };
+
 export default CatalogPreviewModal;

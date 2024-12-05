@@ -9,12 +9,13 @@ import { useState } from "react";
 import { useAppSelector } from "@/Redux/Hooks";
 
 interface AddNewDateProps {
-  handleAddNewDate: (date: Date) => void;
+  handleAddNewDate: (startDate: Date, endDate: Date) => void;
 }
 
 export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
   const { t } = useTranslation("common");
-  const [newDate, setNewDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const { isLoading: isLoadingReduxForm } = useAppSelector(
     (state) => state.addProduct
@@ -27,18 +28,24 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
   } = useForm({
     resolver: zodResolver(AddNewDateInputSchema),
     defaultValues: {
-      newDate: new Date(),
+      startDate: new Date(),
+      endDate: new Date(),
     },
   });
 
-  const handleNewDateChange = (date: Date) => {
-    setNewDate(date);
-    setValue("newDate", date);
+  const handleStartDateChange = (date: Date) => {
+    setStartDate(date);
+    setValue("startDate", date);
+  };
+
+  const handleEndDateChange = (date: Date) => {
+    setEndDate(date);
+    setValue("endDate", date);
   };
 
   const onSubmit = (data: AddNewDateSchema) => {
     console.log({ data });
-    handleAddNewDate(data.newDate);
+    handleAddNewDate(data.startDate, data.endDate);
   };
   return (
     <Col lg="12">
@@ -53,13 +60,28 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
             <Row style={{ justifyContent: "center", alignItems: "center" }}>
               <Col lg="3">
                 <Label for="validationServer01" check>
-                  {t("Add New Date")} <span className="txt-danger"> *</span>
+                  {t("Start Date")} <span className="txt-danger"> *</span>
                 </Label>
                 <div className="input-group flatpicker-calender product-date">
                   <ReactDatePicker
                     className="form-control flatpickr-input"
-                    selected={newDate}
-                    onChange={handleNewDateChange}
+                    selected={startDate}
+                    onChange={handleStartDateChange}
+                    locale={tr}
+                    dateFormat="yyyy/MM/dd"
+                    disabled={isLoading || isLoadingReduxForm}
+                  />
+                </div>
+              </Col>
+              <Col lg="3">
+                <Label for="validationServer01" check>
+                  {t("End Date")} <span className="txt-danger"> *</span>
+                </Label>
+                <div className="input-group flatpicker-calender product-date">
+                  <ReactDatePicker
+                    className="form-control flatpickr-input"
+                    selected={endDate}
+                    onChange={handleEndDateChange}
                     locale={tr}
                     dateFormat="yyyy/MM/dd"
                     disabled={isLoading || isLoadingReduxForm}

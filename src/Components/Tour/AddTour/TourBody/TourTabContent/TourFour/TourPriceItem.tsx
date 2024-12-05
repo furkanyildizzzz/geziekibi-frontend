@@ -15,21 +15,28 @@ const TourPriceItem = ({
   return (
     tourDateList.length &&
     tourDateList.map((tourDate) => (
-      <AccordionItem className={"bg-light-primary"}>
+      <AccordionItem
+        key={tourDate.startDate.toString()}
+        className={"bg-light-primary"}
+      >
         <AccordionHeader
           targetId={tourDate.id.toString()}
           className={"bg-light-primary"}
         >
           <span className={"txt-primary"}>
-            {tourDate.tourDate.toDateString()}
+            {tourDate.startDate.toDateString()}
+          </span>
+          <span>-</span>
+          <span className={"txt-primary"}>
+            {tourDate.endDate.toDateString()}
           </span>
           {<ChevronDown className={`svg-color "txt-primary"`} />}
         </AccordionHeader>
         <AccordionBody accordionId={tourDate.id.toString()}>
           <div className="todo-list-body custom-scrollbar">
             <ul id="todo-list">
-              {tourDate.priceList?.length > 0
-                ? tourDate.priceList?.map((price, index) => (
+              {tourDate.prices?.length > 0
+                ? tourDate.prices?.map((price, index) => (
                     <li className={`task`} key={price.rowId}>
                       <div className="task-container row">
                         <div className="col-sm-3" style={{ flexGrow: "1" }}>
