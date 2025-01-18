@@ -443,3 +443,16 @@ export const AddNewDateInputSchema = z.object({
   ),
 });
 export type AddNewDateSchema = z.infer<typeof AddNewDateInputSchema>;
+
+export const CreateFAQFormSchema = z.object({
+  Question: z
+    .string({ message: "Please enter valid question" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+  Answer: z.string().optional(),
+  Order: z
+    .number()
+    .int()
+    .transform((value) => Number(value)),
+});
+export type CreateFAQSchema = z.infer<typeof CreateFAQFormSchema>;

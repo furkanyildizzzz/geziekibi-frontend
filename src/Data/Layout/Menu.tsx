@@ -167,7 +167,19 @@ export const MenuList: MenuItem[] | undefined = [
       },
     ],
   },
-
+  {
+    title: "Frequently Asked Questions",
+    Items: [
+      {
+        id: 33,
+        path: "/faqs",
+        icon: "support-tickets",
+        type: "link",
+        active: false,
+        title: "Frequently Asked Questions",
+      },
+    ],
+  },
   {
     title: "Contact Forms",
     Items: [

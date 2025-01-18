@@ -227,3 +227,10 @@ export type ContactFormSuccessResponse = {
   isResponded: boolean;
   response?: string;
 };
+
+export type FAQSuccessResponse = {
+  id: number;
+  Question: string;
+  Answer: string;
+  Order: number;
+};
