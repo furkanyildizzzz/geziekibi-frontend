@@ -27,6 +27,7 @@ const initialState: AddProductSliceType = {
     tags: [],
     tourServices: [],
     dailyForms: [{}],
+    importantNotes: "",
   },
 };
 
@@ -88,6 +89,7 @@ const AddProductSlice = createSlice({
             prices: [],
           },
         ],
+        importantNotes: "",
       };
     },
     updateDailyForm: (state, action) => {

@@ -281,6 +281,7 @@ export const TourValidationFormSchema = z.object({
   ),
   dailyForms: z.array(DailyFormFormSchema), // Allow an array of any file objects for primary images
   dates: z.array(TourDateFormSchema), // Allow an array of any file objects for primary images
+  importantNotes: z.string().optional(), // 'text' type is generally optional in validation
 });
 export type TourValidationSchema = z.infer<typeof TourValidationFormSchema>;
 

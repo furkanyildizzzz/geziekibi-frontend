@@ -139,6 +139,7 @@ export type TourSuccessResponse = {
   tags: TagSuccessResponse[];
   tourServices: TourService[];
   dailyForms: TourDailyForm[];
+  importantNotes: string;
 };
 
 export type TourListSuccessResponse = {

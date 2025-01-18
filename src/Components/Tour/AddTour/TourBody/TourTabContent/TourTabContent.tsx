@@ -7,6 +7,7 @@ import TourFive from "./TourFive";
 import CommonButton from "../CommonButton/CommonButton";
 import { useAppSelector } from "@/Redux/Hooks";
 import TourSix from "./TourSix";
+import TourSeven from "./TourSeven";
 
 const TourTabContent = () => {
   const { navId } = useAppSelector((state) => state.addProduct);
@@ -34,6 +35,9 @@ const TourTabContent = () => {
           </TabPane> */}
           <TabPane tabId={6}>
             <TourFive />
+          </TabPane>
+          <TabPane tabId={7}>
+            <TourSeven />
           </TabPane>
         </TabContent>
       </Col>

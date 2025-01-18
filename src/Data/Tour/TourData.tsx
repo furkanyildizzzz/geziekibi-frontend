@@ -35,4 +35,10 @@ export const AddTourNav = [
     title: "ServicesTitle",
     detail: "ServicesDetail",
   },
+  {
+    id: 7,
+    icon: "danger",
+    title: "ImportantNotes",
+    detail: "ImportantNotes",
+  },
 ];
