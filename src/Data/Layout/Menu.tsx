@@ -169,16 +169,15 @@ export const MenuList: MenuItem[] | undefined = [
   },
 
   {
-    title: "Support Ticket",
+    title: "Contact Forms",
     Items: [
       {
         id: 33,
-        path: "https://support.pixelstrap.com/",
-        target: "_blank",
+        path: "/contact-forms",
         icon: "support-tickets",
         type: "link",
         active: false,
-        title: "Support Ticket",
+        title: "Contact Forms",
       },
     ],
   },

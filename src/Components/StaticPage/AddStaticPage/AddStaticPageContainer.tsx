@@ -13,6 +13,7 @@ import {
   StaticPageValidationSchema,
 } from "@/app/lib/definitions";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PageTypeEnum, PageTypeEnumDisplayNames } from "@/app/lib/enums";
 
 interface AddStaticPageContainerProps {
   staticPageId: number;
@@ -28,18 +29,21 @@ const AddStaticPageContainer: React.FC<AddStaticPageContainerProps> = ({
     defaultValues: {
       title: staticPageData.id ? staticPageData.title : "",
       body: staticPageData.id ? staticPageData.body : "",
-      pageType: staticPageData.id ? staticPageData.pageType : undefined,
+      pageType: staticPageData.pageType,
     },
   });
+  useEffect(() => {
+    document.title = `${t(
+      PageTypeEnumDisplayNames[staticPageData.pageType]
+    )} | GeziEkibi`;
+  }, []);
 
   return (
     <>
       <Breadcrumbs
-        pageTitle={
-          staticPageData.id ? staticPageData.title : t("Add Static Page")
-        }
+        pageTitle={t(PageTypeEnumDisplayNames[staticPageData.pageType])}
         parent={t("Static Page")}
-        title={staticPageData.id ? staticPageData.title : t("Add Static Page")}
+        title={t(PageTypeEnumDisplayNames[staticPageData.pageType])}
       />
       <Container fluid>
         <Row>

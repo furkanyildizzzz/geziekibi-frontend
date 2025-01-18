@@ -351,7 +351,7 @@ export const CreateBlogCategoryFormSchema = z.object({
     .string({ message: "Please enter valid category name" })
     .min(3, { message: "Be at least 3 charactes long" })
     .trim(),
-  description: z.string().trim().optional(),
+  description: z.string().trim().nullable().optional(),
   parentId: z.number().optional(),
   primaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
   uploadedPrimaryImages: z.array(z.any()).optional(), // Allow an array of any file objects for primary images

@@ -15,6 +15,8 @@ const AddTour = async ({ params: { id } }: { params: { id: string } }) => {
   if ("data" in response) {
     tourData = response.data;
     metadata.title = response.data.title;
+  } else if (response.errorType === "NOT FOUND") {
+    throw new Error(response.errorMessage);
   }
   return <AddTourContainer id={Number(id)} tourData={tourData} />;
 };

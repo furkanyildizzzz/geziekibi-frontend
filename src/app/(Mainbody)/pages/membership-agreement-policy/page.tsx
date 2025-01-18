@@ -14,7 +14,11 @@ const AddStaticPage = async () => {
     PageTypeEnum.PageMembershipAgreementPolicy
   );
   const data =
-    "data" in response ? response.data : ({} as StaticPageSuccessResponse);
+    "data" in response
+      ? response.data
+      : ({
+          pageType: PageTypeEnum.PageMembershipAgreementPolicy,
+        } as StaticPageSuccessResponse);
 
   console.log({ data });
   return (

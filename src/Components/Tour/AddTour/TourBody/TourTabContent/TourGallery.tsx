@@ -9,6 +9,7 @@ import SVG from "@/Components/SVG/Svg";
 import AlreadyUploadedDropzone from "@/Components/Dropzone/AlreadyUploadedDropzone";
 import { CloudinaryImage } from "@/Types/ApiResponseType";
 import { useTranslation } from "react-i18next";
+import ShowError from "@/Components/Toast/Error/ShowError";
 
 const TourGalleryImages = () => {
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
@@ -18,6 +19,10 @@ const TourGalleryImages = () => {
   const { t } = useTranslation("common");
 
   const updateFiles = (files: ExtFile[]) => {
+    if (files.length > 5) {
+      ShowError("Maximum 5 adet yükleyebilirsiniz");
+      return;
+    }
     setFiles(files);
     dispatch(setFormValue({ name: "galleryImages", value: files }));
   };

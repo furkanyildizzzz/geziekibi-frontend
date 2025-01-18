@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const AddStaticPage = async () => {
   const response = await getStaticPageByType(PageTypeEnum.PageAboutUs);
   const data =
-    "data" in response ? response.data : ({} as StaticPageSuccessResponse);
-
-  console.log({ data });
+    "data" in response
+      ? response.data
+      : ({ pageType: PageTypeEnum.PageAboutUs } as StaticPageSuccessResponse);
   return (
     <AddStaticPageContainer
       staticPageId={Number(data.id)}

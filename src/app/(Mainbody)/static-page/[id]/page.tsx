@@ -16,8 +16,7 @@ const AddStaticPage = async ({
   const response = await getStaticPageById(Number(id));
   const data =
     "data" in response ? response.data : ({} as StaticPageSuccessResponse);
-
-  console.log({ data });
+  console.log({ data, id });
   return (
     <AddStaticPageContainer staticPageId={Number(id)} staticPageData={data} />
   );

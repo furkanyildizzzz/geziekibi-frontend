@@ -1,15 +1,7 @@
 import { Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import FormEditors from "./FormEditors";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import {
-  ChooseTheTourType,
-  FinishDate,
-  ProductTitle,
-  StartDate,
-  TourSpot,
-  TourTitle,
-  TourType,
-} from "@/Constant/constant";
+import { ChooseTheTourType } from "@/Constant/constant";
 import { setFormValue } from "@/Redux/Reducers/AddProductSlice";
 import DropDownComponent from "@/Components/General/Dropdown/DropDownComponent";
 import { TourTypeDisplayNames, TourTypeEnum } from "@/app/lib/enums";

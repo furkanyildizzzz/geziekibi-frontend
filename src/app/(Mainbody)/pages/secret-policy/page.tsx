@@ -12,7 +12,11 @@ export const metadata: Metadata = {
 const AddStaticPage = async () => {
   const response = await getStaticPageByType(PageTypeEnum.PageSecretPolicy);
   const data =
-    "data" in response ? response.data : ({} as StaticPageSuccessResponse);
+    "data" in response
+      ? response.data
+      : ({
+          pageType: PageTypeEnum.PageSecretPolicy,
+        } as StaticPageSuccessResponse);
 
   console.log({ data });
   return (

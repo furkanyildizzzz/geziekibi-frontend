@@ -75,7 +75,7 @@ export const FormPost: React.FC<FormPostProps> = ({
       <Row>
         <Col sm="6">
           <FormGroup>
-            <SelectPageType
+            {/* <SelectPageType
               onChange={(id) => {
                 console.log({
                   id,
@@ -84,7 +84,7 @@ export const FormPost: React.FC<FormPostProps> = ({
                 setValue("pageType", id as PageTypeEnum);
               }}
               pageType={getValues("pageType")}
-            />
+            /> */}
             <DisplayError
               errorsValidation={errorsValidation}
               errorMessage={errors["pageType"]?.message}

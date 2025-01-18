@@ -57,6 +57,7 @@ interface FormPostProps {
 
 export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
   const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isDeleting, setIsDeleting] = useState(false); // Add loading state
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
@@ -84,7 +85,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
       } else {
         ShowSuccess(response.message);
         blogId = response.data.id;
-        router.replace(`/blog/${blogId}`);
+        handleReload(`/blog/${blogId}`);
       }
     } finally {
       setIsLoading(false);
@@ -97,16 +98,21 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
       window.confirm(`Are you sure you want to delete:\r ${blogData!.title} ?`)
     ) {
       try {
-        setIsLoading(true);
+        setIsDeleting(true);
 
         await deleteBlog(blogData!.id);
       } catch (error) {
         ShowError("Failed to delete tour. Please try again.");
       } finally {
-        setIsLoading(false);
+        setIsDeleting(false);
         router.replace("/blogs");
       }
     }
+  };
+
+  const handleReload = (path: string) => {
+    // window.location.reload(); // Reloads the current page
+    router.push(path);
   };
 
   return (
@@ -309,14 +315,23 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
       </Row>
       <Row style={{ display: "flex", justifyContent: "flex-end", gap: "2%" }}>
         <div className="col-1 btn-showcase text-end mt-4">
-          <Button type="submit" color="primary">
+          <Button
+            type="submit"
+            color="primary"
+            disabled={isLoading || isDeleting}
+          >
             {isLoading ? <LoadingButton /> : t("Submit")}
           </Button>
         </div>
         {blogData && blogData.id > 0 && (
           <div className="col-1 btn-showcase text-end mt-4">
-            <Button type="button" color="danger" onClick={handleDelete}>
-              {isLoading ? <LoadingButton /> : t("Delete")}
+            <Button
+              type="button"
+              color="danger"
+              onClick={handleDelete}
+              disabled={isLoading || isDeleting}
+            >
+              {isDeleting ? <LoadingButton /> : t("Delete")}
             </Button>
           </div>
         )}

@@ -14,9 +14,11 @@ const AddStaticPage = async () => {
     PageTypeEnum.PageInformationSecurityPolicy
   );
   const data =
-    "data" in response ? response.data : ({} as StaticPageSuccessResponse);
-
-  console.log({ data });
+    "data" in response
+      ? response.data
+      : ({
+          pageType: PageTypeEnum.PageInformationSecurityPolicy,
+        } as StaticPageSuccessResponse);
   return (
     <AddStaticPageContainer
       staticPageId={Number(data.id)}

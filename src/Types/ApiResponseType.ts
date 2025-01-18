@@ -213,3 +213,16 @@ export type StaticPageListSuccessResponse = {
   title: string;
   pageType: PageTypeEnum;
 };
+
+export type ContactFormSuccessResponse = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  message: string;
+
+  agreeToTerms: boolean;
+  isResponded: boolean;
+  response?: string;
+};

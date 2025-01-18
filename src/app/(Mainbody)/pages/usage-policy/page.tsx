@@ -1,5 +1,5 @@
 import { getStaticPageByType } from "@/app/actions/staticPage/getStaticPageByType";
-import { PageTypeEnum } from "@/app/lib/enums";
+import { PageTypeEnum, PageTypeEnumDisplayNames } from "@/app/lib/enums";
 import AddStaticPageContainer from "@/Components/StaticPage/AddStaticPage/AddStaticPageContainer";
 import { StaticPageSuccessResponse } from "@/Types/ApiResponseType";
 import { Metadata } from "next";
@@ -12,9 +12,11 @@ export const metadata: Metadata = {
 const AddStaticPage = async () => {
   const response = await getStaticPageByType(PageTypeEnum.PageUsagePolicy);
   const data =
-    "data" in response ? response.data : ({} as StaticPageSuccessResponse);
-
-  console.log({ data });
+    "data" in response
+      ? response.data
+      : ({
+          pageType: PageTypeEnum.PageUsagePolicy,
+        } as StaticPageSuccessResponse);
   return (
     <AddStaticPageContainer
       staticPageId={Number(data.id)}
