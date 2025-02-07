@@ -234,3 +234,9 @@ export type FAQSuccessResponse = {
   Answer: string;
   Order: number;
 };
+export type HomepageSliderSuccessResponse = {
+  id: number;
+  isActive: boolean;
+  order: number;
+  image: CloudinaryImage;
+};

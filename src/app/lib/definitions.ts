@@ -456,3 +456,15 @@ export const CreateFAQFormSchema = z.object({
     .transform((value) => Number(value)),
 });
 export type CreateFAQSchema = z.infer<typeof CreateFAQFormSchema>;
+
+export const EditHomepageSliderFormSchema = z.object({
+  order: z
+    .number()
+    .int()
+    .transform((value) => Number(value)),
+  isActive: z.boolean(),
+  homepageSlider: z.array(z.any()).optional(), // Allow an array of any file objects for primary images
+});
+export type EditHomepageSliderSchema = z.infer<
+  typeof EditHomepageSliderFormSchema
+>;

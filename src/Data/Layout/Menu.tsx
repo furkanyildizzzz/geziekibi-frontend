@@ -11,7 +11,7 @@ export const MenuList: MenuItem[] | undefined = [
         icon: "home",
         type: "sub",
         lanClass: "lan-3",
-        path: "/dashboard",
+        path: "/homepageSlider",
       },
       {
         title: "Tags",
@@ -102,73 +102,57 @@ export const MenuList: MenuItem[] | undefined = [
     lanClass: "lan-1",
     Items: [
       {
-        icon: "sample-page",
-        id: 24,
+        title: "Sayfalar",
+        icon: "support-tickets",
+        type: "sub",
         active: false,
-        path: "/pages/about-us",
-        title: "About Us",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 25,
-        active: false,
-        path: "/pages/secret-policy",
-        title: "Secret Policy",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 26,
-        active: false,
-        path: "/pages/usage-policy",
-        title: "Usage Policy",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 25,
-        active: false,
-        path: "/pages/information-security-policy",
-        title: "Information Security Policy",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 25,
-        active: false,
-        path: "/pages/kvkk-policy",
-        title: "KVKK Policy",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 25,
-        active: false,
-        path: "/pages/cookie-policy",
-        title: "Cookie Policy",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 25,
-        active: false,
-        path: "/pages/membership-agreement-policy",
-        title: "Membership Agreement Policy",
-        type: "link",
-      },
-      {
-        icon: "sample-page",
-        id: 25,
-        active: false,
-        path: "/pages/human-resources",
-        title: "Human Resources",
-        type: "link",
+        children: [
+          {
+            path: "/pages/about-us",
+            title: "About Us",
+            type: "link",
+          },
+          {
+            path: "/pages/secret-policy",
+            title: "Secret Policy",
+            type: "link",
+          },
+          {
+            path: "/pages/usage-policy",
+            title: "Usage Policy",
+            type: "link",
+          },
+          {
+            path: "/pages/information-security-policy",
+            title: "Information Security Policy",
+            type: "link",
+          },
+          {
+            path: "/pages/kvkk-policy",
+            title: "KVKK Policy",
+            type: "link",
+          },
+          {
+            path: "/pages/cookie-policy",
+            title: "Cookie Policy",
+            type: "link",
+          },
+          {
+            path: "/pages/membership-agreement-policy",
+            title: "Membership Agreement Policy",
+            type: "link",
+          },
+          {
+            path: "/pages/human-resources",
+            title: "Human Resources",
+            type: "link",
+          },
+        ],
       },
     ],
   },
   {
-    title: "Frequently Asked Questions",
+    title: "İletişim",
     Items: [
       {
         id: 33,
@@ -178,11 +162,7 @@ export const MenuList: MenuItem[] | undefined = [
         active: false,
         title: "Frequently Asked Questions",
       },
-    ],
-  },
-  {
-    title: "Contact Forms",
-    Items: [
+
       {
         id: 33,
         path: "/contact-forms",

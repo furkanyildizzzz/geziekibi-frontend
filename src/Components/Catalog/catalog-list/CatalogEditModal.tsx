@@ -35,7 +35,7 @@ import DisplayError from "@/utils/DisplayError";
 import PublishDate from "@/Components/Common/PublishDate";
 import { PublishStatusEnum } from "@/app/lib/enums";
 import SelectPublishStatus from "@/Components/Common/SelectPublishStatus";
-import { deleteCatalog } from "@/app/actions/catalog/deleteTour";
+import { deleteCatalog } from "@/app/actions/catalog/deleteCatalog";
 
 export interface CatalogModalInterfaceType {
   value: boolean;

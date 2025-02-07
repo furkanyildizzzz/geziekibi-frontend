@@ -1,3 +1,45 @@
 .rbt-input-wrapper input {
   color: black;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Responsive columns */
+  gap: 16px; /* Space between items */
+}
+
+.folder-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  height: 100%; /* Ensures all items stretch */
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensures all cards have the same height */
+}
+
+.product-box-2 {
+  flex-grow: 1; /* Allows content to take available space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Push content to bottom */
+}
+
+.order-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between order text and checkbox */
+  margin-top: 10px;
+}
+
+.order-checkbox {
+  width: 18px;
+  height: 18px;
+}
