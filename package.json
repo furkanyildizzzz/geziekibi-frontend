@@ -66,7 +66,6 @@
     "react": "^18.2.0",
     "react-accessible-treeview": "^2.9.0",
     "react-ace": "^11.0.1",
-    "react-apexcharts": "^1.4.1",
     "react-beautiful-dnd": "^13.1.1",
     "react-bootstrap-typeahead": "^6.3.2",
     "react-calendar": "^4.8.0",
