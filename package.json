@@ -43,6 +43,7 @@
     "bootstrap": "^5.3.2",
     "cleave.js": "^1.6.0",
     "convert-size": "^1.2.1",
+    "dotenv": "^16.4.7",
     "easymde": "^2.18.0",
     "emoji-mart": "^5.5.2",
     "eslint": "8.56.0",

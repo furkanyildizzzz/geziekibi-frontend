@@ -1,11 +1,11 @@
+import "dotenv";
+
 import {
   ApiErrorResponse,
   ApiResponse,
   ApiSuccessResponse,
 } from "@/Types/ApiResponseType";
 import Cookies from "js-cookie";
-import { isTokenExpired } from "./IsTokenExpired";
-import { useRouter } from "next/router";
 
 const IsErrorResponse = (obj: Response): obj is ApiErrorResponse => {
   return "errorType" in obj;
@@ -28,12 +28,16 @@ export async function apiRequest<T>(
     };
     // Prepare body
     const requestBody = isFormData ? body : JSON.stringify(body);
-    const response = await fetch(`http://localhost:4000/v1/panel/${url}`, {
-      method,
-      headers,
-      body: requestBody,
-      cache: "no-store",
-    });
+    console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`,
+      {
+        method,
+        headers,
+        body: requestBody,
+        cache: "no-store",
+      }
+    );
 
     const result = await processApiResponse<T>(response);
 
@@ -67,11 +71,15 @@ export async function apiRequestFile<T>(
     }
     bodyContent = formData;
     console.log({ body });
-    const response = await fetch(`http://localhost:4000/v1/panel/${url}`, {
-      method,
-      headers,
-      body: bodyContent,
-    });
+    console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`,
+      {
+        method,
+        headers,
+        body: bodyContent,
+      }
+    );
 
     const result = await processApiResponse<T>(response);
 
@@ -79,17 +87,6 @@ export async function apiRequestFile<T>(
   } catch (error) {
     console.error("API Request Failed:", error);
     throw error;
-  }
-}
-
-async function processApiResponseEski<T>(
-  response: Response
-): Promise<ApiResponse<T>> {
-  const result = await response.json();
-  if (response.ok) {
-    return result as ApiSuccessResponse<T>;
-  } else {
-    return result as ApiErrorResponse;
   }
 }
 
