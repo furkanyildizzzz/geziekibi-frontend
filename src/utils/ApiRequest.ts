@@ -36,6 +36,8 @@ export async function apiRequest<T>(
         headers,
         body: requestBody,
         cache: "no-store",
+        credentials: "include",
+        redirect: "manual", // Redirect'leri engelle
       }
     );
 
@@ -78,6 +80,8 @@ export async function apiRequestFile<T>(
         method,
         headers,
         body: bodyContent,
+        credentials: "include",
+        redirect: "manual", // Redirect'leri engelle
       }
     );
 
