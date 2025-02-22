@@ -3,14 +3,19 @@ import {
   ApiResponse,
   StaticPageSuccessResponse,
 } from "@/Types/ApiResponseType";
-import { apiRequest } from "@/utils/ApiRequest";
+import { apiRequestWithToken } from "@/utils/ApiRequest";
+import { cookies } from "next/headers";
 
 export const getStaticPageByType = async (
   pageType: PageTypeEnum
 ): Promise<ApiResponse<StaticPageSuccessResponse>> => {
-  const response = await apiRequest<StaticPageSuccessResponse>(
+  const cookieStore = cookies();
+  const token = cookieStore.get("token")?.value;
+
+  const response = await apiRequestWithToken<StaticPageSuccessResponse>(
     "staticPage/pageType?type=" + pageType.toString(),
-    "GET"
+    "GET",
+    token!
   );
   return response;
 };

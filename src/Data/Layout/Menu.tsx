@@ -147,6 +147,11 @@ export const MenuList: MenuItem[] | undefined = [
             title: "Human Resources",
             type: "link",
           },
+          {
+            path: "/pages/tour-packet-agreement",
+            title: "Tour Packet Agreement",
+            type: "link",
+          },
         ],
       },
     ],
