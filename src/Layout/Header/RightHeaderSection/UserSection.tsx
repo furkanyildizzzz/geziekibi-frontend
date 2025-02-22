@@ -1,21 +1,41 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Href, ImagePath } from "@/Constant/constant";
 import { UserListData } from "@/Data/Layout/LayoutData";
 import Link from "next/link";
-import { LogOut } from "react-feather";
+import { LogOut, User } from "react-feather";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { UserSuccessResponse } from "@/Types/ApiResponseType";
+import { getUserProfile } from "@/app/actions/user/getUserProfile";
+import ShowError from "@/Components/Toast/Error/ShowError";
+import { useTranslation } from "react-i18next";
 
 export const UserSection = () => {
   const router = useRouter();
+  const [userData, setUserData] = useState<UserSuccessResponse>();
+  const { t } = useTranslation("common");
 
   const handleLogout = () => {
     Cookies.remove("token");
     localStorage.clear();
     router.push(`/auth/login`);
   };
+
+  const fetchUserData = async () => {
+    const response = await getUserProfile();
+    if ("data" in response) {
+      setUserData({ ...response.data });
+    } else {
+      ShowError(response.errorMessage);
+      router.push("/auth/login");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [""]);
   return (
     <li className="profile-nav onhover-dropdown p-0">
       <div className="d-flex align-items-center profile-media">
@@ -24,13 +44,15 @@ export const UserSection = () => {
           width={40}
           height={40}
           className="b-r-10 img-40 img-fluid"
-          src={`${ImagePath}/dashboard/profile.png`}
-          alt="user"
+          src={
+            userData?.profileImage?.url || `${ImagePath}/dashboard/profile.png`
+          }
+          alt={userData?.fullName || ""}
         />
         <div className="flex-grow-1">
-          <span>Helen Walter</span>
+          <span>{userData?.fullName}</span>
           <p className="mb-0">
-            Admin <i className="middle fa fa-angle-down" />
+            {t(userData?.role || "")} <i className="middle fa fa-angle-down" />
           </p>
         </div>
       </div>
@@ -38,7 +60,7 @@ export const UserSection = () => {
         {UserListData.map((item, index) => (
           <li key={index}>
             <Link href={item.path}>
-              {item.icon}
+              <User />
               <span>{item.title}</span>
             </Link>
           </li>

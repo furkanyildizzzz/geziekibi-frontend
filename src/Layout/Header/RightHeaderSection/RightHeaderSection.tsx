@@ -14,16 +14,21 @@ import Language from "./Language";
 
 export const RightHeaderSection = () => {
   return (
-    <Col xxl="7" xl="6" xs="auto" className="nav-right box-col-6 pull-right right-header p-0 ms-auto">
+    <Col
+      xxl="7"
+      xl="6"
+      xs="auto"
+      className="nav-right box-col-6 pull-right right-header p-0 ms-auto"
+    >
       <ul className="nav-menus">
-        <ResponsiveHeaderSearch />
-        <HeaderSearch />
+        {/* <ResponsiveHeaderSearch /> */}
+        {/* <HeaderSearch /> */}
         <Language />
         <MaximizeScreen />
-        <NotificationSection />
-        <HeaderBookmark />
-        <CartSection />
-        <MessageSection />
+        {/* <NotificationSection /> */}
+        {/* <HeaderBookmark /> */}
+        {/* <CartSection /> */}
+        {/* <MessageSection /> */}
         <DarkMode />
         <UserSection />
       </ul>
