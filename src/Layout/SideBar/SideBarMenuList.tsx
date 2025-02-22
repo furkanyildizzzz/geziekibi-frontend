@@ -8,6 +8,7 @@ import { Link } from "react-feather";
 import { Href, Logout } from "@/Constant/constant";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { logout } from "@/app/actions/auth/logout";
 
 const SidebarMenuList = () => {
   const [activeMenu, setActiveMenu] = useState([]);
@@ -20,9 +21,13 @@ const SidebarMenuList = () => {
   const { t } = useTranslation("common");
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await logout();
+    // Token'ı ve kullanıcı ile ilgili verileri cookie'den ve localStorage'dan temizle
     Cookies.remove("token");
-    localStorage.clear();
+    localStorage.removeItem("user"); // Eğer başka bir veriyi saklıyorsan (örneğin kullanıcı bilgileri)
+
+    // Router ile login sayfasına yönlendir
     router.push(`/auth/login`);
   };
 
