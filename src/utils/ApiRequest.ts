@@ -14,7 +14,7 @@ export async function apiRequest<T>(
   body?: any
 ): Promise<ApiResponse<T>> {
   try {
-    // const token = Cookies.get("token");
+    const token = Cookies.get("token");
     // const cookieStore = cookies();
     // const token = cookieStore.get("token")?.value;
 
@@ -22,6 +22,7 @@ export async function apiRequest<T>(
     const isFormData = body instanceof FormData;
     // Set headers, omitting "Content-Type" if body is FormData
     const headers: HeadersInit = {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(!isFormData ? { "Content-Type": "application/json" } : {}),
     };
     // Prepare body
