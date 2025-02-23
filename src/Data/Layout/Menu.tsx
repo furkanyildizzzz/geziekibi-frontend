@@ -149,7 +149,7 @@ export const MenuList: MenuItem[] | undefined = [
           },
           {
             path: "/pages/tour-packet-agreement",
-            title: "Tour Packet Agreement",
+            title: "Packet Tour Agreement",
             type: "link",
           },
         ],
