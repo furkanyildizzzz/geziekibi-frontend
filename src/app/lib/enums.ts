@@ -81,3 +81,22 @@ export const PageTypeEnumDisplayNames: {
   [PageTypeEnum.PageHumanResources]: "Human Resources",
   [PageTypeEnum.PageTourPacketAgreement]: "Packet Tour Agreement",
 };
+
+export enum EmailTemplateEnum {
+  USER_WELCOME = "USER_WELCOME",
+  ADMIN_NEW_USER = "ADMIN_NEW_USER",
+  USER_TOUR_REGISTRATION = "USER_TOUR_REGISTRATION",
+  ADMIN_TOUR_NOTIFICATION = "ADMIN_TOUR_NOTIFICATION",
+  USER_CONTACT_FORM = "USER_CONTACT_FORM",
+  ADMIN_CONTACT_NOTIFICATION = "ADMIN_CONTACT_NOTIFICATION",
+}
+export const EmailTemplateEnumDisplayNames: {
+  [key in EmailTemplateEnum]: string;
+} = {
+  [EmailTemplateEnum.USER_WELCOME]: "USER WELCOME",
+  [EmailTemplateEnum.ADMIN_NEW_USER]: "ADMIN_NEW_USER",
+  [EmailTemplateEnum.USER_TOUR_REGISTRATION]: "USER_TOUR_REGISTRATION",
+  [EmailTemplateEnum.ADMIN_TOUR_NOTIFICATION]: "ADMIN_TOUR_NOTIFICATION",
+  [EmailTemplateEnum.USER_CONTACT_FORM]: "USER_CONTACT_FORM",
+  [EmailTemplateEnum.ADMIN_CONTACT_NOTIFICATION]: "ADMIN_CONTACT_NOTIFICATION",
+};

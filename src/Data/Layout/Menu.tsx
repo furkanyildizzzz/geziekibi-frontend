@@ -94,6 +94,14 @@ export const MenuList: MenuItem[] | undefined = [
           // { path: "/users/user_cards", type: "link", title: "User Cards" },
         ],
       },
+      {
+        id: 33,
+        path: "/email/templates",
+        icon: "support-tickets",
+        type: "link",
+        active: false,
+        title: "Email Templates",
+      },
     ],
   },
 

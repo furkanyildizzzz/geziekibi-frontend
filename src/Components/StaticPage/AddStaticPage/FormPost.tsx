@@ -140,7 +140,7 @@ export const FormPost: React.FC<FormPostProps> = ({
                     });
                     setValue("body", text);
                   }}
-                  uploadFolderPath="/staticPage/uploadBodyImage"
+                  uploadFolderPath="staticPage/uploadBodyImage"
                 />
               </FormGroup>
             </div>

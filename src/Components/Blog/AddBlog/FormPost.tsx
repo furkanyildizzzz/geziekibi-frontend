@@ -306,7 +306,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
                     });
                     setValue("body", text);
                   }}
-                  uploadFolderPath="/blog/uploadBodyImage"
+                  uploadFolderPath="blog/uploadBodyImage"
                 />
               </FormGroup>
             </div>

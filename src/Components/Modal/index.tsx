@@ -1,23 +1,19 @@
 "use client";
 
-import {
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
 
 interface ModalComponentInterface {
   children: React.ReactNode;
   title: string;
+  size?: "sm" | "lg" | "xl"; // Opsiyonel boyut parametresi
 }
 
 const ModalComponent: React.FC<ModalComponentInterface> = ({
   children,
   title,
+  size,
 }) => {
   const [modal, setModal] = useState(true);
 
@@ -35,6 +31,7 @@ const ModalComponent: React.FC<ModalComponentInterface> = ({
       backdrop={true}
       keyboard={true}
       onClosed={onHide}
+      size={size} // Varsayılan olarak boyutsuz (mevcut boyutta) kalır
     >
       <ModalHeader toggle={toggle} onClick={onHide}>
         <h1 className="modal-title fs-5">{title}</h1>
