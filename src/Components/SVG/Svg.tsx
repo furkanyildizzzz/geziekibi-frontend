@@ -4,6 +4,7 @@ interface SvgType {
   iconId?: string;
   className?: string;
   onClick?: () => void;
+  title?: string;
   style?: {
     height: string;
     width: string;
@@ -13,10 +14,11 @@ interface SvgType {
 }
 
 const SVG = (props: SvgType) => {
-  const { iconId, style, ...res } = props;
+  const { title, iconId, style, ...res } = props;
   return (
-    <svg {...res} style={style}>
-      <use href={`/assets/svg/icon-sprite.svg#${iconId}`}></use>
+    <svg {...res} style={style} role="img" aria-labelledby={`${iconId}-title`}>
+      <title id={`${iconId}-title`}>{title}</title>
+      <use href={`/assets/svg/icon-sprite.svg#${iconId}`} />
     </svg>
   );
 };

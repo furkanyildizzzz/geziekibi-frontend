@@ -41,13 +41,20 @@ const ContactFormListTableAction = (props: {
   handleDelete: (name: string, id: number) => Promise<void>;
 }) => {
   const { name, id, isResponded, sendMessage, handleDelete } = props;
+  const { t } = useTranslation("common");
+
   return (
     <div className="product-action">
       <SVG
         iconId={isResponded ? "fill-message" : "message"}
+        title={isResponded ? t("Responded") : t("Give Response")}
         onClick={() => sendMessage(id)}
       />
-      <SVG onClick={async () => await handleDelete(name, id)} iconId="trash1" />
+      <SVG
+        onClick={async () => await handleDelete(name, id)}
+        iconId="trash1"
+        title={t("Delete")}
+      />
     </div>
   );
 };

@@ -486,3 +486,13 @@ export const EmailTemplateValidationFormSchema = z.object({
 export type EmailTemplateValidationSchema = z.infer<
   typeof EmailTemplateValidationFormSchema
 >;
+
+export const CreateContactFormResponseFormSchema = z.object({
+  response: z
+    .string({ message: "Please enter valid answer" })
+    .min(3, { message: "Be at least 3 charactes long" })
+    .trim(),
+});
+export type CreateContactFormResponseSchema = z.infer<
+  typeof CreateContactFormResponseFormSchema
+>;

@@ -223,7 +223,7 @@ export type ContactFormSuccessResponse = {
   email: string;
   phone?: string;
   message: string;
-
+  fullName: string;
   agreeToTerms: boolean;
   isResponded: boolean;
   response?: string;

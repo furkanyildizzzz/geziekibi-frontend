@@ -122,7 +122,7 @@ const ContactFormListContainer = () => {
   };
 
   const handleSendMessage = async (id: number) => {
-    router.push(`/contactForms/${id}`);
+    router.push(`/contact-forms/${id}`);
   };
 
   const handleSave = async (id: number, data: FormData) => {
@@ -138,9 +138,9 @@ const ContactFormListContainer = () => {
   return (
     <>
       <Breadcrumbs
-        pageTitle={t("ContactFormList")}
+        pageTitle={t("Contact Form List")}
         parent={t("General")}
-        title={t("ContactFormList")}
+        title={t("Contact Form List")}
       />
       <Container fluid>
         <Row>
