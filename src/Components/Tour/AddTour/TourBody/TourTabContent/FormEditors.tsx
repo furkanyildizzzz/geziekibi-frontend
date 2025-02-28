@@ -43,7 +43,7 @@ const FormEditors = () => {
         {/* <RichTextEditor onChange={handleChange} /> */}
         <RichTextEditor2
           initialValue={formValue.body}
-          uploadFolderPath="/tour/uploadBodyImage"
+          uploadFolderPath="tour/uploadBodyImage"
           onChange={handleChange}
         />
 

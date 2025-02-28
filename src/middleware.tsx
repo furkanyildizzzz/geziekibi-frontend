@@ -2,37 +2,38 @@
   import type { NextRequest } from "next/server";
   import { jwtDecode } from "jwt-decode";
 
-  export function middleware(request: NextRequest) {
-    const path = request.nextUrl.pathname;
-    const token = request.cookies.has("token")
-      ? request.cookies.get("token")!.value
-      : "";
+export function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname;
 
-    let decodedToken;
-    try {
-      decodedToken = jwtDecode(token);
-    } catch (error) {
-      // Invalid or missing token
-      decodedToken = null;
-    }
+  // Çerezleri kontrol et
+  const tokenCookie = request.cookies.get("token");
+  const token = tokenCookie?.value ?? "";
+  let decodedToken: { exp?: number } | null = null;
 
-    const currentDate = new Date();
-    const isExpired =
-      !decodedToken || decodedToken.exp! * 1000 < currentDate.getTime();
-
-    // Redirect to login if token is missing or expired and not already on an auth page
-    if (isExpired && !path.startsWith("/auth")) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-
-    // Redirect to the main page if already authenticated and on an auth page
-    if (!isExpired && path.startsWith("/auth")) {
-      return NextResponse.redirect(new URL("/tour/add_tour", request.url));
-    }
-
-    return NextResponse.next();
+  try {
+    decodedToken = token ? jwtDecode<{ exp: number }>(token) : null;
+  } catch (error) {
+    decodedToken = null; // Token geçersizse yakala
   }
 
-  export const config = {
-    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-  };
+  const currentDate = new Date().getTime();
+  const isExpired = !decodedToken?.exp || decodedToken.exp * 1000 < currentDate;
+
+  console.log({ path });
+  // Eğer token süresi dolmuşsa ve zaten "/auth" sayfasında değilse yönlendir
+  if (isExpired && !path.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
+
+  // Eğer giriş yapılmışsa ve "/auth" sayfasındaysa, yönlendir
+  if (!isExpired && path.startsWith("/auth")) {
+    return NextResponse.redirect(new URL("/tour/add_tour", request.url));
+  }
+
+  return NextResponse.next();
+}
+
+// API ve statik dosyalar hariç tüm sayfalarda çalıştır
+export const config = {
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+};

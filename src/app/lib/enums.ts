@@ -65,6 +65,7 @@ export enum PageTypeEnum {
   PageCookiePolicy = "page-cookie-policy",
   PageMembershipAgreementPolicy = "page-membership-agreement-policy",
   PageHumanResources = "page-human-resources",
+  PageTourPacketAgreement = "tour-packet-agreement",
 }
 
 export const PageTypeEnumDisplayNames: {
@@ -78,4 +79,26 @@ export const PageTypeEnumDisplayNames: {
   [PageTypeEnum.PageCookiePolicy]: "Cookie Policy",
   [PageTypeEnum.PageMembershipAgreementPolicy]: "Membership Agreement Policy",
   [PageTypeEnum.PageHumanResources]: "Human Resources",
+  [PageTypeEnum.PageTourPacketAgreement]: "Packet Tour Agreement",
+};
+
+export enum EmailTemplateEnum {
+  USER_WELCOME = "USER_WELCOME",
+  ADMIN_NEW_USER = "ADMIN_NEW_USER",
+  USER_TOUR_REGISTRATION = "USER_TOUR_REGISTRATION",
+  ADMIN_TOUR_NOTIFICATION = "ADMIN_TOUR_NOTIFICATION",
+  USER_CONTACT_FORM_RECEIVED = "USER_CONTACT_FORM_RECEIVED",
+  USER_CONTACT_FORM_ANSWERED = "USER_CONTACT_FORM_ANSWERED",
+  ADMIN_CONTACT_NOTIFICATION = "ADMIN_CONTACT_NOTIFICATION",
+}
+export const EmailTemplateEnumDisplayNames: {
+  [key in EmailTemplateEnum]: string;
+} = {
+  [EmailTemplateEnum.USER_WELCOME]: "USER WELCOME",
+  [EmailTemplateEnum.ADMIN_NEW_USER]: "ADMIN_NEW_USER",
+  [EmailTemplateEnum.USER_TOUR_REGISTRATION]: "USER_TOUR_REGISTRATION",
+  [EmailTemplateEnum.ADMIN_TOUR_NOTIFICATION]: "ADMIN_TOUR_NOTIFICATION",
+  [EmailTemplateEnum.USER_CONTACT_FORM_RECEIVED]: "USER_CONTACT_FORM_RECEIVED",
+  [EmailTemplateEnum.USER_CONTACT_FORM_ANSWERED]: "USER_CONTACT_FORM_ANSWERED",
+  [EmailTemplateEnum.ADMIN_CONTACT_NOTIFICATION]: "ADMIN_CONTACT_NOTIFICATION",
 };

@@ -68,7 +68,7 @@ const TourSeven = () => {
         {/* <RichTextEditor onChange={handleChange} /> */}
         <RichTextEditor2
           initialValue={formValue.importantNotes || importantNotes}
-          uploadFolderPath="/tour/uploadBodyImage"
+          uploadFolderPath="tour/uploadBodyImage"
           onChange={handleChange}
         />
       </div>

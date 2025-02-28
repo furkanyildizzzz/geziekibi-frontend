@@ -31,7 +31,6 @@ export const createNewHomepageSlider = async (
         formData.append(key, value.toISOString()); // e.g., "2023-11-06T12:34:56.789Z"
       } else if (typeof value === "boolean") {
         // Convert boolean to string ("true" or "false")
-        console.log("I am here ");
         formData.append(key, value.toString());
       } else if (key === "homepageSlider" && value.length > 0) {
         for (let index = 0; index < value.length; index++) {

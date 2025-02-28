@@ -121,11 +121,11 @@ const AddFAQModal = () => {
                   {t("Order")} <span className="txt-danger"> *</span>
                 </Label>
                 <input
-                  type="text"
+                  type="number"
                   className="m-0 form-control"
                   id="Order"
                   required
-                  {...register("Order")}
+                  {...register("Order", { valueAsNumber: true })}
                 />
                 <DisplayError
                   errors={errors}

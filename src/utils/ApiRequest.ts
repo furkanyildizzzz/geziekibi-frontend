@@ -6,10 +6,7 @@ import {
   ApiSuccessResponse,
 } from "@/Types/ApiResponseType";
 import Cookies from "js-cookie";
-
-const IsErrorResponse = (obj: Response): obj is ApiErrorResponse => {
-  return "errorType" in obj;
-};
+import { cookies } from "next/headers";
 
 export async function apiRequest<T>(
   url: string,
@@ -18,6 +15,8 @@ export async function apiRequest<T>(
 ): Promise<ApiResponse<T>> {
   try {
     const token = Cookies.get("token");
+    // const cookieStore = cookies();
+    // const token = cookieStore.get("token")?.value;
 
     // Determine if body is FormData
     const isFormData = body instanceof FormData;
@@ -28,7 +27,6 @@ export async function apiRequest<T>(
     };
     // Prepare body
     const requestBody = isFormData ? body : JSON.stringify(body);
-    console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`);
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`,
       {
@@ -36,6 +34,50 @@ export async function apiRequest<T>(
         headers,
         body: requestBody,
         cache: "no-store",
+        credentials: "include",
+        redirect: "manual", // Redirect'leri engelle
+      }
+    );
+
+    const result = await processApiResponse<T>(response);
+
+    return result;
+  } catch (error) {
+    console.error("API Request Failed:", error);
+    throw error;
+  }
+}
+
+export async function apiRequestWithToken<T>(
+  url: string,
+  method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
+  token: string | "",
+  body?: any
+): Promise<ApiResponse<T>> {
+  try {
+    // const token = Cookies.get("token");
+    // const cookieStore = cookies();
+    // const token = cookieStore.get("token")?.value;
+
+    console.log({ token });
+    // Determine if body is FormData
+    const isFormData = body instanceof FormData;
+    // Set headers, omitting "Content-Type" if body is FormData
+    const headers: HeadersInit = {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(!isFormData ? { "Content-Type": "application/json" } : {}),
+    };
+    // Prepare body
+    const requestBody = isFormData ? body : JSON.stringify(body);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${url}`,
+      {
+        method,
+        headers,
+        body: requestBody,
+        cache: "no-store",
+        credentials: "include",
+        redirect: "manual", // Redirect'leri engelle
       }
     );
 
@@ -78,6 +120,8 @@ export async function apiRequestFile<T>(
         method,
         headers,
         body: bodyContent,
+        credentials: "include",
+        redirect: "manual", // Redirect'leri engelle
       }
     );
 

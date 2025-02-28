@@ -1,10 +1,10 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Href, ImagePath } from "@/Constant/constant";
 import { UserListData } from "@/Data/Layout/LayoutData";
 import Link from "next/link";
-import { LogOut } from "react-feather";
+import { LogOut, User } from "react-feather";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useSelector } from "react-redux";
@@ -18,17 +18,37 @@ export const UserSection = () => {
     localStorage.clear();
     router.push(`/auth/login`);
   };
+
+  const fetchUserData = async () => {
+    const response = await getUserProfile();
+    if ("data" in response) {
+      setUserData({ ...response.data });
+    } else {
+      ShowError(response.errorMessage);
+      router.push("/auth/login");
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [""]);
   return (
     <li className="profile-nav onhover-dropdown p-0">
       <div className="d-flex align-items-center profile-media">
-        <Image
-          priority
-          width={40}
-          height={40}
-          className="b-r-10 img-40 img-fluid"
-          src={`${ImagePath}/dashboard/profile.png`}
-          alt="user"
-        />
+        {userData?.profileImage ? (
+          <img
+            width={40}
+            height={40}
+            className="b-r-10 img-40 img-fluid"
+            src={
+              userData?.profileImage?.secureUrl ||
+              `${ImagePath}/dashboard/profile.png`
+            }
+            alt={""}
+          />
+        ) : (
+          <User />
+        )}
         <div className="flex-grow-1">
           <span>{user?.fullName}</span>
           <p className="mb-0">
@@ -40,7 +60,7 @@ export const UserSection = () => {
         {UserListData.map((item, index) => (
           <li key={index}>
             <Link href={item.path}>
-              {item.icon}
+              <User />
               <span>{item.title}</span>
             </Link>
           </li>

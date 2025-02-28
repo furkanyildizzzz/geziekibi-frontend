@@ -1,4 +1,5 @@
 import {
+  EmailTemplateEnum,
   LanguageEnum,
   PageTypeEnum,
   PublishStatusEnum,
@@ -223,7 +224,7 @@ export type ContactFormSuccessResponse = {
   email: string;
   phone?: string;
   message: string;
-
+  fullName: string;
   agreeToTerms: boolean;
   isResponded: boolean;
   response?: string;
@@ -240,4 +241,16 @@ export type HomepageSliderSuccessResponse = {
   isActive: boolean;
   order: number;
   image: CloudinaryImage;
+};
+
+export type EmailTemplateSuccessResponse = {
+  id: number;
+  subject: string;
+  body: string;
+  key: EmailTemplateEnum;
+};
+
+export type EmailTemplateListSuccessResponse = {
+  id: number;
+  key: EmailTemplateEnum;
 };

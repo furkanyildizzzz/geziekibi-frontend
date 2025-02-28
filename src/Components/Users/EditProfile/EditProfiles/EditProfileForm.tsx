@@ -50,12 +50,12 @@ const EditProfileForm = ({ user }: { user: UserSuccessResponse }) => {
         firstName: user.firstName,
         lastName: user.lastName,
         bio: user.bio,
-        secondEmail: user.address.secondEmail,
-        website: user.address.website,
-        address: user.address.address,
-        city: user.address.city,
-        zipCode: user.address.zipCode,
-        country: user.address.country,
+        secondEmail: user.address?.secondEmail,
+        website: user.address?.website,
+        address: user.address?.address,
+        city: user.address?.city,
+        zipCode: user.address?.zipCode,
+        country: user.address?.country,
       }); // Reset the form with user data
     }
   }, [user]);

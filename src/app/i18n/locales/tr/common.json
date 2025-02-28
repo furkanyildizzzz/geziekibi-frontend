@@ -1,4 +1,10 @@
 {
+  "Phone": "Telefon",
+  "Full Name": "Adı",
+  "Contact Form List": "İletişim Formu Listesi",
+  "Give Response": "Cevapla",
+  "Responded": "Cevaplandı",
+  "ADMINISTRATOR": "Admin",
   "IsActive": "Aktif Mi",
   "Homepage Slider": "Anasayfa Slider",
   "CreateNew": "Yeni Oluştur",
@@ -37,6 +43,7 @@
   "Cookie Policy": "Çerez Politikası",
   "Membership Agreement Policy": "Üyelik Sözleşmesi Politikası",
   "Human Resources": "İnsan Kaynakları",
+  "Packet Tour Agreement": "Paket Tur Sözleşmesi",
   "Page": "Sayfa",
   "PageType": "Sayfa Tipi",
   "Static Page": "Statik Sayfa",

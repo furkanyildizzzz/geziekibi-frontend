@@ -1,10 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "../../../public/assets/css/rte_theme_default.css";
-import { useAppSelector } from "@/Redux/Hooks";
-import {
-  uploadSingleBase64Image,
-  uploadSingleFile,
-} from "@/app/actions/upload/uploadFile";
+import Cookies from "js-cookie";
+
 // Extend window interface to recognize `RichTextEditor`
 declare global {
   interface Window {
@@ -33,8 +30,12 @@ const RichTextEditor2: React.FC<{
     };
 
     function getCookie(name: string) {
+      const token = Cookies.get("token");
+      console.log({ token });
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
+      console.log({ parts });
+      // return token;
       if (parts.length === 2) return parts.pop()!.split(";").shift();
     }
 
@@ -44,7 +45,7 @@ const RichTextEditor2: React.FC<{
       optionalIndex?: number,
       optionalFiles?: File[]
     ): Promise<void> {
-      const uploadHandlerPath = `http://localhost:4000/v1${uploadFolderPath}`;
+      const uploadHandlerPath = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${uploadFolderPath}`;
 
       console.log("upload", file, "to", uploadHandlerPath);
 
@@ -96,11 +97,16 @@ const RichTextEditor2: React.FC<{
         true
       );
 
-      // Set the Authorization header
-      const token = getCookie("token");
-      if (token) {
-        xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-      }
+      // ✅ HttpOnly Cookie'nin otomatik gönderilmesi için eklenmeli!
+      xhr.withCredentials = true;
+
+      // // Set the Authorization header
+      // const token = getCookie("token");
+      // console.log({ token });
+
+      // if (token) {
+      //   xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+      // }
 
       // Wrap xhr in a Promise to make it awaitable
       const uploadPromise = new Promise<any | null>((resolve, reject) => {

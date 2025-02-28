@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { Row } from "reactstrap";
 import { MobileView } from "./MobileView";
-import { HeaderMenu } from "./HeaderMenu/HeaderMenu";
 import { RightHeaderSection } from "./RightHeaderSection/RightHeaderSection";
 import { useAppSelector } from "@/Redux/Hooks";
 

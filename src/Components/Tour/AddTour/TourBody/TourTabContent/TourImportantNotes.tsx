@@ -37,7 +37,7 @@ const TourImportantNotes: React.FC<TourImportantNotesProps> = ({
         <RichTextEditor2
           key={editorKey} // Change the key to reset the editor
           initialValue={incomingValue}
-          uploadFolderPath="/tour/uploadBodyImage"
+          uploadFolderPath="tour/uploadBodyImage"
           onChange={handleChange}
         />
       </div>

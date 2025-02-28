@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 
 const AddTour = async ({ params: { id } }: { params: { id: string } }) => {
   const response = await getTourById(Number(id));
-
   let tourData = {} as TourSuccessResponse;
   if ("data" in response) {
     tourData = response.data;
