@@ -7,10 +7,12 @@ import Link from "next/link";
 import { LogOut } from "react-feather";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "@/Redux/Hooks";
 
 export const UserSection = () => {
   const router = useRouter();
-
+  const { user } = useAppSelector((state) => state.user);
   const handleLogout = () => {
     Cookies.remove("token");
     localStorage.clear();
@@ -28,9 +30,9 @@ export const UserSection = () => {
           alt="user"
         />
         <div className="flex-grow-1">
-          <span>Helen Walter</span>
+          <span>{user?.fullName}</span>
           <p className="mb-0">
-            Admin <i className="middle fa fa-angle-down" />
+            {user?.role} <i className="middle fa fa-angle-down" />
           </p>
         </div>
       </div>

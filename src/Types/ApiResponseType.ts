@@ -35,6 +35,7 @@ export interface ApiSuccessResponse<T> extends Response {
   data: T;
 }
 export type DeleteSuccessResponse = {};
+export type Role = 'ADMINISTRATOR' | 'STANDARD';
 export type UserSuccessResponse = {
   id: number;
   email: string;
@@ -42,7 +43,7 @@ export type UserSuccessResponse = {
   lastName: string;
   bio: string;
   fullName: string;
-  role: "ADMINISTRATOR" | "STANDART"; // Adjust roles as necessary
+  role: Role; // Adjust roles as necessary
   language: string; // e.g., "en-US", "tr-TR"
   profileImage: CloudinaryImage;
   address: UserAddress;

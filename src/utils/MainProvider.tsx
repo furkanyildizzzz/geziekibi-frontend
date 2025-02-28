@@ -1,9 +1,10 @@
 "use client";
-import Store from "@/Redux/Store";
+import Store, { persistor } from "@/Redux/Store";
 import React, { ReactNode, ErrorInfo } from "react";
 import { Provider } from "react-redux";
 import { unstable_batchedUpdates } from "react-dom";
- 
+import { PersistGate } from "redux-persist/integration/react";
+
 
 interface MainProviderProps {
   children: ReactNode;
@@ -14,8 +15,8 @@ interface ErrorBoundaryState {
 }
 
 unstable_batchedUpdates(() => {
-  console.error = () => {};
-  console.warn = () => {};
+  console.error = () => { };
+  console.warn = () => { };
 });
 
 class ErrorBoundary extends React.Component<MainProviderProps, ErrorBoundaryState> {
@@ -47,7 +48,9 @@ class ErrorBoundary extends React.Component<MainProviderProps, ErrorBoundaryStat
 const MainProvider: React.FC<MainProviderProps> = ({ children }) => {
   return (
     <Provider store={Store}>
-      <ErrorBoundary>{children}</ErrorBoundary>
+      <PersistGate loading={null} persistor={persistor}>
+        <ErrorBoundary>{children}</ErrorBoundary>
+      </PersistGate>
     </Provider>
   );
 };

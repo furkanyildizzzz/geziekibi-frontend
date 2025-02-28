@@ -13,7 +13,7 @@ import {
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import imageOne from "../../../public/assets/images/logo/logo-1.png";
 import imageTwo from "../../../public/assets/images/logo/logo.png";
@@ -23,47 +23,79 @@ import { ErrorValidation } from "@/Types/ApiResponseType";
 import SweetAlert from "sweetalert2";
 import { popup } from "leaflet";
 import DisplayError from "@/utils/DisplayError";
+import { useDispatch } from "react-redux";
+import { loginUser, setUser } from "@/Redux/Reducers/UserSlice";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { useSelector } from "react-redux";
 
 export const UserForm = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("admin@admin.com");
   const [password, setPassword] = useState("test");
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [errorsValidation, setErrorsValidation] = useState<
     ErrorValidation[] | null
   >([]);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  // const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const dispatch = useAppDispatch();
+  const { isFetching, isSuccess, isError, errorMessage } = useAppSelector((state) => state.user);
+  // const formSubmitHandleEski = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+  //   setErrorsValidation([]);
+  //   const formData = new FormData(event.currentTarget);
+  //   try {
+  //     const response = await signin(formData);
+
+  //     if ("errorMessage" in response) {
+  //       setErrorsValidation(response.errorsValidation);
+  //       setErrorMessage(response.errorMessage);
+  //     } else {
+  //       Cookies.set("token", response.data.accessToken);
+
+  //       SweetAlert.fire({
+  //         icon: "success",
+  //         title: "Good job!",
+  //         text: "You logged in successfully!",
+  //         showConfirmButton: false,
+  //         didOpen: (popup) => {
+  //           // window.location.reload();
+  //           window.location.href = "/tour/add_tour"
+  //         },
+  //       });
+  //       console.log(response.data.user)
+  //       dispatch(setUser(response.data.user));
+
+  //     }
+  //   } catch (error) {
+  //     console.log({ error });
+  //   }
+
+  //   setIsLoading(false);
+  // };
 
   const formSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
-    setErrorsValidation([]);
     const formData = new FormData(event.currentTarget);
-    try {
-      const response = await signin(formData);
-
-      if ("errorMessage" in response) {
-        setErrorsValidation(response.errorsValidation);
-        setErrorMessage(response.errorMessage);
-      } else {
-        Cookies.set("token", response.data.accessToken);
-        SweetAlert.fire({
-          icon: "success",
-          title: "Good job!",
-          text: "You logged in successfully!",
-          showConfirmButton: false,
-          didOpen: (popup) => {
-            window.location.reload();
-          },
-        });
-      }
-    } catch (error) {
-      console.log({ error });
-    }
-
-    setIsLoading(false);
+    dispatch(loginUser(formData));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      SweetAlert.fire({
+        icon: "success",
+        title: "Good job!",
+        text: "You logged in successfully!",
+        showConfirmButton: false,
+        didOpen: (popup) => {
+          // window.location.reload();
+          window.location.href = "/tour/add_tour"
+        },
+      });
+    }
+  }, [isError, isSuccess]);
 
   return (
     <div>
@@ -103,7 +135,8 @@ export const UserForm = () => {
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Test123@gmail.com"
             />
-            <DisplayError errorsValidation={errorsValidation} keyProp="email" />
+            <DisplayError
+              errorMessage={errorMessage} errorsValidation={errorsValidation} keyProp="email" />
           </FormGroup>
           <FormGroup>
             <Label className="col-form-label">{Password}</Label>
@@ -116,6 +149,7 @@ export const UserForm = () => {
                 placeholder="Test@123"
               />
               <DisplayError
+                errorMessage={errorMessage}
                 errorsValidation={errorsValidation}
                 keyProp="password"
               />
@@ -133,7 +167,7 @@ export const UserForm = () => {
               </Label>
             </div>
             <div className="text-end mt-3">
-              <Button type="submit" color="primary" block disabled={isLoading}>
+              <Button type="submit" color="primary" block disabled={isFetching}>
                 {SignIn}
               </Button>
             </div>
