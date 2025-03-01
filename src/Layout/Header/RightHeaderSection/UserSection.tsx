@@ -19,29 +19,16 @@ export const UserSection = () => {
     router.push(`/auth/login`);
   };
 
-  const fetchUserData = async () => {
-    const response = await getUserProfile();
-    if ("data" in response) {
-      setUserData({ ...response.data });
-    } else {
-      ShowError(response.errorMessage);
-      router.push("/auth/login");
-    }
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, [""]);
   return (
     <li className="profile-nav onhover-dropdown p-0">
       <div className="d-flex align-items-center profile-media">
-        {userData?.profileImage ? (
+        {user?.profileImage ? (
           <img
             width={40}
             height={40}
             className="b-r-10 img-40 img-fluid"
             src={
-              userData?.profileImage?.secureUrl ||
+              user?.profileImage?.secureUrl ||
               `${ImagePath}/dashboard/profile.png`
             }
             alt={""}

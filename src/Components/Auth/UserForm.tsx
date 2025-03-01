@@ -23,10 +23,8 @@ import { ErrorValidation } from "@/Types/ApiResponseType";
 import SweetAlert from "sweetalert2";
 import { popup } from "leaflet";
 import DisplayError from "@/utils/DisplayError";
-import { useDispatch } from "react-redux";
 import { loginUser, setUser } from "@/Redux/Reducers/UserSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
-import { useSelector } from "react-redux";
 
 export const UserForm = () => {
   const [show, setShow] = useState(false);
@@ -34,9 +32,9 @@ export const UserForm = () => {
   const [password, setPassword] = useState("test");
 
   // const [isLoading, setIsLoading] = useState(false);
-  const [errorsValidation, setErrorsValidation] = useState<
-    ErrorValidation[] | null
-  >([]);
+  // const [errorsValidation, setErrorsValidation] = useState<
+  //   ErrorValidation[] | null
+  // >([]);
   // const [errorMessage, setErrorMessage] = useState<string>("");
 
   const dispatch = useAppDispatch();
@@ -136,7 +134,9 @@ export const UserForm = () => {
               placeholder="Test123@gmail.com"
             />
             <DisplayError
-              errorMessage={errorMessage} errorsValidation={errorsValidation} keyProp="email" />
+              errorMessage={errorMessage} 
+              // errorsValidation={errorsValidation} 
+              keyProp="email" />
           </FormGroup>
           <FormGroup>
             <Label className="col-form-label">{Password}</Label>
@@ -150,7 +150,7 @@ export const UserForm = () => {
               />
               <DisplayError
                 errorMessage={errorMessage}
-                errorsValidation={errorsValidation}
+                // errorsValidation={errorsValidation}
                 keyProp="password"
               />
 

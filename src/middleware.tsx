@@ -1,32 +1,28 @@
-  import { NextResponse } from "next/server";
-  import type { NextRequest } from "next/server";
-  import { jwtDecode } from "jwt-decode";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { jwtDecode } from "jwt-decode";
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
+  const { pathname } = request.nextUrl;
+  const tokenCookie = request.cookies.get("token")?.value;
 
-  // Çerezleri kontrol et
-  const tokenCookie = request.cookies.get("token");
-  const token = tokenCookie?.value ?? "";
-  let decodedToken: { exp?: number } | null = null;
+  let isAuthenticated = false;
 
-  try {
-    decodedToken = token ? jwtDecode<{ exp: number }>(token) : null;
-  } catch (error) {
-    decodedToken = null; // Token geçersizse yakala
+  if (tokenCookie) {
+    try {
+      const decodedToken = jwtDecode<{ exp: number }>(tokenCookie);
+      const currentTime = Date.now() / 1000; // saniye cinsinden
+      isAuthenticated = decodedToken.exp > currentTime;
+    } catch (error) {
+      console.error("Invalid token:", error);
+    }
   }
 
-  const currentDate = new Date().getTime();
-  const isExpired = !decodedToken?.exp || decodedToken.exp * 1000 < currentDate;
-
-  console.log({ path });
-  // Eğer token süresi dolmuşsa ve zaten "/auth" sayfasında değilse yönlendir
-  if (isExpired && !path.startsWith("/auth")) {
+  if (!isAuthenticated && !pathname.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  // Eğer giriş yapılmışsa ve "/auth" sayfasındaysa, yönlendir
-  if (!isExpired && path.startsWith("/auth")) {
+  if (isAuthenticated && pathname.startsWith("/auth")) {
     return NextResponse.redirect(new URL("/tour/add_tour", request.url));
   }
 
