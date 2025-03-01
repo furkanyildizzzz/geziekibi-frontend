@@ -31,6 +31,8 @@ import { SigninSchema } from "@/app/lib/definitions";
 import { useFormStatus } from "react-dom";
 import DisplayError from "@/utils/DisplayError";
 import { signup } from "@/app/actions/auth/signup";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { registerUser } from "@/Redux/Reducers/UserSlice";
 
 export const UserFormSignup = () => {
   const router = useRouter();
@@ -46,48 +48,73 @@ export const UserFormSignup = () => {
   const [errorsValidation, setErrorsValidation] = useState<
     ErrorValidation[] | null
   >([]);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  // const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const dispatch = useAppDispatch();
+  const { isFetching, isSuccess, isError, errorMessage,successMessage } = useAppSelector((state) => state.user);
+
+  // const formSubmitHandleEski = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+  //   setErrorsValidation([]);
+  //   const formData = new FormData(event.currentTarget);
+  //   try {
+  //     const response = await signup(formData);
+  //     if ("errorMessage" in response) {
+  //       setErrorsValidation(response.errorsValidation);
+  //       setErrorMessage(response.errorMessage);
+  //       toast.error(response.errorMessage, {
+  //         // position: "top-right",
+  //         autoClose: 2000, // 2 seconds delay before redirect
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //       });
+  //     } else {
+  //       toast.success(response.message, {
+  //         // position: "top-right",
+  //         autoClose: 2000, // 2 seconds delay before redirect
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //       });
+  //       setErrorsValidation(null);
+  //       setErrorMessage("");
+  //       Cookies.remove("token");
+  //       localStorage.clear();
+  //       setTimeout(() => {
+  //         router.push("/auth/login");
+  //       }, 2000);
+  //     }
+  //   } catch (error) {
+  //     console.log({ error });
+  //   }
+  //   setIsLoading(false);
+  // };
 
   const formSubmitHandle = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
-    setErrorsValidation([]);
     const formData = new FormData(event.currentTarget);
-    try {
-      const response = await signup(formData);
-      if ("errorMessage" in response) {
-        setErrorsValidation(response.errorsValidation);
-        setErrorMessage(response.errorMessage);
-        toast.error(response.errorMessage, {
-          // position: "top-right",
-          autoClose: 2000, // 2 seconds delay before redirect
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      } else {
-        toast.success(response.message, {
-          // position: "top-right",
-          autoClose: 2000, // 2 seconds delay before redirect
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-        setErrorsValidation(null);
-        setErrorMessage("");
-        Cookies.remove("token");
-        localStorage.clear();
-        setTimeout(() => {
-          router.push("/auth/login");
-        }, 2000);
-      }
-    } catch (error) {
-      console.log({ error });
-    }
-    setIsLoading(false);
+    dispatch(registerUser(formData));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(successMessage, {
+        // position: "top-right",
+        autoClose: 2000, // 2 seconds delay before redirect
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      setTimeout(() => {
+        router.push("/auth/login");
+    }, 2000);
+    }
+  }, [isError, isSuccess]);
 
   return (
     <div>

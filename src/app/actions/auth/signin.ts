@@ -31,16 +31,6 @@ export const signin = async (
   formData: FormData
 ): Promise<ApiResponse<LoginSuccessResponse>> => {
   const formObject = Object.fromEntries(formData.entries()) as SigninSchema;
-  // const { valid, errors, data } = validateForm(SigninFormSchema, formObject);
-
-  // if (!valid) {
-  //   console.log({ errors });
-  //   const errorValidation = errors as ErrorValidation[];
-  //   console.log({ errorValidation });
-  //   const apiErrorResonse = errorValidation as ApiErrorResponse;
-  //   throw errors as ErrorValidation[];
-  // }
-
   try {
     // If validation is successful, proceed with the API request
     const data = SigninFormSchema.parse(formObject); // Zod throws an error if invalid

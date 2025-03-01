@@ -102,8 +102,8 @@ const TourListContainer = () => {
   };
 
   const handleAdd = () => {
-    // router.push("/tour/add_tour");
-    window.open("/tour/add_tour", "_blank");
+    // router.push("/tour/add-tour");
+    window.open("/tour/add-tour", "_blank");
   };
 
   const handleDelete = async (title: string, id: number) => {

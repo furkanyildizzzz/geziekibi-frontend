@@ -1,5 +1,5 @@
-import { useAppSelector } from "@/Redux/Hooks";
-import { Fragment, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
+import { Fragment, useEffect, useState } from "react";
 import Menulist from "./Menulist";
 import { MenuList } from "@/Data/Layout/Menu";
 import { MenuItem } from "@/Types/LayoutTypes";
@@ -9,6 +9,8 @@ import { Href, Logout } from "@/Constant/constant";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { logout } from "@/app/actions/auth/logout";
+import { useSelector } from "react-redux";
+import { clearUser, logoutUser } from "@/Redux/Reducers/UserSlice";
 
 const SidebarMenuList = () => {
   const [activeMenu, setActiveMenu] = useState([]);
@@ -21,15 +23,28 @@ const SidebarMenuList = () => {
   const { t } = useTranslation("common");
   const router = useRouter();
 
-  const handleLogout = async () => {
-    await logout();
-    // Token'ı ve kullanıcı ile ilgili verileri cookie'den ve localStorage'dan temizle
-    Cookies.remove("token");
-    localStorage.removeItem("user"); // Eğer başka bir veriyi saklıyorsan (örneğin kullanıcı bilgileri)
+  // const handleLogout = async () => {
+  //   await logout();
+  //   // Token'ı ve kullanıcı ile ilgili verileri cookie'den ve localStorage'dan temizle
+  //   Cookies.remove("token");
+  //   localStorage.removeItem("user"); // Eğer başka bir veriyi saklıyorsan (örneğin kullanıcı bilgileri)
 
-    // Router ile login sayfasına yönlendir
-    router.push(`/auth/login`);
+  //   // Router ile login sayfasına yönlendir
+  //   router.push(`/auth/login`);
+  // };
+  const dispatch = useAppDispatch();
+  const { isSuccess } = useAppSelector((state) => state.user);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/auth/login");
+      dispatch(clearUser());
+    }
+  }, [isSuccess]);
 
   return (
     <>
@@ -37,9 +52,8 @@ const SidebarMenuList = () => {
         MenuList.map((mainMenu: MenuItem, index) => (
           <Fragment key={index}>
             <li
-              className={`sidebar-main-title ${
-                shouldHideMenu(mainMenu) ? "d-none" : ""
-              }`}
+              className={`sidebar-main-title ${shouldHideMenu(mainMenu) ? "d-none" : ""
+                }`}
             >
               <div>
                 <h6 className={mainMenu.lanClass && mainMenu.lanClass}>

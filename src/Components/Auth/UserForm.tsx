@@ -23,7 +23,7 @@ import { ErrorValidation } from "@/Types/ApiResponseType";
 import SweetAlert from "sweetalert2";
 import { popup } from "leaflet";
 import DisplayError from "@/utils/DisplayError";
-import { loginUser, setUser } from "@/Redux/Reducers/UserSlice";
+import { clearState, loginUser } from "@/Redux/Reducers/UserSlice";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 
 export const UserForm = () => {
@@ -60,7 +60,7 @@ export const UserForm = () => {
   //         showConfirmButton: false,
   //         didOpen: (popup) => {
   //           // window.location.reload();
-  //           window.location.href = "/tour/add_tour"
+  //           window.location.href = "/tour/add-tour"
   //         },
   //       });
   //       console.log(response.data.user)
@@ -89,9 +89,11 @@ export const UserForm = () => {
         showConfirmButton: false,
         didOpen: (popup) => {
           // window.location.reload();
-          window.location.href = "/tour/add_tour"
+          window.location.href = "/tour/add-tour"
         },
       });
+      dispatch(clearState());
+
     }
   }, [isError, isSuccess]);
 
@@ -134,7 +136,7 @@ export const UserForm = () => {
               placeholder="Test123@gmail.com"
             />
             <DisplayError
-              errorMessage={errorMessage} 
+              errorMessage={errorMessage}
               // errorsValidation={errorsValidation} 
               keyProp="email" />
           </FormGroup>

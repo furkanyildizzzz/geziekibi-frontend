@@ -23,7 +23,7 @@ export function middleware(request: NextRequest) {
   }
 
   if (isAuthenticated && pathname.startsWith("/auth")) {
-    return NextResponse.redirect(new URL("/tour/add_tour", request.url));
+    return NextResponse.redirect(new URL("/tour/add-tour", request.url));
   }
 
   return NextResponse.next();

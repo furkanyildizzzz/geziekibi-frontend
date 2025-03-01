@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UserSuccessResponse } from "@/Types/ApiResponseType";
 import { signin } from "@/app/actions/auth/signin";
 import Cookies from "js-cookie";
-import { persistor } from "../Store";
+import { signup } from "@/app/actions/auth/signup";
+import { logout } from "@/app/actions/auth/logout";
 
 interface UserState {
     user: UserSuccessResponse | null;
@@ -10,6 +11,7 @@ interface UserState {
     isSuccess: boolean,
     isError: boolean,
     errorMessage: string,
+    successMessage: string,
 }
 
 const initialState: UserState = {
@@ -18,6 +20,7 @@ const initialState: UserState = {
     isSuccess: false,
     isError: false,
     errorMessage: "",
+    successMessage: "",
 };
 
 // 🔹 Login İşlemi
@@ -38,34 +41,48 @@ export const loginUser = createAsyncThunk(
             return thunkAPI.rejectWithValue(error.message || "Something went wrong");
         }
     }
+
 );
 
 // 🔹 Register İşlemi
 export const registerUser = createAsyncThunk(
     "user/register",
     async (
-        { email, password, name }: { email: string; password: string; name: string },
+        formData: FormData,
         thunkAPI
     ) => {
         try {
-            const response = await fetch(
-                "https://mock-user-auth-server.herokuapp.com/api/v1/register",
-                {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email, password, name }),
-                }
-            );
+            const response = await signup(formData)
 
-            const data = await response.json();
-            if (!response.ok) {
-                return thunkAPI.rejectWithValue(data.message || "Registration failed");
+            if ("errorMessage" in response) {
+                return thunkAPI.rejectWithValue(response.errorMessage);
+            }
+            else {
+                Cookies.remove("token");
+                localStorage.clear();
+                
+                return response.data; // Başarılı girişte veriyi döndür
+            }
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.message || "Something went wrong");
+        }
+    }
+);
+
+// 🔹 Logout İşlemi
+export const logoutUser = createAsyncThunk(
+    "user/logout",
+    async (_, thunkAPI) => {
+        try {
+            const response = await logout();
+
+            if ("errorMessage" in response) {
+                return thunkAPI.rejectWithValue(response.errorMessage);
             }
 
-            return data; // Başarılı kayıt verisini döndür
+            Cookies.remove("token");
+            localStorage.removeItem("user");
+            return true; // Başarıyla çıkış yaptığında `true` döndür
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.message || "Something went wrong");
         }
@@ -84,7 +101,15 @@ const userSlice = createSlice({
             state.isFetching = false;
             state.isError = false;
             state.isSuccess = false;
-            persistor.purge()
+            state.errorMessage = ""
+            state.successMessage = ""
+        },
+        clearState: (state) => {
+            state.isFetching = false;
+            state.isError = false;
+            state.isSuccess = false;
+            state.errorMessage = ""
+            state.successMessage = ""
         },
     },
     extraReducers: (builder) => {
@@ -115,9 +140,26 @@ const userSlice = createSlice({
                 state.isFetching = false;
                 state.isError = false;
                 state.isSuccess = true;
-                state.user = action.payload;
+                state.successMessage = action.payload as string;
             })
             .addCase(registerUser.rejected, (state, action) => {
+                state.isFetching = false;
+                state.isError = true;
+                state.isSuccess = false;
+                state.errorMessage = action.payload as string;
+            })
+            .addCase(logoutUser.pending, (state) => {
+                state.isFetching = true;
+                state.isError = false;
+                state.isSuccess = false;
+            })
+            .addCase(logoutUser.fulfilled, (state, action) => {
+                state.isFetching = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.user = null
+            })
+            .addCase(logoutUser.rejected, (state, action) => {
                 state.isFetching = false;
                 state.isError = true;
                 state.isSuccess = false;
@@ -126,5 +168,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser,clearState } = userSlice.actions;
 export default userSlice.reducer;

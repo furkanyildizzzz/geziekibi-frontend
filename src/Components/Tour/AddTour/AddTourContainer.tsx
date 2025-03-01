@@ -54,7 +54,7 @@ const AddTourContainer = ({
     //     dispatch(setFormValue({ name: key, value: value }));
     //   });
     // } else {
-    //   // redirec to add_tour page
+    //   // redirec to add-tour page
     // }
 
     Object.entries(tourData).forEach(([key, value]: [string, any]) => {
@@ -79,7 +79,7 @@ const AddTourContainer = ({
     //       dispatch(setFormValue({ name: key, value: value }));
     //   });
     // } else {
-    //   router.replace(`/tour/add_tour`); // Reloads the current page
+    //   router.replace(`/tour/add-tour`); // Reloads the current page
     // }
 
     Object.entries(tourData).forEach(([key, value]: [string, any]) => {
@@ -103,7 +103,7 @@ const AddTourContainer = ({
   }, []);
 
   const handleCopyTour = () => {
-    router.push(`/tour/add_tour?copy=${formValue.id}`); // Reloads the current page
+    router.push(`/tour/add-tour?copy=${formValue.id}`); // Reloads the current page
   };
 
   return (
@@ -121,7 +121,7 @@ const AddTourContainer = ({
           title={t("AddTour")}
         />
       )}
-      <Container key={formValue.id || "add_tour"} fluid>
+      <Container key={formValue.id || "add-tour"} fluid>
         <Row>
           <Col xs="12">
             <Card>
