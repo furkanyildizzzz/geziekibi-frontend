@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 import Breadcrumbs from "../Breadcrumb";
 import { getContactFormList } from "@/app/actions/contactForm/getContactFormList";
 import { ContactFormListTableDataColumn } from "@/Types/ContactFormType";
+import { deleteContactForms } from "@/app/actions/contactForm/deleteContactForm";
 
 const ContactFormListContainer = () => {
   const [ContactFormList, setContactFormList] = useState<
@@ -110,7 +111,7 @@ const ContactFormListContainer = () => {
         const ids = selectedRows.map(
           (item: ContactFormSuccessResponse) => item.id
         );
-        await deleteTags(ids);
+        await deleteContactForms(ids);
         await fetchData();
         setSelectedRows("");
       }

@@ -1,6 +1,7 @@
 import { DOCUMENT_SCHEMA } from "@/app/lib/definitions";
-import { ApiResponse, Catalog } from "@/Types/ApiResponseType";
+import { ApiErrorResponse, ApiResponse, Catalog, ErrorValidation } from "@/Types/ApiResponseType";
 import { apiRequest } from "@/utils/ApiRequest";
+import { ZodError } from "zod";
 
 export const uploadCatalogFile = async (
   file: File
@@ -13,8 +14,10 @@ export const uploadCatalogFile = async (
 
     return await apiRequest<Catalog>("catalog/upload", "POST", formData);
   } catch (error) {
-    console.log({ error });
-    // Handle any other errors (if necessary)
+    if (error instanceof ZodError) {
+      console.log({error})
+      return { errorMessage: error.message, errorType: "BAD REQUEST", errorsValidation: [{ "primaryImages": error.message } as ErrorValidation] } as ApiErrorResponse
+    }
     throw error;
   }
 };
