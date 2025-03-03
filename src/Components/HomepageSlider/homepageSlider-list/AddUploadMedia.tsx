@@ -38,6 +38,7 @@ const AddUploadMedia: React.FC<
   console.log({ lastOrderNumber });
   const [open, setOpen] = useState(true);
   const {
+    register,
     handleSubmit,
     control,
     setValue,
@@ -165,11 +166,11 @@ const AddUploadMedia: React.FC<
                       name="order"
                       control={control}
                       render={({ field }) => (
-                        <Input
-                          {...field}
+                        <input
+                          className="m-0 form-control"
+                          id="order"
                           required
-                          type="text"
-                          invalid={!!errors["order"]}
+                          {...register("order", { valueAsNumber: true })}
                         />
                       )}
                     />

@@ -13,6 +13,7 @@ import {
   ErrorValidation,
   BlogCategorySuccessResponse,
 } from "@/Types/ApiResponseType";
+import Link from "next/link";
 import DisplayError from "@/utils/DisplayError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -21,12 +22,16 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { createNewBlogCategory } from "@/app/actions/blog/category/createNewBlogCategory";
+import { Dropzone, ExtFile, FileMosaic } from "@dropzone-ui/react";
+import SVG from "@/Components/SVG/Svg";
+import { Href } from "@/Constant/constant";
 
 const AddTourCategoryModal = () => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [files, setFiles] = useState<ExtFile[]>([]);
 
   const [blogCategories, setBlogCategories] = useState<
     BlogCategorySuccessResponse[]
@@ -39,7 +44,7 @@ const AddTourCategoryModal = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { isLoading, errors },
+    formState: { isLoading, errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(CreateBlogCategoryFormSchema),
     defaultValues: {
@@ -69,6 +74,7 @@ const AddTourCategoryModal = () => {
     setErrorsValidation([]);
     setErrorMessage("");
 
+    data.primaryImages = files;
     const response = await createNewBlogCategory(data);
 
     if ("errorType" in response) {
@@ -80,7 +86,9 @@ const AddTourCategoryModal = () => {
     }
     return;
   };
-
+  const handleRemove = (id: string | number | undefined) => {
+    setFiles(files.filter((x: ExtFile) => x.id !== id));
+  };
   return (
     <ModalComponent title={t("CreateNewBlogCategoryHeading")}>
       <div className="page-body">
@@ -153,6 +161,52 @@ const AddTourCategoryModal = () => {
                   keyProp="parentId"
                 />
               </FormGroup>
+
+              <FormGroup>
+                <Label for="image" check>
+                  {t("Upload Image")}
+                </Label>
+                <div className="product-upload">
+                  <Dropzone
+                    onChange={(files) => setFiles(files)}
+                    value={files}
+                    maxFiles={1}
+                    multiple={true}
+                    header={false}
+                    footer={false}
+                    minHeight="80px"
+                    name="primaryImages"
+                    disabled={isSubmitting}
+                  >
+                    {files.map((file: ExtFile) => (
+                      <FileMosaic
+                        key={file.id}
+                        {...file}
+                        imageUrl={URL.createObjectURL(file.file!)}
+                        onDelete={handleRemove}
+                        info={true}
+                      />
+                    ))}
+                    {files.length === 0 && (
+                      <Form className="dropzone dropzone-light dz-clickable py-5">
+                        <div className="dz-message needsclick">
+                          <SVG iconId="file-upload" />
+                          <h6>
+                            {t("DragYourImageHere")}
+                            <Link className="txt-primary" href={Href}>
+                              &nbsp;{t("browser")}
+                            </Link>
+                          </h6>
+                          <span className="note needsclick">
+                            SVG,PNG,JPG {t("or")} GIF
+                          </span>
+                        </div>
+                      </Form>
+                    )}
+                  </Dropzone>
+                </div>
+              </FormGroup>
+
             </Row>
 
             <ModalButtons isLoading={isLoading} />

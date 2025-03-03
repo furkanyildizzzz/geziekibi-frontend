@@ -140,9 +140,7 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
           <Col lg="6" className="product-img">
             <img
               className="img-fluid"
-              src={GetCloudinaryPdfFileFirstPageAsImange(
-                homepageSlider?.image.url || ""
-              )}
+              src={homepageSlider?.image?.url}
               alt="image"
             />
           </Col>

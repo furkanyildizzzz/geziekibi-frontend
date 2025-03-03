@@ -7,7 +7,7 @@ import AddUploadMedia from "./AddUploadMedia";
 import FileManagerBody from "./FileManagerBody";
 import FileListItem from "./FileListItem";
 import CatalogPreviewModal from "./CatalogPreviewModal";
-import CatalogEditModal from "./HomepageSliderEditModal";
+import HomepageSliderEditModal from "./HomepageSliderEditModal";
 import { getCatalogList } from "@/app/actions/catalog/getCatalogList";
 import ShowError from "@/Components/Toast/Error/ShowError";
 import { HomepageSliderSuccessResponse } from "@/Types/ApiResponseType";
@@ -99,7 +99,7 @@ const FileContent = () => {
       )} */}
 
       {openEditModal && (
-        <CatalogEditModal
+        <HomepageSliderEditModal
           value={openEditModal}
           setOpenModal={setOpenEditModal}
           dataId={dataId}

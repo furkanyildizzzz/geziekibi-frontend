@@ -34,6 +34,7 @@ import { Button, Col, Form, FormGroup, Input, Label } from "reactstrap";
 import { getBlogCategoryById } from "@/app/actions/blog/category/getBlogCategoryById";
 import { editBlogCategory } from "@/app/actions/blog/category/editBlogCategory";
 import { deleteBlogCategory } from "@/app/actions/blog/category/deleteBlogCategory";
+import { getBlogCategoryList } from "@/app/actions/blog/category/getBlogCategoryList";
 
 const EditBlogCategoryModal = ({
   params: { id },
@@ -84,7 +85,7 @@ const EditBlogCategoryModal = ({
   };
 
   const fetchBlogCategoryList = async () => {
-    const response = await getTourCategoryList();
+    const response = await getBlogCategoryList();
     if ("data" in response) {
       setBlogCategories([...response.data]);
     }
@@ -99,7 +100,7 @@ const EditBlogCategoryModal = ({
     setValue("parentId", Number(id));
   };
 
-  const onsubmit = async (data: CreateTourCategorySchema) => {
+  const onsubmit = async (data: CreateBlogCategorySchema) => {
     data.primaryImages = files;
     const response = await editBlogCategory(Number(id), data);
 
