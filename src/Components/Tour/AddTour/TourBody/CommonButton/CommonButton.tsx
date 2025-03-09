@@ -108,7 +108,7 @@ const CommonButton = () => {
       style={{ display: "flex", justifyContent: "space-between" }}
     >
       <div>
-        {navId === 6 && formValue.id > 0 && (
+        {navId === 7 && formValue.id > 0 && (
           <Button
             color="danger"
             className="ms-2"

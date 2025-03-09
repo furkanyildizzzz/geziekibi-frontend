@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 import { Col, Form, FormGroup, Label } from "reactstrap";
 import { getTourPathById } from "@/app/actions/tour/tourPath/getTourCategoryById";
 import { deleteTourPath } from "@/app/actions/tour/tourPath/deleteTourPath";
+import { editTourPath } from "@/app/actions/tour/tourPath/editTourPath";
 
 const EditTourPathModal = ({ params: { id } }: { params: { id: string } }) => {
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
@@ -59,7 +60,7 @@ const EditTourPathModal = ({ params: { id } }: { params: { id: string } }) => {
   }, []);
 
   const onsubmit = async (data: CreateTourPathSchema) => {
-    const response = await editTourCategory(Number(id), data);
+    const response = await editTourPath(Number(id), data);
 
     if ("errorType" in response) {
       setErrorsValidation(response.errorsValidation!);
@@ -115,7 +116,7 @@ const EditTourPathModal = ({ params: { id } }: { params: { id: string } }) => {
           </FormGroup>
           <FormGroup>
             <Label for="name" check>
-              {t("PathName")} <span className="txt-danger"> *</span>
+              {t("Path")} <span className="txt-danger"> *</span>
             </Label>
             <input
               disabled={isSubmitting}

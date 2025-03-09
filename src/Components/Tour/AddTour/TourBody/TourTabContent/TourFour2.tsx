@@ -87,7 +87,7 @@ const TourFour = () => {
 
   const setExistingDateList = useCallback(async () => {
     console.log({ formValue });
-    setDateList([...formValue?.dates]);
+    setDateList([...formValue?.tourDates]);
   }, [formValue]);
 
   const handleAddNewDate = (startDate: Date, endDate: Date) => {
@@ -117,7 +117,7 @@ const TourFour = () => {
     );
 
     dispatch(
-      setFormValue({ name: "dates", value: [newTourDate, ...formValue.dates] })
+      setFormValue({ name: "tourDates", value: [newTourDate, ...formValue.tourDates] })
     );
   };
 
@@ -138,7 +138,7 @@ const TourFour = () => {
         setDateList(updatedDateList);
         dispatch(
           setFormValue({
-            name: "dates",
+            name: "tourDates",
             value: updatedDateList,
           })
         );

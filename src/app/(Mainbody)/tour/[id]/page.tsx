@@ -2,6 +2,7 @@ import { getTourById } from "@/app/actions/tour/self/getTourById";
 import AddTourContainer from "@/Components/Tour/AddTour/AddTourContainer";
 import { TourSuccessResponse } from "@/Types/ApiResponseType";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
@@ -15,8 +16,10 @@ const AddTour = async ({ params: { id } }: { params: { id: string } }) => {
     tourData = response.data;
     metadata.title = response.data.title;
   } else if (response.errorType === "NOT FOUND") {
-    throw new Error(response.errorMessage);
+    // throw new Error(response.errorMessage);
+    notFound()
   }
+  console.log({tourData})
   return <AddTourContainer id={Number(id)} tourData={tourData} />;
 };
 

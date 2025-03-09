@@ -1,16 +1,13 @@
 "use client";
-import { deleteTourCategory } from "@/app/actions/tour/category/deleteTourCategory";
-import { getTourCategoryList } from "@/app/actions/tour/category/getTourCategoryList";
+import { deleteTourPath } from "@/app/actions/tour/tourPath/deleteTourPath";
+import { deleteTourPaths } from "@/app/actions/tour/tourPath/deleteTourPaths";
+import { getTourPathList } from "@/app/actions/tour/tourPath/getTourPathList";
 import Breadcrumbs from "@/Components/Breadcrumb";
 import {
-  General,
-  CategoryList,
-  Tour,
-  CreateNewCategoryHeading,
   SearchTableButton,
 } from "@/Constant/constant";
-import { TourCategorySuccessResponse } from "@/Types/ApiResponseType";
-import { TourCategoryListTableDataColumn } from "@/Types/TourCategoryType";
+import { TourPathSuccessResponse } from "@/Types/ApiResponseType";
+import { TourPathListTableDataColumn } from "@/Types/TourPathType";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import DataTable, { Alignment } from "react-data-table-component";
@@ -27,8 +24,8 @@ import {
 } from "reactstrap";
 
 const TourPathListContainer = () => {
-  const [tourCategoryList, setTourCategoryList] = useState<
-    TourCategorySuccessResponse[]
+  const [tourPathList, setTourPathList] = useState<
+    TourPathSuccessResponse[]
   >([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -41,12 +38,12 @@ const TourPathListContainer = () => {
   const { t } = useTranslation("common");
 
   const fetchData = async () => {
-    const response = await getTourCategoryList();
+    const response = await getTourPathList();
     if ("errorMessage" in response) {
       setErrorMessage(response.errorMessage);
     } else {
       setErrorMessage("");
-      setTourCategoryList(response.data);
+      setTourPathList(response.data);
       setIsLoading(false);
     }
   };
@@ -54,7 +51,7 @@ const TourPathListContainer = () => {
     fetchData();
   }, [pathname]);
 
-  const filteredItems = tourCategoryList
+  const filteredItems = tourPathList
     .filter((item) => {
       return Object.values(item).some(
         (value) =>
@@ -82,23 +79,59 @@ const TourPathListContainer = () => {
   }, [filterText]);
 
   const handleEdit = async (id: number) => {
-    router.push(`/tour/category/${id}`);
+    router.push(`/tour/paths/${id}`);
   };
 
   const handleAdd = () => {
-    router.push("/tour/category/add-category");
+    router.push("/tour/paths/add-path");
   };
+
+  const handleRowSelected = useCallback((state: any) => {
+    setSelectedRows(state.selectedRows);
+  }, []);
 
   const handleDelete = async (name: string, id: number) => {
     try {
       setIsLoading(true);
 
       if (window.confirm(`Are you sure you want to delete:\r ${name} ?`)) {
-        await deleteTourCategory(id);
+        await deleteTourPath(id);
         await fetchData();
       }
     } catch (error) {
-      setErrorMessage("Failed to delete category. Please try again.");
+      setErrorMessage("Failed to delete path. Please try again.");
+    } finally {
+      setIsLoading(false); // Reset loading state
+    }
+  };
+
+  const handleMultipleDelete = async () => {
+    try {
+      setIsLoading(true);
+
+      if (
+        window.confirm(
+          `Are you sure you want to delete:\r ${selectedRows.map(
+            (r: TourPathSuccessResponse) => r.name
+          )} ?`
+        )
+      ) {
+        setToggleCleared(!toggleCleared);
+        // setTagList(
+        //   tagList.filter((item: TagSuccessResponse) =>
+        //     selectedRows.filter((elem: TagSuccessResponse) => elem.id === item.id)
+        //       .length > 0
+        //       ? false
+        //       : true
+        //   )
+        // );
+        const ids = selectedRows.map((item: TourPathSuccessResponse) => item.id);
+        await deleteTourPaths(ids);
+        await fetchData();
+        setSelectedRows("");
+      }
+    } catch (error) {
+      setErrorMessage("Failed to delete tags. Please try again.");
     } finally {
       setIsLoading(false); // Reset loading state
     }
@@ -107,9 +140,9 @@ const TourPathListContainer = () => {
   return (
     <>
       <Breadcrumbs
-        pageTitle={t("CategoryList")}
+        pageTitle={t("PathList")}
         parent={t("Tour")}
-        title={t("CategoryList")}
+        title={t("PathList")}
       />
       <Container fluid>
         <Row>
@@ -125,21 +158,33 @@ const TourPathListContainer = () => {
                       onClick={handleAdd}
                     >
                       <i className="me-2 fa fa-plus"> </i>
-                      {t("CreateNewCategoryHeading")}
+                      {t("CreateNewPathHeading")}
                     </Button>
                   </div>
                 </div>
                 <div className="list-product">
                   <div className="table-responsive">
+                    {selectedRows.length !== 0 && (
+                      <Button
+                        color="danger"
+                        onClick={handleMultipleDelete}
+                        className="mb-3"
+                      >
+                        {t("DeleteSelectDataButton")}
+                      </Button>
+                    )}
                     <DataTable
                       className="custom-scrollbar"
                       data={filteredItems}
-                      columns={TourCategoryListTableDataColumn(
+                      columns={TourPathListTableDataColumn(
                         handleEdit,
                         handleDelete
                       )}
                       striped
                       highlightOnHover
+                      selectableRows
+                      onSelectedRowsChange={handleRowSelected}
+                      clearSelectedRows={toggleCleared}
                       pagination
                       subHeader
                       progressPending={isLoading}

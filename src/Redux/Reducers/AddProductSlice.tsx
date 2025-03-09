@@ -22,7 +22,7 @@ const initialState: AddProductSliceType = {
     publishDate: "",
     startDate: "",
     endDate: "",
-    dates: [{}],
+    tourDates: [{}],
     currency: "",
     tags: [],
     tourServices: [],
@@ -79,7 +79,7 @@ const AddProductSlice = createSlice({
             dailyVisitingPlaces: [],
           },
         ],
-        dates: [
+        tourDates: [
           {
             id: 0,
             isActive: true,
@@ -112,14 +112,14 @@ const AddProductSlice = createSlice({
 
       console.log({ targetDate, priceList });
       // Find the target date
-      const dateIndex = state.formValue.dates.findIndex((d: any) =>
+      const dateIndex = state.formValue.tourDates.findIndex((d: any) =>
         isSameDay(d.startDate, targetDate)
       );
 
       if (dateIndex !== -1) {
         // Update the priceList for the matched date
-        state.formValue.dates[dateIndex] = {
-          ...state.formValue.dates[dateIndex],
+        state.formValue.tourDates[dateIndex] = {
+          ...state.formValue.tourDates[dateIndex],
           prices: priceList,
         };
       } else {
