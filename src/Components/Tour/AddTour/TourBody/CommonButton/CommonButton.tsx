@@ -25,6 +25,7 @@ const CommonButton = () => {
   );
   const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const router = useRouter();
 
@@ -67,8 +68,8 @@ const CommonButton = () => {
           ? await editTour(formValue.id, formValue)
           : await createNewTour(formValue);
       if ("errorType" in response) {
-        ShowValidationError(response.errorsValidation!);
-        ShowError(response.errorMessage);
+        ShowValidationError(tForm, response.errorsValidation!);
+        ShowError(tForm, response.errorMessage);
       } else {
         ShowSuccess(response.message);
         tourId = response.data.id;
@@ -89,7 +90,7 @@ const CommonButton = () => {
 
         await deleteTour(formValue.id);
       } catch (error) {
-        ShowError("Failed to delete tour. Please try again.");
+        ShowError(tForm, "Failed to delete tour. Please try again.");
       } finally {
         dispatch(setIsLoading(false));
         handleReload("/tours");

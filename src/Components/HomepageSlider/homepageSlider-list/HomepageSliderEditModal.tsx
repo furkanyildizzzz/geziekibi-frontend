@@ -46,6 +46,7 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
 
   const [isLoading, setIsLoading] = useState(false); // Add loading state
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const {
     register,
@@ -69,7 +70,7 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
       const response = await updateHomepageSlider(dataId, data);
 
       if ("errorType" in response) {
-        ShowError(response.errorMessage!);
+        ShowError(tForm, response.errorMessage!);
       } else {
         ShowSuccess(response.message);
         onCloseModal();
@@ -85,7 +86,7 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
   const fetchHomepageSliderById = async () => {
     const response = await getHomepageSliderById(dataId);
     if ("errorType" in response) {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
       onCloseModal();
     } else {
       setHomepageSlider({ ...response.data });
@@ -118,7 +119,7 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
 
         await deleteHomepageSlider(homepageSlider!.id);
       } catch (error) {
-        ShowError("Failed to delete homepageSlider. Please try again.");
+        ShowError(tForm, "Failed to delete homepageSlider. Please try again.");
       } finally {
         setIsLoading(false);
         window.location.reload();

@@ -9,6 +9,7 @@ import { Button, Col, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
 import { Catalog } from "@/Types/ApiResponseType";
 import { getCatalogById } from "@/app/actions/catalog/getCatalaogById";
 import ShowError from "@/Components/Toast/Error/ShowError";
+import { useTranslation } from "react-i18next";
 
 export interface CatalogModalInterfaceType {
   value: boolean;
@@ -24,6 +25,8 @@ const CatalogPreviewModal: React.FC<CatalogModalInterfaceType> = ({
   const [open, setOpen] = useState(value);
   const [catalog, setCatalog] = useState<Catalog>();
 
+  const { t: tForm } = useTranslation("form");
+
   const onCloseModal = () => {
     setOpen(false);
     setOpenModal(false);
@@ -32,7 +35,7 @@ const CatalogPreviewModal: React.FC<CatalogModalInterfaceType> = ({
   const fetchCatalogById = async () => {
     const response = await getCatalogById(dataId);
     if ("errorType" in response) {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
       onCloseModal();
     } else {
       setCatalog(response.data);

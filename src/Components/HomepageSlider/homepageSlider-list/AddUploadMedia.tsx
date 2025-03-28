@@ -32,6 +32,7 @@ const AddUploadMedia: React.FC<
   AddUploadMediaProps & { lastOrderNumber: number }
 > = ({ onFileUpload, lastOrderNumber }) => {
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
   const [openUploadModal, setOpenUploadModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -78,8 +79,8 @@ const AddUploadMedia: React.FC<
     try {
       const response = await createNewHomepageSlider(data);
       if ("errorType" in response) {
-        ShowValidationError(response.errorsValidation!);
-        ShowError(response.errorMessage);
+        ShowValidationError(tForm, response.errorsValidation!);
+        ShowError(tForm, response.errorMessage);
       } else {
         ShowSuccess(response.message);
       }

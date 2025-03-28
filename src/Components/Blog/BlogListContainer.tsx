@@ -47,6 +47,7 @@ const BlogListContainer = () => {
   const [filterText, setFilterText] = useState("");
 
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
   const pathname = usePathname();
   const router = useRouter();
 
@@ -120,14 +121,14 @@ const BlogListContainer = () => {
       if (window.confirm(`Are you sure you want to delete:\r ${title} ?`)) {
         const response = await deleteBlog(id);
 
-        if ("errorType" in response) ShowError(response.errorMessage);
+        if ("errorType" in response) ShowError(tForm, response.errorMessage);
         else ShowSuccess(response.message);
 
         await fetchData();
       }
     } catch (error) {
       setErrorMessage("Failed to delete blog. Please try again.");
-      ShowError("Failed to delete blog. Please try again.");
+      ShowError(tForm, "Failed to delete blog. Please try again.");
     } finally {
       setIsLoading(false); // Reset loading state
     }

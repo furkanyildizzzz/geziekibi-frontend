@@ -12,6 +12,7 @@ import { getCatalogList } from "@/app/actions/catalog/getCatalogList";
 import ShowError from "@/Components/Toast/Error/ShowError";
 import { HomepageSliderSuccessResponse } from "@/Types/ApiResponseType";
 import { getHomepageSliderList } from "@/app/actions/homepageSlider/getHomepageSliderList";
+import { useTranslation } from "react-i18next";
 
 const FileContent = () => {
   const [searchFile, setSearchFile] = useState("");
@@ -25,6 +26,8 @@ const FileContent = () => {
   const [existingFiles, setExistingFiles] = useState<
     HomepageSliderSuccessResponse[]
   >([]);
+
+  const { t: tForm } = useTranslation("form");
 
   const onCloseModal = () => {
     fetchExistingFiles();
@@ -50,7 +53,7 @@ const FileContent = () => {
   const fetchExistingFiles = async () => {
     const response = await getHomepageSliderList();
     if ("errorMessage" in response) {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
     } else {
       console.log(response);
       setExistingFiles(response.data);

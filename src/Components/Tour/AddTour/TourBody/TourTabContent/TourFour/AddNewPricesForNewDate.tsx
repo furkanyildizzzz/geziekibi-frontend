@@ -65,6 +65,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
   const toggle = (id: string) => (open === id ? setOpen("") : setOpen(id));
 
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
   const [errorsValidation, setErrorsValidation] = useState<ErrorValidation[]>(
     []
   );
@@ -106,7 +107,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
           s.description === data.description
       )
     ) {
-      ShowError(`Price "${data.name}" already exits`);
+      ShowError(tForm, `Price "${data.name}" already exits`);
       return;
     }
 

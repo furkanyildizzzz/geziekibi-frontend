@@ -16,6 +16,7 @@ export const UserSection = () => {
   const router = useRouter();
   const [userData, setUserData] = useState<UserSuccessResponse>();
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const handleLogout = () => {
     Cookies.remove("token");
@@ -28,7 +29,7 @@ export const UserSection = () => {
     if ("data" in response) {
       setUserData({ ...response.data });
     } else {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
       router.push("/auth/login");
     }
   };

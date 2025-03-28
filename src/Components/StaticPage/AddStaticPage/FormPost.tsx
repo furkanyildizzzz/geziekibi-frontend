@@ -33,6 +33,7 @@ export const FormPost: React.FC<FormPostProps> = ({
   );
   const [errorMessage, setErrorMessage] = useState("");
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const {
     handleSubmit,
@@ -53,8 +54,8 @@ export const FormPost: React.FC<FormPostProps> = ({
           ? await editStaticPage(staticPageId, data)
           : await createNewStaticPage(data);
       if ("errorType" in response) {
-        ShowValidationError(response.errorsValidation!);
-        ShowError(response.errorMessage);
+        ShowValidationError(tForm, response.errorsValidation!);
+        ShowError(tForm, response.errorMessage);
       } else {
         ShowSuccess(response.message);
         staticPageId = response.data.id;

@@ -62,6 +62,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
     []
   );
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
   const router = useRouter();
   const {
     handleSubmit,
@@ -80,8 +81,8 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
       const response =
         blogId > 0 ? await editBlog(blogId, data) : await createNewBlog(data);
       if ("errorType" in response) {
-        ShowValidationError(response.errorsValidation!);
-        ShowError(response.errorMessage);
+        ShowValidationError(tForm, response.errorsValidation!);
+        ShowError(tForm, response.errorMessage);
       } else {
         ShowSuccess(response.message);
         blogId = response.data.id;
@@ -102,7 +103,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
 
         await deleteBlog(blogData!.id);
       } catch (error) {
-        ShowError("Failed to delete tour. Please try again.");
+        ShowError(tForm, "Failed to delete tour. Please try again.");
       } finally {
         setIsDeleting(false);
         router.replace("/blogs");
@@ -138,7 +139,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
             <DisplayError
               errorsValidation={errorsValidation}
               errorMessage={errors["title"]?.message}
-              keyProp="title"
+              keyProp="blog.title"
             />{" "}
           </FormGroup>
 
