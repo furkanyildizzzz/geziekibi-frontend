@@ -43,6 +43,7 @@ const EditProfilePrimaryImages = ({
   );
 
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const updateFiles = (files: ExtFile[]) => {
     setFiles(files);
@@ -56,7 +57,7 @@ const EditProfilePrimaryImages = ({
       console.log({ response });
 
       if ("errorType" in response) {
-        ShowError(response.errorMessage);
+        ShowError(tForm, response.errorMessage);
         setErrorsValidation(response.errorsValidation!);
       } else {
         ShowSuccess(response.message);

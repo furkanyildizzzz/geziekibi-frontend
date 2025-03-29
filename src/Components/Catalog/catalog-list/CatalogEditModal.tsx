@@ -53,6 +53,7 @@ const CatalogEditModal: React.FC<CatalogModalInterfaceType> = ({
 
   const [isLoading, setIsLoading] = useState(false); // Add loading state
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const {
     register,
@@ -77,7 +78,7 @@ const CatalogEditModal: React.FC<CatalogModalInterfaceType> = ({
       const response = await updateCatalog(dataId, data);
 
       if ("errorType" in response) {
-        ShowError(response.errorMessage!);
+        ShowError(tForm, response.errorMessage!);
       } else {
         ShowSuccess(response.message);
       }
@@ -92,7 +93,7 @@ const CatalogEditModal: React.FC<CatalogModalInterfaceType> = ({
   const fetchCatalogById = async () => {
     const response = await getCatalogById(dataId);
     if ("errorType" in response) {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
       onCloseModal();
     } else {
       setCatalog({ ...response.data });
@@ -129,7 +130,7 @@ const CatalogEditModal: React.FC<CatalogModalInterfaceType> = ({
 
         await deleteCatalog(catalog!.id);
       } catch (error) {
-        ShowError("Failed to delete catalog. Please try again.");
+        ShowError(tForm, "Failed to delete catalog. Please try again.");
       } finally {
         setIsLoading(false);
         window.location.reload();

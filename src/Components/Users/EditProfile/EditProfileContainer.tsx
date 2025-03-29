@@ -21,6 +21,7 @@ import { EditUserFormSchema } from "@/app/lib/definitions";
 
 const EditProfileContainer = () => {
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const [userData, setUserData] = useState<UserSuccessResponse>();
 
@@ -31,7 +32,7 @@ const EditProfileContainer = () => {
     if ("data" in response) {
       setUserData({ ...response.data });
     } else {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
       router.push("/auth/login");
     }
   };

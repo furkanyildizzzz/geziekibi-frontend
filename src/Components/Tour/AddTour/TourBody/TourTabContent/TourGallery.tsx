@@ -17,10 +17,11 @@ const TourGalleryImages = () => {
   const [existingFiles, setExistingFiles] = useState<CloudinaryImage[]>([]);
   const dispatch = useAppDispatch();
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const updateFiles = (files: ExtFile[]) => {
     if (files.length > 5) {
-      ShowError("Maximum 5 adet yükleyebilirsiniz");
+      ShowError(tForm, "Maximum 5 adet yükleyebilirsiniz");
       return;
     }
     setFiles(files);

@@ -11,6 +11,10 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "@/Redux/Hooks";
 import { persistor } from "@/Redux/Store";
 import { clearUser, logoutUser } from "@/Redux/Reducers/UserSlice";
+import { useTranslation } from "react-i18next";
+import { UserSuccessResponse } from "@/Types/ApiResponseType";
+import { getUserProfile } from "@/app/actions/user/getUserProfile";
+import ShowError from "@/Components/Toast/Error/ShowError";
 
 export const UserSection = () => {
   const router = useRouter();
@@ -20,6 +24,25 @@ export const UserSection = () => {
 
   const handleLogout = () => {
     dispatch(logoutUser())
+  }
+  const [userData, setUserData] = useState<UserSuccessResponse>();
+  const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
+
+  // const handleLogout = () => {
+  //   Cookies.remove("token");
+  //   localStorage.clear();
+  //   router.push(`/auth/login`);
+  // };
+
+  const fetchUserData = async () => {
+    const response = await getUserProfile();
+    if ("data" in response) {
+      setUserData({ ...response.data });
+    } else {
+      ShowError(tForm, response.errorMessage);
+      router.push("/auth/login");
+    }
   };
 
   useEffect(() => {
@@ -28,7 +51,7 @@ export const UserSection = () => {
       dispatch(clearUser());
     }
   }, [isSuccess]);
-  
+
   return (
     <li className="profile-nav onhover-dropdown p-0">
       <div className="d-flex align-items-center profile-media">

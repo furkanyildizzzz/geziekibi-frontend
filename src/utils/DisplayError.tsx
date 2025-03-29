@@ -1,5 +1,6 @@
 import { ErrorValidation } from "@/Types/ApiResponseType";
 import { DeepMap, FieldError, FieldErrors, FieldValues } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 // Define the prop types for DisplayError
 interface DisplayErrorProps {
@@ -15,21 +16,24 @@ const DisplayError: React.FC<DisplayErrorProps> = ({
   errorMessage,
   errors,
 }) => {
+  console.log({ errorsValidation, keyProp, errorMessage, errors });
+  const { t } = useTranslation("form");
+
   return (
     <>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      {errorMessage && <p style={{ color: "red" }}>{t(errorMessage)}</p>}
       {errorsValidation &&
         errorsValidation.length > 0 &&
         errorsValidation.map((errorObj, index) =>
           errorObj[keyProp!] ? (
             <p key={`${keyProp}-error-${index}`} style={{ color: "red" }}>
-              {errorObj[keyProp!]}
+              {t(errorObj[keyProp!])}
             </p>
           ) : null
         )}
       {errors && errors[keyProp!] ? (
         <p key={`${keyProp}-error`} style={{ color: "red" }}>
-          {(errors[keyProp!] as DeepMap<FieldValues, FieldError>).message}
+          {t((errors[keyProp!] as DeepMap<FieldValues, FieldError>).message)}
         </p>
       ) : null}
     </>

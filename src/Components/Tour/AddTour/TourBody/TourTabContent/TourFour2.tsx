@@ -42,6 +42,7 @@ import { AddNewPricesForNewDate } from "./TourFour/AddNewPricesForNewDate";
 import ShowError from "@/Components/Toast/Error/ShowError";
 import { isSameDay, startOfDay } from "date-fns";
 import { tr } from "date-fns/locale/tr";
+import { useTranslation } from "react-i18next";
 
 export const DropDownData = [
   {
@@ -66,6 +67,8 @@ const TourFour = () => {
   );
 
   const [dateList, setDateList] = useState<TourDateSuccessResponse[]>([]);
+
+  const { t: tForm } = useTranslation("form");
 
   const {
     register,
@@ -104,7 +107,10 @@ const TourFour = () => {
     const isDuplicate = dateList.some((s) => isSameDay(s.startDate, startDate));
 
     if (isDuplicate) {
-      ShowError(`${startDate.toLocaleDateString("tr")} is already added`);
+      ShowError(
+        tForm,
+        `${startDate.toLocaleDateString("tr")} is already added`
+      );
       return;
     }
 

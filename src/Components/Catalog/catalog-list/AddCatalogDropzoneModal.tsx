@@ -33,6 +33,7 @@ const AddCatalogDropzoneModal: React.FC<AddCatalogDropzoneModalProps> = ({
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
   const { t } = useTranslation("common");
+  const { t: tForm } = useTranslation("form");
 
   const updateFiles = (files: ExtFile[]) => {
     setFiles(files);
@@ -55,7 +56,7 @@ const AddCatalogDropzoneModal: React.FC<AddCatalogDropzoneModalProps> = ({
       console.log({ response });
 
       if ("errorType" in response) {
-        ShowError(response.errorMessage);
+        ShowError(tForm, response.errorMessage);
         setErrorsValidation(response.errorsValidation!);
       } else {
         ShowSuccess(response.message);

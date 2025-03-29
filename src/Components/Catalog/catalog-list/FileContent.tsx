@@ -11,6 +11,7 @@ import CatalogEditModal from "./CatalogEditModal";
 import { getCatalogList } from "@/app/actions/catalog/getCatalogList";
 import ShowError from "@/Components/Toast/Error/ShowError";
 import { Catalog } from "@/Types/ApiResponseType";
+import { useTranslation } from "react-i18next";
 
 const FileContent = () => {
   const [searchFile, setSearchFile] = useState("");
@@ -21,6 +22,8 @@ const FileContent = () => {
   const [dataId, setDataId] = useState<number>(0);
 
   const [existingFiles, setExistingFiles] = useState<Catalog[]>([]);
+
+  const { t: tForm } = useTranslation("form");
 
   const onFileUpload = () => {
     fetchExistingFiles();
@@ -45,7 +48,7 @@ const FileContent = () => {
   const fetchExistingFiles = async () => {
     const response = await getCatalogList();
     if ("errorMessage" in response) {
-      ShowError(response.errorMessage);
+      ShowError(tForm, response.errorMessage);
     } else {
       setExistingFiles(response.data);
     }
