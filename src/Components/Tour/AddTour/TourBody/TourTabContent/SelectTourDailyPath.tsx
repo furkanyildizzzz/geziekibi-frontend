@@ -91,7 +91,7 @@ const SelectTourDailyPath: React.FC<SelectTourDailyPathProps> = ({
   }, [existingValues]);
 
   const handleAdd = () => {
-    router.push("/tour/tour-path/add-path");
+    router.push("/tour/paths/add-path");
   };
 
   return (
