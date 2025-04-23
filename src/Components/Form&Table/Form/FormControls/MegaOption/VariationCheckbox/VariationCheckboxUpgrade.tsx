@@ -4,6 +4,7 @@ import {
   ServiceSuccessResponse,
   TourServiceSuccessResponse,
 } from "@/Types/ApiResponseType";
+import { useTranslation } from "react-i18next";
 import { Col, Input } from "reactstrap";
 
 export const UpgradeVariationData = [
@@ -34,9 +35,17 @@ interface ServicesBox {
   title: string;
   textColor: string;
   services: ServiceSuccessResponse[];
+  removeItemFromList: Function;
 }
 
-const ServicesBox: React.FC<ServicesBox> = ({ title, textColor, services }) => {
+const ServicesBox: React.FC<ServicesBox> = ({
+  title,
+  textColor,
+  services,
+  removeItemFromList,
+}) => {
+  const { t } = useTranslation("common");
+
   return (
     <div className="card-wrapper border rounded-3 h-100 checkbox-checked">
       <div>
@@ -47,15 +56,22 @@ const ServicesBox: React.FC<ServicesBox> = ({ title, textColor, services }) => {
       <div className="variation-box">
         {services.map(({ id, name }, index) => (
           <div className="payment-wrapper" key={index}>
-            <div
-              className="payment-first"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "15px",
-              }}
-            >
-              <span>{name}</span>
+            <div className="d-flex flex-column flex-lg-row justify-content-between align-items-start align-items-lg-center gap-2">
+              <span className="flex-grow-1">{name}</span>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-danger px-2 py-1 d-flex align-items-center"
+                style={{
+                  fontSize: "0.75rem",
+                  lineHeight: "1",
+                  verticalAlign: "middle",
+                }}
+                onClick={() =>
+                  removeItemFromList(TourServiceTypeEnum.INHERIT, id, name)
+                }
+              >
+                <i className="icon-trash me-1"></i> {t("Remove")}
+              </button>
             </div>
           </div>
         ))}

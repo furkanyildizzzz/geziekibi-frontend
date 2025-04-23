@@ -123,7 +123,10 @@ const TourFour = () => {
     );
 
     dispatch(
-      setFormValue({ name: "tourDates", value: [newTourDate, ...formValue.tourDates] })
+      setFormValue({
+        name: "tourDates",
+        value: [newTourDate, ...formValue.tourDates],
+      })
     );
   };
 
@@ -152,17 +155,34 @@ const TourFour = () => {
     }
   };
 
+  const handleFilterDateList = (startDate: Date, endDate: Date) => {
+    const normalizedStartDate = startOfDay(startDate); // Reset time to 00:00:00
+    const normalizedEndDate = startOfDay(endDate); // Reset time to 00:00:00
+
+    const filteredList = (
+      formValue.tourDates as TourDateSuccessResponse[]
+    ).filter((item) => {
+      // Normalize item start and end dates to compare only the date part
+      const itemStartDate = startOfDay(new Date(item.startDate));
+      const itemEndDate = startOfDay(new Date(item.endDate));
+
+      // Check if the item's date range is fully between the given range
+      return (
+        itemStartDate >= normalizedStartDate && itemEndDate <= normalizedEndDate
+      );
+    });
+
+    // Log the filtered list or update state with filtered results
+    console.log("Filtered Date List:", filteredList);
+    setDateList(filteredList);
+  };
+
   return (
     <>
-      <AddNewDate handleAddNewDate={handleAddNewDate} />
-      {/* {newTourDateList.length > 0 &&
-        newTourDateList.map((t, index) => (
-          <AddNewPricesForNewDate
-            tourDate={t}
-            accordionId={index.toString()}
-            handleRemoveTourDate={handleRemoveTourDate}
-          />
-        ))} */}
+      <AddNewDate
+        handleAddNewDate={handleAddNewDate}
+        handleFilterDateList={handleFilterDateList}
+      />
       {dateList.length > 0 &&
         dateList.map((d, index) => (
           <AddNewPricesForNewDate

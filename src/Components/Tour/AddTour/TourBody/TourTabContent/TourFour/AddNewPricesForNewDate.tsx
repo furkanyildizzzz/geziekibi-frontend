@@ -201,7 +201,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                         })}
                       >
                         <Row>
-                          <Col xs="3">
+                          <Col lg="3" xs="12">
                             <FormGroup>
                               <Label for="name" check>
                                 {t("SellingPriceName")}{" "}
@@ -222,7 +222,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                               />
                             </FormGroup>
                           </Col>
-                          <Col xs="2">
+                          <Col lg="2" xs="12">
                             <FormGroup>
                               <Label for="price" check>
                                 {t("SellingPrice")}{" "}
@@ -242,7 +242,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                               />
                             </FormGroup>
                           </Col>
-                          <Col xs="2">
+                          <Col lg="2" xs="12">
                             <FormGroup>
                               <Label for="currency" check>
                                 {t("SellingCurrency")}{" "}
@@ -279,7 +279,7 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                               />
                             </FormGroup>
                           </Col>
-                          <Col xs="3">
+                          <Col lg="3" xs="12">
                             <FormGroup>
                               <Label for="description" check>
                                 {t("Description")}
@@ -299,7 +299,8 @@ export const AddNewPricesForNewDate: React.FC<AddNewPricesForNewDateProps> = ({
                             </FormGroup>
                           </Col>
                           <Col
-                            xs="1"
+                            lg="1"
+                            xs="12"
                             style={{ alignSelf: "center", cursor: "pointer" }}
                           >
                             <Button

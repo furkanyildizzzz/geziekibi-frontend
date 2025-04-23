@@ -10,9 +10,13 @@ import { useAppSelector } from "@/Redux/Hooks";
 
 interface AddNewDateProps {
   handleAddNewDate: (startDate: Date, endDate: Date) => void;
+  handleFilterDateList: (startDate: Date, endDate: Date) => void;
 }
 
-export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
+export const AddNewDate: React.FC<AddNewDateProps> = ({
+  handleAddNewDate,
+  handleFilterDateList,
+}) => {
   const { t } = useTranslation("common");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -47,6 +51,11 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
     console.log({ data });
     handleAddNewDate(data.startDate, data.endDate);
   };
+
+  const onFilter = () => {
+    handleFilterDateList(startDate, endDate);
+  };
+
   return (
     <Col lg="12">
       <Card>
@@ -56,9 +65,8 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
               onSubmit(data as AddNewDateSchema);
             })}
           >
-            {" "}
             <Row style={{ justifyContent: "center", alignItems: "center" }}>
-              <Col lg="3">
+              <Col lg="3" xs="12" className="mb-3">
                 <Label for="validationServer01" check>
                   {t("Start Date")} <span className="txt-danger"> *</span>
                 </Label>
@@ -73,7 +81,7 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
                   />
                 </div>
               </Col>
-              <Col lg="3">
+              <Col lg="3" xs="12" className="mb-3">
                 <Label for="validationServer01" check>
                   {t("End Date")} <span className="txt-danger"> *</span>
                 </Label>
@@ -88,13 +96,35 @@ export const AddNewDate: React.FC<AddNewDateProps> = ({ handleAddNewDate }) => {
                   />
                 </div>
               </Col>
-              <Col lg="3">
+              <Col
+                lg="3"
+                xs="12"
+                className="d-flex justify-content-center mb-3"
+              >
                 <Button
                   type="submit"
                   className="btn btn-primary"
                   disabled={isLoading || isLoadingReduxForm}
                 >
                   {t("Add")}
+                </Button>
+              </Col>
+              <Col
+                lg="3"
+                xs="12"
+                className="d-flex justify-content-center mb-3"
+              >
+                <Button
+                  type="button"
+                  onClick={onFilter}
+                  disabled={isLoading || isLoadingReduxForm}
+                  style={{
+                    backgroundColor: "#007bff", // Custom background color
+                    borderColor: "#007bff", // Custom border color
+                    color: "white", // Text color
+                  }}
+                >
+                  {t("Filter")}
                 </Button>
               </Col>
             </Row>

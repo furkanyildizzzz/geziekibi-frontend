@@ -36,7 +36,7 @@ export interface ApiSuccessResponse<T> extends Response {
   data: T;
 }
 export type DeleteSuccessResponse = {};
-export type Role = 'ADMINISTRATOR' | 'STANDARD';
+export type Role = "ADMINISTRATOR" | "STANDARD";
 export type UserSuccessResponse = {
   id: number;
   email: string;
@@ -136,6 +136,8 @@ export type TourSuccessResponse = {
   galleryImages: CloudinaryImage[];
   publishStatus: string;
   publishDate: Date;
+  startDate: Date;
+  endDate: Date;
   category: TourCategorySuccessResponse;
   prices: { name: string; description: string; price: number }[];
   tags: TagSuccessResponse[];

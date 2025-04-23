@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Card,
@@ -31,391 +32,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { TourServiceTypeEnum } from "@/app/lib/enums";
 import { useTranslation } from "react-i18next";
 
-// const VariationCheckboxEski = () => {
-//   const [services, setServices] = useState<ServiceSuccessResponse[]>([]);
-//   const [service, setService] = useState<ServiceSuccessResponse>();
-//   const [refreshKey, setRefreshKey] = useState(0); // This will be updated to trigger rerender
-//   const dispatch = useAppDispatch();
-//   const { formValue } = useAppSelector((state) => state.addProduct);
-//   const router = useRouter();
-//   const pathname = usePathname();
-
-//   const fetchServiceList = useCallback(async () => {
-//     const response: ApiResponse<ServiceSuccessResponse[]> =
-//       await getServiceList();
-//     if ("data" in response) {
-//       setServices((previousServices) => {
-//         return response.data.map((item) => {
-//           const existingService = formValue.tourServices.find(
-//             (s: TourService) => s.service?.id === item.id
-//           );
-//           if (existingService) {
-//             return {
-//               ...existingService.service,
-//               selected: existingService.type === "included" ? "Y" : "N",
-//             };
-//           } else {
-//             return { ...item, selected: "I" };
-//           }
-//         });
-//       });
-//     }
-//   }, [formValue]);
-
-//   const handleModalClosed = async () => {
-//     const response: ApiResponse<ServiceSuccessResponse[]> =
-//       await getServiceList();
-//     if ("data" in response) {
-//       // Create a map of previous services by ID
-//       const prevServicesMap: Record<number, ServiceSuccessResponse> =
-//         services.reduce((map, service) => {
-//           map[service.id] = service;
-//           return map;
-//         }, {} as Record<number, ServiceSuccessResponse>);
-
-//       // Merge new data with old data, preserving specific properties
-//       const updatedServices = response.data.map((newService) => {
-//         const prevService = prevServicesMap[newService.id];
-//         if (prevService) {
-//           return {
-//             ...newService,
-//             selected: prevService.selected, // Preserve `selected` from the previous item
-//           };
-//         } else {
-//           newService.selected = "I";
-//           return {
-//             ...newService,
-//           };
-//         }
-//         return newService;
-//       });
-
-//       setServices([...updatedServices]);
-//     }
-//   };
-
-//   const handleServiceChange = (
-//     selected: "N" | "I" | "Y",
-//     id: number,
-//     name: string
-//   ) => {
-//     setService((prev) => {
-//       return { id: Number(id), name, selected } as ServiceSuccessResponse;
-//     });
-//   };
-
-//   useEffect(() => {
-//     if (formValue.id > 0 && services.length === 0) {
-//       fetchServiceList();
-//     }
-//   }, [fetchServiceList]);
-
-//   useEffect(() => {
-//     // Check if we are no longer on the modal path to refresh the component
-//     if (pathname !== "/services/add-service") {
-//       setRefreshKey((prev) => prev + 1);
-//       handleModalClosed();
-//     }
-//   }, [pathname]);
-
-//   useEffect(() => {
-//     if (!service) return;
-
-//     // If the service exists, update the selection status, otherwise add it
-//     const updatedServices = services.map((item) => {
-//       const isMatch = item.id === service.id;
-//       return isMatch ? { ...item, selected: service.selected } : item;
-//     });
-//     setServices((prevServices) => {
-//       return [...updatedServices];
-//     });
-//     dispatch(
-//       setFormValue({ name: "tourServices", value: [...updatedServices] })
-//     );
-//   }, [service]);
-
-//   const handleAdd = () => {
-//     router.push("/services/add-service");
-//   };
-//   return (
-//     <Col sm="12">
-//       <Card>
-//         <CardBody>
-//           <Row className="g-1">
-//             <Col xl="12" md="12">
-//               <div
-//                 key={refreshKey}
-//                 className="tag-buton"
-//                 style={{ display: "flex", justifyContent: "end" }}
-//               >
-//                 <Button
-//                   color="transparent"
-//                   tag="a"
-//                   className="button-primary bg-light-primary font-primary"
-//                   onClick={handleAdd}
-//                 >
-//                   <i className="me-2 fa fa-plus"> </i>
-//                   {CreateNewServiceHeading}
-//                 </Button>
-//               </div>
-//               <h6 className="sub-title">{ChooseServices}</h6>
-//               <div
-//                 className="card-wrapper border rounded-3 h-100 checkbox-checked"
-//                 style={{
-//                   overflowY: "auto",
-//                   maxHeight: "400px",
-//                   marginBottom: "0",
-//                   paddingBottom: "0",
-//                 }}
-//               >
-//                 {services.map(({ id, name, selected }, index) => (
-//                   <div className="payment-wrapper" key={index}>
-//                     <div
-//                       className="payment-first"
-//                       style={{
-//                         display: "flex",
-//                         alignItems: "center",
-//                         gap: "15px",
-//                       }}
-//                     >
-//                       <ThreeChoiceSwitch
-//                         key={`${id}-${index}-${selected}`}
-//                         id={id}
-//                         name={name}
-//                         onSelectChange={handleServiceChange}
-//                         isSelected={selected}
-//                       />
-//                       <span>{name}</span>
-//                     </div>
-//                   </div>
-//                 ))}
-//               </div>
-//             </Col>
-//             <Col xl="12" md="12">
-//               <Row>
-//                 <Col xl="6" md="12">
-//                   <VariationCheckboxUpgrade
-//                     title={IncludedServices}
-//                     textColor="success"
-//                     services={services.filter((s) => s.selected === "Y")}
-//                   />
-//                 </Col>
-//                 <Col xl="6" md="12">
-//                   <VariationCheckboxUpgrade
-//                     title={ExcludedServices}
-//                     textColor="danger"
-//                     services={services.filter((s) => s.selected === "N")}
-//                   />
-//                 </Col>
-//               </Row>
-//             </Col>
-//           </Row>
-//         </CardBody>
-//       </Card>
-//     </Col>
-//   );
-// };
-
-// const VariationCheckboxEski2 = () => {
-//   const [services, setServices] = useState<ServiceSuccessResponse[]>([]);
-//   const [existingServices, setExistingServices] = useState<
-//     ServiceSuccessResponse[]
-//   >([]);
-//   const [service, setService] = useState<ServiceSuccessResponse>();
-//   const [refreshKey, setRefreshKey] = useState(0); // This will be updated to trigger rerender
-//   const dispatch = useAppDispatch();
-//   const { formValue } = useAppSelector((state) => state.addProduct);
-//   const router = useRouter();
-//   const pathname = usePathname();
-
-//   const fetchServiceList = useCallback(async () => {
-//     const response: ApiResponse<ServiceSuccessResponse[]> =
-//       await getServiceList();
-//     if ("data" in response) {
-//       setServices((previousServices) => {
-//         return response.data.map((item) => {
-//           const existingService = formValue.tourServices.find(
-//             (s: TourService) => s.service?.id === item.id
-//           );
-//           if (existingService) {
-//             return {
-//               ...existingService.service,
-//               type: existingService.type as TourServiceTypeEnum,
-//             };
-//           } else {
-//             return { ...item, type: TourServiceTypeEnum.INHERIT };
-//           }
-//         });
-//       });
-//     }
-//   }, [existingServices]);
-
-//   const initiateExistingServices = useCallback(async () => {
-//     setExistingServices([...formValue.tourServices]);
-//   }, [formValue]);
-
-//   const handleModalClosed = async () => {
-//     const response: ApiResponse<ServiceSuccessResponse[]> =
-//       await getServiceList();
-//     if ("data" in response) {
-//       // Create a map of previous services by ID
-//       const prevServicesMap: Record<number, ServiceSuccessResponse> =
-//         services.reduce((map, service) => {
-//           map[service.id] = service;
-//           return map;
-//         }, {} as Record<number, ServiceSuccessResponse>);
-
-//       // Merge new data with old data, preserving specific properties
-//       const updatedServices = response.data.map((newService) => {
-//         const prevService = prevServicesMap[newService.id];
-//         if (prevService) {
-//           return {
-//             ...newService,
-//             type: prevService.type, // Preserve `selected` from the previous item
-//           };
-//         } else {
-//           newService.type = TourServiceTypeEnum.INHERIT;
-//           return {
-//             ...newService,
-//           };
-//         }
-//         return newService;
-//       });
-
-//       setServices([...updatedServices]);
-//     }
-//   };
-
-//   const handleServiceChange = (
-//     type: TourServiceTypeEnum,
-//     id: number,
-//     name: string
-//   ) => {
-//     setService((prev) => {
-//       return { id: Number(id), name, type } as ServiceSuccessResponse;
-//     });
-//   };
-
-//   useEffect(() => {
-//     fetchServiceList();
-//   }, [fetchServiceList]);
-
-//   useEffect(() => {
-//     if (formValue.id > 0 && existingServices.length === 0) {
-//       initiateExistingServices();
-//     }
-//   }, [initiateExistingServices]);
-
-//   useEffect(() => {
-//     // Check if we are no longer on the modal path to refresh the component
-//     if (pathname !== "/services/add-service") {
-//       setRefreshKey((prev) => prev + 1);
-//       handleModalClosed();
-//     }
-//   }, [pathname]);
-
-//   useEffect(() => {
-//     if (!service) return;
-
-//     // If the service exists, update the selection status, otherwise add it
-//     const updatedServices = services.map((item) => {
-//       const isMatch = item.id === service.id;
-//       return isMatch ? { ...item, type: service.type } : item;
-//     });
-//     setServices((prevServices) => {
-//       return [...updatedServices];
-//     });
-//     dispatch(
-//       setFormValue({ name: "tourServices", value: [...updatedServices] })
-//     );
-//   }, [service]);
-
-//   const handleAdd = () => {
-//     router.push("/services/add-service");
-//   };
-//   return (
-//     <Col sm="12">
-//       <Card>
-//         <CardBody>
-//           <Row className="g-1">
-//             <Col xl="12" md="12">
-//               <div
-//                 key={refreshKey}
-//                 className="tag-buton"
-//                 style={{ display: "flex", justifyContent: "end" }}
-//               >
-//                 <Button
-//                   color="transparent"
-//                   tag="a"
-//                   className="button-primary bg-light-primary font-primary"
-//                   onClick={handleAdd}
-//                 >
-//                   <i className="me-2 fa fa-plus"> </i>
-//                   {CreateNewServiceHeading}
-//                 </Button>
-//               </div>
-//               <h6 className="sub-title">{ChooseServices}</h6>
-//               <div
-//                 className="card-wrapper border rounded-3 h-100 checkbox-checked"
-//                 style={{
-//                   overflowY: "auto",
-//                   maxHeight: "400px",
-//                   marginBottom: "0",
-//                   paddingBottom: "0",
-//                 }}
-//               >
-//                 {services.map(({ id, name, type }, index) => (
-//                   <div className="payment-wrapper" key={index}>
-//                     <div
-//                       className="payment-first"
-//                       style={{
-//                         display: "flex",
-//                         alignItems: "center",
-//                         gap: "15px",
-//                       }}
-//                     >
-//                       <ThreeChoiceSwitch
-//                         key={`${id}-${index}-${type}`}
-//                         id={id}
-//                         name={name}
-//                         onSelectChange={handleServiceChange}
-//                         type={type}
-//                       />
-//                       <span>{name}</span>
-//                     </div>
-//                   </div>
-//                 ))}
-//               </div>
-//             </Col>
-//             <Col xl="12" md="12">
-//               <Row>
-//                 <Col xl="6" md="12">
-//                   <VariationCheckboxUpgrade
-//                     title={IncludedServices}
-//                     textColor="success"
-//                     services={services.filter(
-//                       (s) => s.type === TourServiceTypeEnum.INCLUDED
-//                     )}
-//                   />
-//                 </Col>
-//                 <Col xl="6" md="12">
-//                   <VariationCheckboxUpgrade
-//                     title={ExcludedServices}
-//                     textColor="danger"
-//                     services={services.filter(
-//                       (s) => s.type === TourServiceTypeEnum.EXCLUDED
-//                     )}
-//                   />
-//                 </Col>
-//               </Row>
-//             </Col>
-//           </Row>
-//         </CardBody>
-//       </Card>
-//     </Col>
-//   );
-// };
-
 const VariationCheckbox = () => {
   const [services, setServices] = useState<ServiceSuccessResponse[]>([]);
   const [tourServices, setTourServices] = useState<
@@ -427,7 +43,13 @@ const VariationCheckbox = () => {
   const { formValue, isLoading } = useAppSelector((state) => state.addProduct);
   const router = useRouter();
   const pathname = usePathname();
+  const [searchQuery, setSearchQuery] = useState("");
   const { t } = useTranslation("common");
+
+  // Filter services based on search query
+  const filteredServices = tourServices.filter(({ service: { name } }) =>
+    name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const fetchServiceList2 = useCallback(async () => {
     setTourServices((previousTourServices) => {
@@ -453,28 +75,6 @@ const VariationCheckbox = () => {
     const response: ApiResponse<ServiceSuccessResponse[]> =
       await getServiceList();
     if ("data" in response) {
-      // // Create a map of previous services by ID
-      // const prevServicesMap: Record<number, ServiceSuccessResponse> =
-      //   services.reduce((map, service) => {
-      //     map[service.id] = service;
-      //     return map;
-      //   }, {} as Record<number, ServiceSuccessResponse>);
-
-      // // Merge new data with old data, preserving specific properties
-      // const updatedServices = response.data.map((newService) => {
-      //   const prevService = tourServices.find(
-      //     (ts: TourServiceSuccessResponse) => ts.service.id === newService.id
-      //   );
-      //   return (
-      //     prevService ||
-      //     ({
-      //       service: newService,
-      //       type: TourServiceTypeEnum.INHERIT,
-      //     } as TourServiceSuccessResponse)
-      //   );
-      // });
-
-      // setTourServices([...updatedServices]);
       setServices([...response.data]);
     }
   };
@@ -555,6 +155,17 @@ const VariationCheckbox = () => {
                 </Button>
               </div>
               <h6 className="sub-title">{t("ChooseServices")}</h6>
+
+              {/* Search Bar */}
+              <div className="mb-3">
+                <Input
+                  type="text"
+                  placeholder={t("SearchByName")}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
               <div
                 className="card-wrapper border rounded-3 h-100 checkbox-checked"
                 style={{
@@ -564,27 +175,43 @@ const VariationCheckbox = () => {
                   paddingBottom: "0",
                 }}
               >
-                {tourServices.map(({ service: { id, name }, type }, index) => (
-                  <div className="payment-wrapper" key={index}>
-                    <div
-                      className="payment-first"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "15px",
-                      }}
-                    >
-                      <ThreeChoiceSwitch
-                        key={`${id}-${index}-${type}`}
-                        id={id}
-                        name={name}
-                        onSelectChange={handleTourServiceChange}
-                        type={type}
-                      />
-                      <span>{name}</span>
-                    </div>
-                  </div>
-                ))}
+                <div className="row">
+                  {filteredServices.map(
+                    ({ service: { id, name }, type }, index) => (
+                      <React.Fragment key={index}>
+                        <div className="col-lg-6 col-12">
+                          <div className="d-flex flex-lg-row flex-column align-items-start gap-3">
+                            <div style={{ flexShrink: 0 }}>
+                              <ThreeChoiceSwitch
+                                key={`${id}-${index}-${type}`}
+                                id={id}
+                                name={name}
+                                onSelectChange={handleTourServiceChange}
+                                type={type}
+                              />
+                            </div>
+                            <span
+                              className="w-100 text-center"
+                              style={{
+                                flexGrow: 1,
+                                wordBreak: "break-word",
+                                overflowWrap: "anywhere",
+                                alignSelf: "center",
+                              }}
+                            >
+                              {name}
+                            </span>
+                          </div>
+                        </div>
+                        {index < filteredServices.length - 1 && (
+                          <div className="col-12">
+                            <hr className="my-3" />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    )
+                  )}
+                </div>
               </div>
             </Col>
             <Col xl="12" md="12">
@@ -596,6 +223,7 @@ const VariationCheckbox = () => {
                     services={tourServices
                       .filter((s) => s.type === TourServiceTypeEnum.INCLUDED)
                       .map((s) => s.service)}
+                    removeItemFromList={handleTourServiceChange}
                   />
                 </Col>
                 <Col xl="6" md="12">
@@ -605,6 +233,7 @@ const VariationCheckbox = () => {
                     services={tourServices
                       .filter((s) => s.type === TourServiceTypeEnum.EXCLUDED)
                       .map((s) => s.service)}
+                    removeItemFromList={handleTourServiceChange}
                   />
                 </Col>
               </Row>

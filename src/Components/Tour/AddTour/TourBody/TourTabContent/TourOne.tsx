@@ -53,7 +53,7 @@ const TourOne = () => {
     const endDateValue = formValue.endDate
       ? new Date(formValue.endDate)
       : new Date();
-    setStartDate(new Date(endDateValue));
+    setEndDate(new Date(endDateValue));
   }, [formValue]);
 
   useEffect(() => {
