@@ -138,14 +138,14 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
       <ModalHeader className="position-relative">
         <Button close onClick={onCloseModal}></Button>
         <Row className="product-box align-items-center">
-          <Col lg="6" className="product-img">
+          <Col xs="12" lg="6" className="product-img mb-3 mb-lg-0">
             <img
               className="img-fluid"
               src={homepageSlider?.image?.url}
               alt="image"
             />
           </Col>
-          <Col lg="6" className="product-details text-start p-1">
+          <Col xs="12" lg="6" className="product-details text-start p-1">
             <form onSubmit={handleSubmit(onSubmitForm)}>
               <FormGroup>
                 <Col xs="12">
@@ -198,13 +198,18 @@ const HomepageSliderEditModal: React.FC<HomepageSliderModalInterfaceType> = ({
                 </Col>
               </FormGroup>
               <Row>
-                <Col lg="6">
-                  <Button type="submit" color="primary">
+                <Col xs="12" sm="6">
+                  <Button type="submit" color="primary" className="w-100">
                     {isLoading ? <LoadingButton /> : t("Save")}
                   </Button>
                 </Col>
-                <Col lg="6">
-                  <Button type="button" color="danger" onClick={handleDelete}>
+                <Col xs="12" sm="6" className="mt-2 mt-sm-0">
+                  <Button
+                    type="button"
+                    color="danger"
+                    onClick={handleDelete}
+                    className="w-100"
+                  >
                     {isLoading ? <LoadingButton /> : t("Delete")}
                   </Button>
                 </Col>
