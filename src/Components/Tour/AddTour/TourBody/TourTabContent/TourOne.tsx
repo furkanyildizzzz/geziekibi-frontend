@@ -9,6 +9,7 @@ import ReactDatePicker from "react-datepicker";
 import { useCallback, useEffect, useState } from "react";
 import { tr } from "date-fns/locale/tr";
 import { useTranslation } from "react-i18next";
+import tourFunctions from "@/utils/tourFunctions";
 
 export const DropDownData = [
   {
@@ -32,6 +33,10 @@ const TourOne = () => {
 
   const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
+  const [daysAndNights, setDaysAndNights] = useState<{
+    days: number;
+    nights: number;
+  }>({ days: 0, nights: 0 });
 
   const { t } = useTranslation("common");
 
@@ -60,6 +65,15 @@ const TourOne = () => {
     initiateDates();
   }, [initiateDates]);
 
+  useEffect(() => {
+    if (startDate && endDate) {
+      const result = tourFunctions.calculateDaysAndNights(startDate, endDate);
+      setDaysAndNights(result);
+    } else {
+      setDaysAndNights({ days: 0, nights: 0 });
+    }
+  }, [startDate, endDate]);
+
   const handleTourTypeChanged = (id: string) => {
     dispatch(setFormValue({ name: "tourType", value: id }));
   };
@@ -68,7 +82,7 @@ const TourOne = () => {
     <div className="sidebar-body">
       <Form>
         <Row className="g-2">
-          <Col xs="3">
+          <Col lg="3" xs="12">
             <FormGroup>
               <Label for="validationServer01" check>
                 {t("TourType")}
@@ -101,44 +115,65 @@ const TourOne = () => {
               <p className="f-light">{ChooseTheTourType}</p>
             </FormGroup>
           </Col>
-          <Col xs="2"></Col>
 
-          <Col xs="3">
-            <FormGroup>
-              <Label for="validationServer01" check>
-                {t("TourStartDate")} <span className="txt-danger"> *</span>
-              </Label>
-              <div className="input-group flatpicker-calender product-date">
-                <ReactDatePicker
-                  className="form-control flatpickr-input"
-                  selected={startDate}
-                  onChange={handleStartDateChange}
-                  locale={tr}
-                  dateFormat="yyyy/MM/dd HH:mm"
-                  showTimeSelect
-                  disabled={isLoading}
-                />
-              </div>
-            </FormGroup>
+          <Col lg="3" xs="12" className="d-none d-lg-block" />
+          <Col lg="6" xs="12">
+            <Row className="g-2">
+              <Col lg="6" xs="12">
+                <FormGroup>
+                  <Label for="validationServer01" check>
+                    {t("TourStartDate")} <span className="txt-danger"> *</span>
+                  </Label>
+                  <div className="input-group flatpicker-calender product-date">
+                    <ReactDatePicker
+                      className="form-control flatpickr-input"
+                      selected={startDate}
+                      onChange={handleStartDateChange}
+                      locale={tr}
+                      dateFormat="yyyy/MM/dd HH:mm"
+                      showTimeSelect
+                      disabled={isLoading}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+              <Col lg="6" xs="12">
+                <FormGroup>
+                  <Label for="validationServer01" check>
+                    {t("TourEndDate")} <span className="txt-danger"> *</span>
+                  </Label>
+                  <div className="input-group flatpicker-calender product-date">
+                    <ReactDatePicker
+                      className="form-control flatpickr-input"
+                      selected={endDate}
+                      onChange={handleEndDateChange}
+                      locale={tr}
+                      dateFormat="yyyy/MM/dd HH:mm"
+                      showTimeSelect
+                      disabled={isLoading}
+                    />
+                  </div>
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row className="mt-2">
+              <Col>
+                {daysAndNights.days > 0 && (
+                  <div>
+                    <span className="badge bg-secondary text-light">
+                      {daysAndNights.nights} gece
+                    </span>
+                    <span className="badge bg-info text-dark me-2">
+                      {daysAndNights.days} gün
+                    </span>
+                  </div>
+                )}
+              </Col>
+            </Row>
           </Col>
-          <Col xs="3">
-            <FormGroup>
-              <Label for="validationServer01" check>
-                {t("TourEndDate")} <span className="txt-danger"> *</span>
-              </Label>
-              <div className="input-group flatpicker-calender product-date">
-                <ReactDatePicker
-                  className="form-control flatpickr-input"
-                  selected={endDate}
-                  onChange={handleEndDateChange}
-                  locale={tr}
-                  dateFormat="yyyy/MM/dd HH:mm"
-                  showTimeSelect
-                  disabled={isLoading}
-                />
-              </div>
-            </FormGroup>
-          </Col>
+        </Row>
+        <hr />
+        <Row className="g-2">
           <FormGroup>
             <Col xs="12">
               <Label className="m-0" check>

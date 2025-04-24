@@ -11,17 +11,20 @@ const TourThree = () => {
     <div className="sidebar-body">
       <Form>
         <Row className="g-lg-4 g-3">
-          <Col xs="12">
-            <Row className="g-3">
-              <SelectOne />
-              <SelectTwo />
-            </Row>
+          <Col lg="6" xs="12">
+            <SelectOne />
           </Col>
-          <Col xs="12">
-            <Row className="g-3">
-              <SelectFour />
-              <SelectFive />
-            </Row>
+          <Col lg="6" xs="12">
+            <SelectTwo />
+          </Col>
+        </Row>
+        <hr />
+        <Row className="g-lg-4 g-3">
+          <Col lg="6" xs="12">
+            <SelectFour />
+          </Col>
+          <Col lg="6" xs="12">
+            <SelectFive />
           </Col>
         </Row>
       </Form>

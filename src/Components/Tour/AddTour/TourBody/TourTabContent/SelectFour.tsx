@@ -42,42 +42,38 @@ const SelectFour = () => {
   };
 
   return (
-    <Col sm="6">
-      <Row>
-        <Col xs="12">
-          <Label for="validationServer01" check>
-            {t("PublishStatus")}
-            <span className="txt-danger"> *</span>
-          </Label>
+    <>
+      <Label for="validationServer01" check>
+        {t("PublishStatus")}
+        <span className="txt-danger"> *</span>
+      </Label>
 
-          <DropDownComponent
-            id="id"
-            title={""}
-            isRequired={false}
-            labelKey="name"
-            multiple={false}
-            placeHolder=""
-            onChange={handlePublishStatusChanged}
-            isDisabled={isLoading}
-            options={DropDownData.map((item) => {
-              return {
-                name: t(item.name),
-                id: item.id.toString(),
-              };
-            })}
-            selectedOption={
-              formValue.publishStatus
-                ? DropDownData.filter(
-                    (data) => data.id === formValue.publishStatus
-                  ).map((s) => {
-                    return { ...s, name: t(s.name) };
-                  })
-                : undefined
-            }
-          />
-        </Col>
-      </Row>
-    </Col>
+      <DropDownComponent
+        id="id"
+        title={""}
+        isRequired={false}
+        labelKey="name"
+        multiple={false}
+        placeHolder=""
+        onChange={handlePublishStatusChanged}
+        isDisabled={isLoading}
+        options={DropDownData.map((item) => {
+          return {
+            name: t(item.name),
+            id: item.id.toString(),
+          };
+        })}
+        selectedOption={
+          formValue.publishStatus
+            ? DropDownData.filter(
+                (data) => data.id === formValue.publishStatus
+              ).map((s) => {
+                return { ...s, name: t(s.name) };
+              })
+            : undefined
+        }
+      />
+    </>
   );
 };
 

@@ -14,33 +14,31 @@ const TourTabContent = () => {
 
   return (
     <>
-      <Col xxl="9" xl="8" className="box-col-8 position-relative">
-        <TabContent activeTab={navId}>
-          <TabPane tabId={1}>
-            <TourThree />
-            <hr />
-            <TourOne />
-          </TabPane>
-          <TabPane tabId={2}>
-            <TourTwo />
-          </TabPane>
-          <TabPane tabId={3}>
-            <TourSix />
-          </TabPane>
-          <TabPane tabId={4}>
-            <TourFour />
-          </TabPane>
-          {/* <TabPane tabId={5}>
+      <TabContent activeTab={navId}>
+        <TabPane tabId={1}>
+          <TourThree />
+          <hr />
+          <TourOne />
+        </TabPane>
+        <TabPane tabId={2}>
+          <TourTwo />
+        </TabPane>
+        <TabPane tabId={3}>
+          <TourSix />
+        </TabPane>
+        <TabPane tabId={4}>
+          <TourFour />
+        </TabPane>
+        {/* <TabPane tabId={5}>
             <TourFour />
           </TabPane> */}
-          <TabPane tabId={6}>
-            <TourFive />
-          </TabPane>
-          <TabPane tabId={7}>
-            <TourSeven />
-          </TabPane>
-        </TabContent>
-      </Col>
+        <TabPane tabId={6}>
+          <TourFive />
+        </TabPane>
+        <TabPane tabId={7}>
+          <TourSeven />
+        </TabPane>
+      </TabContent>
       <CommonButton />
     </>
   );

@@ -29,23 +29,19 @@ const SelectFive = () => {
     initiatePublishDate();
   }, [initiatePublishDate]);
   return (
-    <Col sm="6">
-      <Row>
-        <Col xs="12">
-          <Label for="validationServer01" check>
-            {t("PublishDateTime")}
-          </Label>
-          <div className="input-group flatpicker-calender product-date">
-            <ReactDatePicker
-              className="form-control flatpickr-input"
-              selected={date}
-              onChange={handleChange}
-              disabled={isLoading}
-            />
-          </div>
-        </Col>
-      </Row>
-    </Col>
+    <>
+      <Label for="validationServer01" check>
+        {t("PublishDateTime")}
+      </Label>
+      <div className="input-group flatpicker-calender product-date">
+        <ReactDatePicker
+          className="form-control flatpickr-input"
+          selected={date}
+          onChange={handleChange}
+          disabled={isLoading}
+        />
+      </div>
+    </>
   );
 };
 

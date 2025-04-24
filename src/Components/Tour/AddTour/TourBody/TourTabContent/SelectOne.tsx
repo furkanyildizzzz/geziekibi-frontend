@@ -62,62 +62,57 @@ const SelectOne = () => {
   };
 
   return (
-    <Col sm="6">
-      <Row className="g-2">
-        <Col xs="12">
-          <Label className="m-0">
-            {t("SelectCategory")}
-            <span className="txt-danger"> *</span>
-          </Label>
-        </Col>
-        <Col xs="12">
-          <DropDownComponent
-            id="id"
-            title={""}
-            isRequired={false}
-            labelKey="name"
-            multiple={false}
-            placeHolder=""
-            onChange={handleCategoryIdChanged}
-            isDisabled={isLoading}
-            options={tourCategories.map((item) => {
-              return {
-                name: item.name,
-                id: item.id.toString(),
-              };
-            })}
-            selectedOption={
-              formValue.category
-                ? [
-                    {
-                      name: formValue.category.name,
-                      id: formValue.category.id.toString(),
-                    },
-                  ]
-                : undefined
-            }
-          />
-          <DisplayError
-            errorsValidation={errorsValidation}
-            keyProp="parentid"
-          />{" "}
-        </Col>
-      </Row>
-      <Row>
-        <Col xs="8">
-          <Button
-            color="transparent"
-            tag="a"
-            disabled={isLoading}
-            className="button-primary bg-light-primary font-primary"
-            onClick={handleAdd}
-          >
-            <i className="me-2 fa fa-plus"> </i>
-            {t("CreateNewCategoryHeading")}
-          </Button>
-        </Col>
-      </Row>
-    </Col>
+    <Row className="g-2">
+      <Col xs="12">
+        <Label className="m-0">
+          {t("SelectCategory")}
+          <span className="txt-danger"> *</span>
+        </Label>
+      </Col>
+      <Col xs="12">
+        <DropDownComponent
+          id="id"
+          title={""}
+          isRequired={false}
+          labelKey="name"
+          multiple={false}
+          placeHolder=""
+          onChange={handleCategoryIdChanged}
+          isDisabled={isLoading}
+          options={tourCategories.map((item) => {
+            return {
+              name: item.name,
+              id: item.id.toString(),
+            };
+          })}
+          selectedOption={
+            formValue.category
+              ? [
+                  {
+                    name: formValue.category.name,
+                    id: formValue.category.id.toString(),
+                  },
+                ]
+              : undefined
+          }
+        />
+        <DisplayError errorsValidation={errorsValidation} keyProp="parentid" />{" "}
+      </Col>
+
+      <Col xs="12" md="6">
+        <Button
+          color="transparent"
+          tag="a"
+          disabled={isLoading}
+          className="button-primary bg-light-primary font-primary w-100 d-flex align-items-center justify-content-center"
+          style={{ whiteSpace: "nowrap" }}
+          onClick={handleAdd}
+        >
+          <i className="me-2 fa fa-plus"> </i>
+          {t("CreateNewCategoryHeading")}
+        </Button>
+      </Col>
+    </Row>
   );
 };
 

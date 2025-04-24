@@ -72,55 +72,52 @@ const SelectTwo = () => {
   };
 
   return (
-    <Col sm="6">
-      <Row className="g-2 product-tag">
-        <Col xs="12">
-          <Label className="d-block m-0" for="validationServer01" check>
-            {t("SelectTag")}
-            <span className="txt-danger"> *</span>
-          </Label>
-        </Col>
-        <Col xs="12">
-          <Typeahead
-            // defaultSelected={MultiWithHeaderData.slice(0, 4)}
-            id="public-methods-example"
-            labelKey="name"
-            multiple
-            options={tags}
-            onChange={handleChange}
-            ref={ref}
-            disabled={isLoading}
-            selected={
-              formValue.tags.length
-                ? formValue.tags.map((tag: { id: number; name: string }) => tag)
-                : undefined
-            }
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs="6">
-          <ButtonToolbar className="mt-3">
-            <Button onClick={() => ref.current?.clear()} disabled={isLoading}>
-              {t("Clear")}
-            </Button>
-          </ButtonToolbar>
-        </Col>
-        <Col xs="6">
-          <Button
-            color="transparent"
-            tag="a"
-            disabled={isLoading}
-            className="button-primary bg-light-primary font-primary"
-            onClick={handleAdd}
-            style={{ width: "100%", padding: "10px" }}
-          >
-            <i className="me-2 fa fa-plus"> </i>
-            {t("CreateNewTagHeading")}
+    <Row className="g-2 product-tag">
+      <Col xs="12">
+        <Label className="d-block m-0" for="validationServer01" check>
+          {t("SelectTag")}
+          <span className="txt-danger"> *</span>
+        </Label>
+      </Col>
+      <Col xs="12">
+        <Typeahead
+          // defaultSelected={MultiWithHeaderData.slice(0, 4)}
+          id="public-methods-example"
+          labelKey="name"
+          multiple
+          options={tags}
+          onChange={handleChange}
+          ref={ref}
+          disabled={isLoading}
+          selected={
+            formValue.tags.length
+              ? formValue.tags.map((tag: { id: number; name: string }) => tag)
+              : undefined
+          }
+        />
+      </Col>
+
+      <Col xs="6">
+        <ButtonToolbar className="mt-3">
+          <Button onClick={() => ref.current?.clear()} disabled={isLoading}>
+            {t("Clear")}
           </Button>
-        </Col>
-      </Row>
-    </Col>
+        </ButtonToolbar>
+      </Col>
+      <Col xs="12" md="6">
+        <Button
+          color="transparent"
+          tag="a"
+          disabled={isLoading}
+          className="button-primary bg-light-primary font-primary w-100 d-flex align-items-center justify-content-center"
+          style={{ whiteSpace: "nowrap" }}
+          onClick={handleAdd}
+        >
+          <i className="me-2 fa fa-plus"> </i>
+          {t("CreateNewTagHeading")}
+        </Button>
+      </Col>
+    </Row>
   );
 };
 
