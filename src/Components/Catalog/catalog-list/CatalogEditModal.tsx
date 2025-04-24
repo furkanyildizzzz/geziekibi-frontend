@@ -147,110 +147,115 @@ const CatalogEditModal: React.FC<CatalogModalInterfaceType> = ({
       toggle={onCloseModal}
     >
       <ModalHeader className="position-relative">
-        <Button close onClick={onCloseModal}></Button>
-        <Row className="product-box align-items-center">
-          <Col lg="6" className="product-img">
-            <img
-              className="img-fluid"
-              src={GetCloudinaryPdfFileFirstPageAsImange(catalog?.url || "")}
-              alt="image"
-            />
-          </Col>
-          <Col lg="6" className="product-details text-start p-1">
-            <form onSubmit={handleSubmit(onSubmitForm)}>
-              <FormGroup>
-                <Col xs="12">
-                  <Label className="m-0" check>
-                    {t("Original Name")}
-                  </Label>
-                </Col>
-                <Col xs="12">
-                  <Controller
-                    name="originalName"
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        {...field}
-                        required
-                        type="text"
-                        invalid={!!errors["originalName"]}
-                      />
-                    )}
-                  />
-                  <DisplayError
-                    errorMessage={errors["originalName"]?.message}
-                  />
-                </Col>
-              </FormGroup>
-              <FormGroup>
-                <Controller
-                  key={catalog?.id}
-                  name="publishDate"
-                  control={control}
-                  render={({ field }) => {
-                    return (
-                      <PublishDate
-                        onChange={(date) => {
-                          console.log({
-                            date,
-                            formValue: getValues("publishDate"),
-                          });
-                          field.onChange(date);
-                        }}
-                        publishDate={catalog?.publishDate || new Date()}
-                      />
-                    );
-                  }}
-                />
-                <DisplayError
-                  errorMessage={errors["publishDate"]?.message}
-                  keyProp="publishDate"
-                />{" "}
-              </FormGroup>
-              <FormGroup>
-                <Controller
-                  key={catalog?.id}
-                  name="publishStatus"
-                  control={control}
-                  render={({ field }) => {
-                    return (
-                      <SelectPublishStatus
-                        onChange={(id) => {
-                          console.log({
-                            id,
-                            formValue: getValues("publishStatus"),
-                          });
-                          setValue("publishStatus", id as PublishStatusEnum);
-                          field.onChange(id);
-                        }}
-                        publishStatus={
-                          catalog?.publishStatus || PublishStatusEnum.DRAFT
-                        }
-                      />
-                    );
-                  }}
-                />
-                <DisplayError
-                  errorMessage={errors["publishStatus"]?.message}
-                  keyProp="publishStatus"
-                />{" "}
-              </FormGroup>
-              <Row>
-                <Col lg="6">
-                  <Button type="submit" color="primary">
-                    {isLoading ? <LoadingButton /> : t("Save")}
-                  </Button>
-                </Col>
-                <Col lg="6">
-                  <Button type="button" color="danger" onClick={handleDelete}>
-                    {isLoading ? <LoadingButton /> : t("Delete")}
-                  </Button>
-                </Col>
-              </Row>
-            </form>
-          </Col>
-        </Row>
+        <div className="w-100 d-flex justify-content-end">
+          <Button close onClick={onCloseModal}></Button>
+        </div>
       </ModalHeader>
+      <Row className="product-box align-items-center">
+        <Col xs="12" lg="6" className="mb-3 mb-lg-0 product-img text-center">
+          <img
+            className="img-fluid"
+            src={GetCloudinaryPdfFileFirstPageAsImange(catalog?.url || "")}
+            alt="image"
+          />
+        </Col>
+        <Col xs="12" lg="6" className="product-details text-start p-2">
+          <form onSubmit={handleSubmit(onSubmitForm)}>
+            <FormGroup>
+              <Col xs="12">
+                <Label className="m-0" check>
+                  {t("Original Name")}
+                </Label>
+              </Col>
+              <Col xs="12">
+                <Controller
+                  name="originalName"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      required
+                      type="text"
+                      invalid={!!errors["originalName"]}
+                    />
+                  )}
+                />
+                <DisplayError errorMessage={errors["originalName"]?.message} />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Controller
+                key={catalog?.id}
+                name="publishDate"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <PublishDate
+                      onChange={(date) => {
+                        console.log({
+                          date,
+                          formValue: getValues("publishDate"),
+                        });
+                        field.onChange(date);
+                      }}
+                      publishDate={catalog?.publishDate || new Date()}
+                    />
+                  );
+                }}
+              />
+              <DisplayError
+                errorMessage={errors["publishDate"]?.message}
+                keyProp="publishDate"
+              />{" "}
+            </FormGroup>
+            <FormGroup>
+              <Controller
+                key={catalog?.id}
+                name="publishStatus"
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <SelectPublishStatus
+                      onChange={(id) => {
+                        console.log({
+                          id,
+                          formValue: getValues("publishStatus"),
+                        });
+                        setValue("publishStatus", id as PublishStatusEnum);
+                        field.onChange(id);
+                      }}
+                      publishStatus={
+                        catalog?.publishStatus || PublishStatusEnum.DRAFT
+                      }
+                    />
+                  );
+                }}
+              />
+              <DisplayError
+                errorMessage={errors["publishStatus"]?.message}
+                keyProp="publishStatus"
+              />{" "}
+            </FormGroup>
+            <Row>
+              <Col xs="6">
+                <Button type="submit" color="primary" className="w-100">
+                  {isLoading ? <LoadingButton /> : t("Save")}
+                </Button>
+              </Col>
+              <Col xs="6">
+                <Button
+                  type="button"
+                  color="danger"
+                  onClick={handleDelete}
+                  className="w-100"
+                >
+                  {isLoading ? <LoadingButton /> : t("Delete")}
+                </Button>
+              </Col>
+            </Row>
+          </form>
+        </Col>
+      </Row>
     </Modal>
   );
 };

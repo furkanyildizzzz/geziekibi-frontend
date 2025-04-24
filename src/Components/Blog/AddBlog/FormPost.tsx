@@ -316,8 +316,8 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
           </div>
         </Col>
       </Row>
-      <Row style={{ display: "flex", justifyContent: "flex-end", gap: "2%" }}>
-        <div className="col-1 btn-showcase text-end mt-4">
+      <Row className="justify-content-end g-2 mt-4">
+        <Col xs="auto">
           <Button
             type="submit"
             color="primary"
@@ -325,9 +325,9 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
           >
             {isLoading ? <LoadingButton /> : t("Submit")}
           </Button>
-        </div>
+        </Col>
         {blogData && blogData.id > 0 && (
-          <div className="col-1 btn-showcase text-end mt-4">
+          <Col xs="auto">
             <Button
               type="button"
               color="danger"
@@ -336,7 +336,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
             >
               {isDeleting ? <LoadingButton /> : t("Delete")}
             </Button>
-          </div>
+          </Col>
         )}
       </Row>
     </Form>

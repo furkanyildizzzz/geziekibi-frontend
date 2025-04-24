@@ -24,9 +24,16 @@ export interface FAQListTableFAQ {
 
 const FAQListTableFAQName: React.FC<FAQListTableFAQ> = ({ name }) => {
   return (
-    <div className="product-names my-2">
-      <p>{name}</p>
-    </div>
+    <>
+      <div className="product-names my-2 d-block d-sm-none">
+        <p className="text-truncate mb-0" style={{ maxWidth: "100%" }}>
+          {name}
+        </p>
+      </div>
+      <div className="product-names my-2 d-none d-sm-block">
+        <p className="mb-0">{name}</p>
+      </div>
+    </>
   );
 };
 

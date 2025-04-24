@@ -61,7 +61,7 @@ const FileContent = () => {
   return (
     <Card>
       <CardHeader>
-        <div className="d-md-flex d-sm-block">
+        <div className="d-flex flex-column flex-md-row gap-3">
           <SearchBar searchFile={searchFile} setSearchFile={setSearchFile} />
           <AddUploadMedia onFileUpload={onFileUpload} />
         </div>
