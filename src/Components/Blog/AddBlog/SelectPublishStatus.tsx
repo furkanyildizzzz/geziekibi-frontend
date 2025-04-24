@@ -44,7 +44,7 @@ const SelectPublishStatus: React.FC<SelectPublishStatusProps> = ({
   };
 
   return (
-    <Col xs="12">
+    <>
       <Label for="validationServer01" check>
         {t("PublishStatus")}
         <span className="txt-danger"> *</span>
@@ -70,7 +70,7 @@ const SelectPublishStatus: React.FC<SelectPublishStatusProps> = ({
           return { ...s, name: t(s.name) };
         })}
       />
-    </Col>
+    </>
   );
 };
 

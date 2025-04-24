@@ -18,7 +18,7 @@ const PublishDate: React.FC<PublishDateProps> = ({ onChange, publisDate }) => {
   };
 
   return (
-    <Col xs="12">
+    <>
       <Label for="validationServer01" check>
         {t("PublishDateTime")} <span className="txt-danger"> *</span>
       </Label>
@@ -29,7 +29,7 @@ const PublishDate: React.FC<PublishDateProps> = ({ onChange, publisDate }) => {
           onChange={handleChange}
         />
       </div>
-    </Col>
+    </>
   );
 };
 

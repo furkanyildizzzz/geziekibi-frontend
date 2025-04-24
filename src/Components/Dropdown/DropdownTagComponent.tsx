@@ -73,12 +73,12 @@ const DropdownTagComponent: React.FC<DropdownTagComponentProps> = ({
         </Col>
       </Row>
       <Row>
-        <Col xs="6">
+        <Col xs="12" sm="6">
           <ButtonToolbar className="mt-3">
             <Button onClick={() => ref.current?.clear()}>{t("Clear")}</Button>
           </ButtonToolbar>
         </Col>
-        <Col xs="6">
+        <Col xs="12" sm="6">
           <Button
             color="transparent"
             tag="a"

@@ -119,93 +119,95 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
   return (
     <Form onSubmit={handleSubmit(handleFormSubmit)}>
       <Row>
-        <Col sm="6">
-          <FormGroup>
-            <Label check>
-              {t("Title")} <span className="txt-danger"> *</span>
-            </Label>
-            <Controller
-              name="title"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  required
-                  type="text"
-                  invalid={!!errors["title"]}
-                />
-              )}
-            />
-            <DisplayError
-              errorsValidation={errorsValidation}
-              errorMessage={errors["title"]?.message}
-              keyProp="blog.title"
-            />{" "}
-          </FormGroup>
-
-          <FormGroup>
-            <Label className="m-0" check>
-              {t("Spot")} <span className="txt-danger"> *</span>
-            </Label>
-            <Controller
-              name="spot"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type="textarea"
-                  invalid={!!errors["spot"]}
-                  style={{ height: "130px" }}
-                />
-              )}
-            />
-            <DisplayError
-              errorsValidation={errorsValidation}
-              errorMessage={errors["spot"]?.message}
-              keyProp="spot"
-            />{" "}
-          </FormGroup>
-
-          <FormGroup>
-            <DropdownBlogCategory
-              onChange={(selectedCategory) => {
-                console.log({
-                  selectedCategory,
-                  formValue: getValues("category"),
-                });
-                setValue("category", selectedCategory);
-              }}
-              selectedOption={
-                getValues("category") ? [getValues("category")] : []
-              }
-            />
-            <DisplayError
-              errorsValidation={errorsValidation}
-              errorMessage={errors["category"]?.message}
-              keyProp="parentid"
-            />{" "}
-          </FormGroup>
-
-          <FormGroup>
-            <DropdownTagComponent
-              onChange={(selectedTags) => {
-                setValue(
-                  "tags",
-                  selectedTags.map((s) => {
-                    return s as TagSuccessResponse;
-                  })
-                );
-              }}
-              incomingTags={getValues("tags")}
-            />
-            <DisplayError
-              errorsValidation={errorsValidation}
-              errorMessage={errors["tags"]?.message}
-              keyProp="tags"
-            />{" "}
-          </FormGroup>
+        <Col md="6" xs="12">
           <Row>
-            <Col xs="6">
+            <FormGroup>
+              <Label check>
+                {t("Title")} <span className="txt-danger"> *</span>
+              </Label>
+              <Controller
+                name="title"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    required
+                    type="text"
+                    invalid={!!errors["title"]}
+                  />
+                )}
+              />
+              <DisplayError
+                errorsValidation={errorsValidation}
+                errorMessage={errors["title"]?.message}
+                keyProp="blog.title"
+              />{" "}
+            </FormGroup>
+
+            <FormGroup>
+              <Label className="m-0" check>
+                {t("Spot")} <span className="txt-danger"> *</span>
+              </Label>
+              <Controller
+                name="spot"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    type="textarea"
+                    invalid={!!errors["spot"]}
+                    style={{ height: "130px" }}
+                  />
+                )}
+              />
+              <DisplayError
+                errorsValidation={errorsValidation}
+                errorMessage={errors["spot"]?.message}
+                keyProp="spot"
+              />{" "}
+            </FormGroup>
+
+            <FormGroup>
+              <DropdownBlogCategory
+                onChange={(selectedCategory) => {
+                  console.log({
+                    selectedCategory,
+                    formValue: getValues("category"),
+                  });
+                  setValue("category", selectedCategory);
+                }}
+                selectedOption={
+                  getValues("category") ? [getValues("category")] : []
+                }
+              />
+              <DisplayError
+                errorsValidation={errorsValidation}
+                errorMessage={errors["category"]?.message}
+                keyProp="parentid"
+              />{" "}
+            </FormGroup>
+
+            <FormGroup>
+              <DropdownTagComponent
+                onChange={(selectedTags) => {
+                  setValue(
+                    "tags",
+                    selectedTags.map((s) => {
+                      return s as TagSuccessResponse;
+                    })
+                  );
+                }}
+                incomingTags={getValues("tags")}
+              />
+              <DisplayError
+                errorsValidation={errorsValidation}
+                errorMessage={errors["tags"]?.message}
+                keyProp="tags"
+              />{" "}
+            </FormGroup>
+          </Row>
+          <Row>
+            <Col md="6" xs="12">
               <FormGroup>
                 <SelectPublishStatus
                   onChange={(id) => {
@@ -224,7 +226,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
                 />{" "}
               </FormGroup>
             </Col>
-            <Col xs="6">
+            <Col md="6" xs="12">
               <FormGroup>
                 <PublishDate
                   onChange={(date) => {
@@ -245,7 +247,7 @@ export const FormPost: React.FC<FormPostProps> = ({ blogId, blogData }) => {
             </Col>
           </Row>
         </Col>
-        <Col sm="6">
+        <Col md="6" xs="12">
           <FormGroup>
             <Label className="m-0" check>
               {t("Picture")} <span className="txt-danger"> *</span>

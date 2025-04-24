@@ -84,7 +84,7 @@ const DropdownBlogCategory: React.FC<DropdownBlogCategoryProps> = ({
         </Col>
       </Row>
       <Row>
-        <Col xs="8">
+        <Col xs="12" sm="6">
           <Button
             color="transparent"
             tag="a"
