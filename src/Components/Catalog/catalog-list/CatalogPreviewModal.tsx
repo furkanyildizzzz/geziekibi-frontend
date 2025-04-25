@@ -134,7 +134,7 @@ const CatalogPreviewModal: React.FC<CatalogModalInterfaceType> = ({
               className="flip-book-container"
               style={{ height: "500px" }}
               // @ts-ignore
-              src={catalog?.url}
+              src={catalog?.secureUrl}
             ></div>
           </Col>
         </Row>
