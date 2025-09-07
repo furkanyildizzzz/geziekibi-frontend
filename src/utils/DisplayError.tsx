@@ -16,7 +16,7 @@ const DisplayError: React.FC<DisplayErrorProps> = ({
   errorMessage,
   errors,
 }) => {
-  console.log({ errorsValidation, keyProp, errorMessage, errors });
+  // console.log({ errorsValidation, keyProp, errorMessage, errors });
   const { t } = useTranslation("form");
 
   return (

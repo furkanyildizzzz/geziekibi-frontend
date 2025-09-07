@@ -1,20 +1,21 @@
 function calculateDaysAndNights(startDate: Date, endDate: Date): { days: number; nights: number } {
-  // Convert dates to ensure time differences are considered
   const start = new Date(startDate);
   const end = new Date(endDate);
 
   if (start > end) {
-    // throw new Error('Start date must be before or equal to end date');
     console.log('calculateDaysAndNights: Start date must be before or equal to end date');
     return { days: 0, nights: 0 };
   }
 
-  // Calculate the difference in days (inclusive)
+  // Farkı gün cinsinden al
   const timeDiff = end.getTime() - start.getTime();
-  const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+  const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
 
-  // Calculate nights
-  const nights = days - 1;
+  // Gün sayısı: fark + 1 (aynı gün için 1 gün)
+  const days = diffDays + 1;
+
+  // Gece sayısı: gün - 1
+  const nights = days > 0 ? days - 1 : 0;
 
   return { days, nights };
 }

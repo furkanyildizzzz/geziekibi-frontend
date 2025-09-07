@@ -83,6 +83,7 @@ export default async function RootLayout({
             type="text/javascript"
             src="/assets/richtexteditor/plugins/all_plugins.js"
           ></script>
+          
         </head>
         <body
           suppressHydrationWarning={true}

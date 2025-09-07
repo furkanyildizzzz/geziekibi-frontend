@@ -1,11 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import "../../../public/assets/css/rte_theme_default.css";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+
+//https://richtexteditor.net/document/index.htm?page=html/configuring-toolbar.htm
+//https://richtexteditor.com/docs/default.aspx
 
 // Extend window interface to recognize `RichTextEditor`
 declare global {
   interface Window {
     RichTextEditor: any;
+    RTE_CreateConfig: any;
+    RTE_DefaultConfig: any;
+    RichTextEditor_OnLoad?: () => void;
   }
 }
 
@@ -14,6 +21,7 @@ const RichTextEditor2: React.FC<{
   uploadFolderPath: string;
   onChange: (text: string) => void;
 }> = ({ initialValue, uploadFolderPath, onChange }) => {
+
   const refDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -21,12 +29,14 @@ const RichTextEditor2: React.FC<{
 
     // Simulate the RichTextEditor instantiation with config
     const config = {
+      DisabledItems: null,
+      onLoad: () => alert("editor loaded"),
       file_upload_handler: (
         file: any,
         callback: any,
         optionalIndex: any,
         optionalFiles: any
-      ) => {},
+      ) => { },
     };
 
     function getCookie(name: string) {
@@ -149,19 +159,75 @@ const RichTextEditor2: React.FC<{
       }
     };
 
-    // Simulate editor initialization
-    const editor = new window.RichTextEditor(refDiv.current, config);
+    // // Simulate editor initialization
+    // const editor = new window.RichTextEditor(refDiv.current, config);
     // console.log("Editor initialized with config:", config);
+    // console.log("Editor :", editor);
 
-    editor.setHTMLCode(initialValue);
-    editor.attachEvent("change", function () {
-      onChange(editor.getHTMLCode().trim());
-    });
+    // editor.setHTMLCode(initialValue);
+    // editor.attachEvent("change", function () {
+    //   onChange(editor.getHTMLCode().trim());
+    // });
 
-    // Clean up on unmount
-    return () => {
-      // Destroy the editor if necessary
-    };
+    // // editable ve focus kontrolü
+    // const iframe = editor.iframe as HTMLIFrameElement;
+    // if (iframe?.contentDocument) {
+    //   iframe.contentDocument.designMode = "on";
+    //   iframe.contentDocument.body.contentEditable = "true";
+    //   iframe.contentWindow?.focus();
+    // }
+
+    // // Clean up on unmount
+    // return () => {
+    //   // Destroy the editor if necessary
+    // };
+
+    const timer = setTimeout(() => {
+      console.log("window :", window);
+      console.log("RTE_CreateConfig :", window.RTE_CreateConfig(config));
+      var defaultConfig = window.RTE_DefaultConfig;
+      const editor = new window.RichTextEditor(refDiv.current!, { defaultConfig, ...config });
+      console.log("Editor :", editor);
+      console.log("editor.iframe.contentDocument.designMode :", editor.iframe.contentDocument.designMode);
+      console.log("editor.attachEvent :", editor.attachEvent.toString());
+      console.log("isCommandEnabled('bold') :", editor.isCommandEnabled("bold"));
+      console.log("isCommandActive('bold') :", editor.isCommandActive("bold"));
+      console.log("isCommandEnabled('code') :", editor.isCommandEnabled("code"));
+      console.log("isCommandActive('code') :", editor.isCommandActive("code"));
+      
+      // editor.attachEvent("ready", () => {
+      //   console.log("Editor is ready!");
+      //   editor.setHTMLCode(initialValue);
+
+      //   const iframe = editor.iframe as HTMLIFrameElement;
+      //   if (iframe?.contentDocument) {
+      //     iframe.contentDocument.designMode = "on";
+      //     iframe.contentDocument.body.contentEditable = "true";
+      //     iframe.contentWindow?.focus();
+      //   }
+      // });
+     
+      // editor.attachEvent("load", () => {
+      //   toast("editor loaded");
+      // });
+
+      // change event
+      editor.attachEvent("change", () => {
+        onChange(editor.getHTMLCode().trim());
+      });
+
+      // editable ve focus kontrolü
+      const iframe = editor.iframe as HTMLIFrameElement;
+      if (iframe?.contentDocument) {
+        console.log("iframe?.contentDocument :", iframe?.contentDocument);
+        iframe.contentDocument.designMode = "on";
+        iframe.contentDocument.body.contentEditable = "true";
+        iframe.contentWindow?.focus();
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+
   }, []);
 
   return (

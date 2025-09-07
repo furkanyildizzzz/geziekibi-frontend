@@ -31,6 +31,12 @@ const rootReducer = combineReducers({
 // 🔹 Store'u oluştur
 const Store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+      },
+    }),
 });
 
 // 🔹 Persistor'u oluştur

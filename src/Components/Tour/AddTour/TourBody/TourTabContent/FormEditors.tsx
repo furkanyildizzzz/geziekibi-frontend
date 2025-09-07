@@ -30,7 +30,6 @@ const imageUpload: ImageUploadType = async (image, onSuccess, onError) => {
 };
 
 const FormEditors = () => {
-  const mdeEditorText = `Enter your description...`;
   const { formValue } = useAppSelector((state) => state.addProduct);
   const dispatch = useAppDispatch();
 
