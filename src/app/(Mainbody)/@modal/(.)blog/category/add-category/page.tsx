@@ -168,7 +168,7 @@ const AddTourCategoryModal = () => {
                 </Label>
                 <div className="product-upload">
                   <Dropzone
-                    onChange={(files) => setFiles(files)}
+                    onChange={(files: ExtFile[]) => setFiles(files)}
                     value={files}
                     maxFiles={1}
                     multiple={true}

@@ -27,7 +27,7 @@ export const DropzoneComponent: React.FC<DropzoneCompnenetProps> = ({
 
   return (
     <Dropzone
-      onChange={(files) => setFiles(files)}
+      onChange={(files: ExtFile[]) => setFiles(files)}
       value={files}
       maxFiles={1}
       multiple={true}
