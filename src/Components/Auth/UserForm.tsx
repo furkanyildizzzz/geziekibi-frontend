@@ -162,29 +162,29 @@ export const UserForm = () => {
             </div>
           </FormGroup>
           <FormGroup className="form-group mb-0">
-            <div className="checkbox p-0">
+            {/* <div className="checkbox p-0">
               <Input id="checkbox1" type="checkbox" />
               <Label className="text-muted" htmlFor="checkbox1">
                 {RememberPassword}
               </Label>
-            </div>
+            </div> */}
             <div className="text-end mt-3">
               <Button type="submit" color="primary" block disabled={isFetching}>
                 {SignIn}
               </Button>
             </div>
-            <Link className="link" href={Href}>
+            {/* <Link className="link" href={Href}>
               {ForgotPassword}?
-            </Link>
+            </Link> */}
           </FormGroup>
           {/* <h6 className="text-muted mt-4">{OrSignInWith}</h6> */}
           {/* <UserSocialApp /> */}
-          <p className="mt-4 mb-0 text-center">
+          {/* <p className="mt-4 mb-0 text-center">
             {DontHaveAccount}
             <Link className="ms-2" href={"signup"}>
               {CreateAccount}
             </Link>
-          </p>
+          </p> */}
         </Form>
       </div>
     </div>
