@@ -121,7 +121,7 @@ const AddUploadMedia: React.FC<
               <Row>
                 <Col sm="6">
                   <Dropzone
-                    onChange={(files) => updateFiles(files)}
+                    onChange={(files: ExtFile[]) => updateFiles(files)}
                     value={files}
                     maxFiles={1}
                     multiple={true}

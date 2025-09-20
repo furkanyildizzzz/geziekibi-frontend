@@ -65,7 +65,7 @@ const TourGalleryImages = () => {
         />
       )}
       <Dropzone
-        onChange={(files) => updateFiles(files)}
+        onChange={(files: ExtFile[]) => updateFiles(files)}
         disabled={isLoading}
         value={files}
         maxFiles={5}

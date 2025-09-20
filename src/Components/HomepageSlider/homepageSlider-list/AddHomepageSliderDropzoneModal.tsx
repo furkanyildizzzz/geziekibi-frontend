@@ -82,7 +82,7 @@ const AddCatalogDropzoneModal: React.FC<AddCatalogDropzoneModalProps> = ({
       <div className="product-upload">
         <DisplayError errorsValidation={errorsValidation} />
         <Dropzone
-          onChange={(files) => updateFiles(files)}
+          onChange={(files: ExtFile[]) => updateFiles(files)}
           value={files}
           maxFiles={1}
           multiple={true}

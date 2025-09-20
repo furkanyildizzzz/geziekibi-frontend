@@ -54,7 +54,7 @@ const BlogPrimaryImages: React.FC<BlogPrimaryImagesProps> = ({
         />
       )}
       <Dropzone
-        onChange={(files) => updateFiles(files)}
+        onChange={(files: ExtFile[]) => updateFiles(files)}
         value={files}
         maxFiles={1}
         multiple={true}
